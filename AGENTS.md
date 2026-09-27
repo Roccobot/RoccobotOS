@@ -223,9 +223,9 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   <https://roccobot.github.io/RoccobotOS>. Conta come **progetto e non come documentazione**, e
   non si chiama 'guida' (`Rules.md`, prima sezione, `## 🖥️ Progetto '/RoccobotOS': un sito, non
   documentazione`, a cui rimandano le voci qui sotto che citano la prima sezione).
-- **Deroghe dichiarate alle regole di sviluppo**: la lingua del sito è l'italiano (i nomi dei
-  file sono in inglese, i testi visibili in italiano), e non c'è il footer 'vibes ✦', perché la
-  versione è in cima (`Rules.md`, prima sezione).
+- **Deroga dichiarata alle regole di sviluppo**: la lingua del sito è l'italiano (i nomi dei
+  file sono in inglese, i testi visibili in italiano); la versione è in cima (`Rules.md`, prima
+  sezione).
 - **Struttura**: `index.html` con `RoccobotOS.css` e `RoccobotOS.js`; quattro sotto-pagine
   (`Characters.html`, `Formats.html`, `AdServers.html`, `BlendModes.html`) con `Pages.css` e
   `Pages.js`; la styleguide in `Styleguide.html`. I file sono alla radice del repo, anche dove
