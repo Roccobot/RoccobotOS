@@ -1,8 +1,12 @@
-# CLAUDE.md: RoccobotOS (`RoccobotOS/`)
+# Rules.md: RoccobotOS (`RoccobotOS/`)
 
 > **Cos'è questo file.** Le regole del **sito** RoccobotOS
-> (<https://roccobot.github.io/RoccobotOS>). Si carica quando si legge un file di
-> qui; le regole trasversali vivono nel `CLAUDE.md` di **root**.
+> (<https://roccobot.github.io/RoccobotOS>), cioè il testo completo delle regole di questo
+> repo; le regole trasversali vivono nell'hub, il repo `roccobot.github.io`.
+> Vale per **tutti gli agenti**: il nucleo, cioè ogni regola in una riga, vive in `AGENTS.md`,
+> e questo file ne dà il perché. Claude Code lo carica da sé, perché `CLAUDE.md` lo importa.
+> ⚠️ **Fino al 2026-09-27 questo testo era il `CLAUDE.md` del repo**: una nota che nomina il
+> `CLAUDE.md` di RoccobotOS per una di queste sezioni parla di questo file.
 
 ## 🖥️ Progetto '/RoccobotOS': un sito, non documentazione
 
