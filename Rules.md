@@ -25,9 +25,8 @@
     si pensava prima.
 - ⚠️ **Deroghe dichiarate alle regole di sviluppo** (`Roccobot.md`, § '🏗️ Sviluppo
   software'), che da progetto gli si applicano: la **lingua del sito è l'italiano** (è il
-  riferimento personale dell'utente, non un prodotto per un pubblico anglofono), e **non
-  c'è il footer standard** con la nota 'vibes ✦': il numero di versione, che quel footer
-  ospiterebbe, è in cima per scelta dell'utente (vedi la sezione della versione).
+  riferimento personale dell'utente, non un prodotto per un pubblico anglofono). Il numero di
+  versione è in cima per scelta dell'utente (vedi la sezione della versione).
 - **Struttura.** Pagina unica `index.html` più `RoccobotOS.css` e `RoccobotOS.js`, quattro
   **sotto-pagine** (`Characters.html`, `Formats.html`, `AdServers.html`, `BlendModes.html`) col
   loro `Pages.css` e `Pages.js`, e la **styleguide** in `Styleguide.html`.
