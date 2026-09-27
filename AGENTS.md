@@ -223,20 +223,20 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   file, caratteri, servizi DNS), pubblicato dal Pages del repo `Roccobot/RoccobotOS` su
   <https://roccobot.github.io/RoccobotOS>. Conta come **progetto e non come documentazione**, e
   non si chiama 'guida' (`Rules.md`, prima sezione, `## 🖥️ Progetto '/RoccobotOS': un sito, non
-  documentazione`, a cui rimandano le voci qui sotto che citano la prima sezione).
+  documentazione`).
 - **Deroga dichiarata alle regole di sviluppo**: la lingua del sito è l'italiano (i nomi dei
   file sono in inglese, i testi visibili in italiano); la versione è in cima (`Rules.md`, prima
   sezione).
 - **Struttura**: `index.html` con `RoccobotOS.css` e `RoccobotOS.js`; quattro sotto-pagine
   (`Characters.html`, `Formats.html`, `AdServers.html`, `BlendModes.html`) con `Pages.css` e
   `Pages.js`; la styleguide in `Styleguide.html`. I file sono alla radice del repo, anche dove
-  `Rules.md` li nomina col prefisso `RoccobotOS/` di quando il sito era una cartella dell'hub.
+  un testo vecchio li nomina col prefisso `RoccobotOS/` di quando il sito era una cartella dell'hub.
 - **`index.html` è la fonte e si modifica direttamente**: non si rigenera più da markdown, quindi
-  un errore là non si recupera rigenerando (`Rules.md`, prima sezione).
+  un errore là non si recupera rigenerando (`Rules.md` § '🚩 Flag, sotto-pagine e decisioni da non rovesciare').
 - **La styleguide è la fonte unica dei valori visivi**: i campioni sono scritti a mano, quindi un
   token si cambia nel CSS del sito e in `Styleguide.html` nello stesso commit; il foglio inline
   della styleguide vince su `Pages.css`, e un contrasto si dichiara sul fondo reale del
-  componente (`Rules.md`, prima sezione).
+  componente (`Rules.md` § '🎨 La styleguide e i valori visivi').
 - **Ramo principale `main`; versione SlimVer con la fonte unica nella costante `VERSIONE` di
   `RoccobotOS.js`**, che il badge legge a runtime. Il numero non si scrive nei file di regole né
   nel commento in testa al `.js`; si bumpa a ogni commit che tocca il prodotto, e un commit che
@@ -256,19 +256,20 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   `processEscapes: false`; nessuna lista di lavori pendenti in un file; niente `localStorage`
   per il tema; il codice inline a pillola è scartato; lo switch delle tabelle e il tasto del
   tema restano dietro i flag spenti `FLAG_SWITCH_TABELLE` e `FLAG_TASTO_TEMA`, col loro codice
-  al suo posto (`Rules.md`, prima sezione).
+  al suo posto (`Rules.md` § '🚩 Flag, sotto-pagine e decisioni da non rovesciare').
 - **Un feature flag si spegne con `[hidden]{display:none!important}` fuori da ogni media
   query**, perché ogni comando dichiara il suo `display`; e si verifica sul `display`
-  calcolato, mai sull'attributo. Il difetto è arrivato in produzione (`Rules.md`, prima sezione).
+  calcolato, mai sull'attributo. Il difetto è arrivato in produzione
+  (`Rules.md` § '🚩 Flag, sotto-pagine e decisioni da non rovesciare').
 - **Censimento del CSS**: una dichiarazione superata non risulta morta, e si trova confrontando
   il colore calcolato con quello dichiarato; le regole del tema markdown vendorizzato restano,
   perché coprono costrutti che la pagina può usare; `.site-version:empty` e `.toc-version:empty`
   non agganciano niente apposta. La misura si rifà con Prism in locale e negli otto stati
-  combinati (`Rules.md`, prima sezione).
+  combinati (`Rules.md` § '🧹 Il CSS: che cosa si pota e che cosa no').
 - **Tabelle a bordi tondi**: modello `separate`, raggio 8 px sulla tabella e 7 sulle celle
   d'angolo; la cella accanto a un `rowspan` porta la classe `not-last-col`. Un `rowspan` si
-  verifica su tutti e quattro i lati delle celle che tocca, bordi e raggi insieme (`Rules.md`,
-  prima sezione).
+  verifica su tutti e quattro i lati delle celle che tocca, bordi e raggi insieme (`Rules.md`
+  § '🎨 La styleguide e i valori visivi').
 - **Comandi fissi**: una sola regola di visibilità per i due formati (compaiono scorrendo e
   spariscono dopo 3 secondi), e si nasconde il comando che non porta da nessuna parte; le
   funzioni che aprono e chiudono l'indice chiamano `aggiornaComandi()`; `--hide-shift` è
