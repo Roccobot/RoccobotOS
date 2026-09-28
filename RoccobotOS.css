@@ -34,12 +34,11 @@ body,html{color:#333;overflow-x:hidden;background-color:#feffff}.icon-inline{wid
    ⚠️ L'altezza è .936em dal 2026-08-02, cioè il +20% chiesto dall'utente sul .78em di prima:
    accanto ai glifi della stessa colonna la mela si leggeva più piccola di un'emoji. Il valore
    è scritto come prodotto e non arrotondato apposta, o si perde da dove viene.
-   ⚠️ L'allineamento ORIZZONTALE resta aperto, e la ragione va saputa prima di provare a
+   L'allineamento ORIZZONTALE è quello di oggi, approvato dall'utente. Prima di provare a
    'sistemarlo': in quella colonna i glifi NON condividono alcun bordo destro. Misurato
    l'inchiostro vero con le metriche del canvas, i bordi destri stanno in un intervallo di 14 px
    (da 541,59 di ♪ a 555,59 di ⌦), perché ogni glifo ha la sua larghezza e la colonna è
-   allineata a sinistra. Non esiste quindi un bordo a cui allinearsi 'al pixel': lo spostamento
-   sarà un valore deciso dall'utente. */
+   allineata a sinistra: non esiste un bordo a cui allinearsi 'al pixel'. */
 .ic-apple{height:.936em;width:auto;--nudge:-.0694em}
 
 /* Numero di versione: sta SOPRA il logo-titolo, allineato al pixel col suo bordo sinistro, e
