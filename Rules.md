@@ -89,7 +89,7 @@
     un angolo tondo mostrerebbe la pagina sotto.
 - ⚠️ **Il LOGO in testata è SVG inline**, e `RoccobotOS.svg` non esiste più: un `<img>` non si
   ricolora, e in tema scuro cambia colore la sola parte grigia della scritta, il marchio verde no.
-  Le due parti portano `.logo-word` e `.logo-mark`, i colori sono in `RoccobotOS.css`. Gli `id`
+  Le due parti hanno le classi `.logo-word` e `.logo-mark`, i colori sono in `RoccobotOS.css`. Gli `id`
   dell'export si sono tolti, perché inline avrebbero potuto collidere con quelli della pagina.
 
 ### 🧹 Il CSS: che cosa si pota e che cosa no
@@ -219,7 +219,7 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
   `telegram_send_new.png`, forniti dall'utente). Nel testo la frase dice **'clic su [nuova] o
   [vecchia]'**, in quest'ordine: prima quella che si vede oggi nell'app, poi la legacy.
   - **Il PNG qui è la scelta giusta**: queste icone restano **identiche nei due temi**, quindi
-    `currentColor` non serve, e il colore esatto lo porta l'asset. Scartato il ridisegno SVG a
+    `currentColor` non serve, e il colore esatto è definito dall'asset. Scartato il ridisegno SVG a
     `#70aee7`, giudicato pessimo dall'utente.
   - ⚠️ **La nuova è quella col tondo azzurro** attorno all'aeroplanino; la legacy è la freccia verde
     acqua senza sfondo, e si mostra comunque. Quando l'ordine conta si chiede o si verifica: dai
@@ -255,14 +255,14 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
     col margine (`Roccobot.md` § '🎨 Grafica'), così non si toccano i vicini né l'altezza della
     riga.
   - ⚠️⚠️ **Il valore teorico non basta: l'aggiustamento OTTICO lo dà l'utente**, perché dipende
-    dalla forma del disegno. Nel CSS ogni icona porta un `--nudge`, che è la correzione **totale**
+    dalla forma del disegno. Nel CSS ogni icona ha un `--nudge`, che è la correzione **totale**
     rispetto al centro della x-height (regola più ottica), con accanto il commento che dice quanti
     pixel dell'utente vale.
   - ⚠️ **I pixel dell'utente sono a DPR 2**: uno suo vale 0,5 px CSS, cioè 0,03125em nel testo a
     16 px e 0,0347em nelle tabelle a 14,4 px. Il globo vive in una tabella: un divisore unico
     sbaglierebbe proprio lui.
   - **La taratura in vigore si legge nel CSS**, che è la fonte: se questo file e il CSS divergono
-    vince il CSS. Mission Control è approvato senza spostamento; il logo Apple porta la sola regola
+    vince il CSS. Mission Control è approvato senza spostamento; il logo Apple segue la sola regola
     generale, senza ottica.
 
 ### 🔢 Versione del progetto: VISIBILE in pagina
@@ -277,7 +277,7 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
     (`2.2.0`...`2.2.3`), poi SlimVer.
   - **I commit che toccano solo questo file di regole non bumpano.**
 - **Il numero vive solo nella costante `VERSIONE` di `RoccobotOS.js`**, e il badge la legge a
-  runtime. ⚠️ Il commento in testa al `.js` **non** porta il numero, di proposito: sarebbe un
+  runtime. ⚠️ Il commento in testa al `.js` **non** contiene il numero, di proposito: sarebbe un
   secondo posto da tenere allineato.
   - ⚠️ **Gli elementi del numero nascono VUOTI in `index.html`** e il CSS li nasconde con `:empty`:
     se il JS non gira, non compare un badge senza numero, che sarebbe peggio dell'assenza.
@@ -329,7 +329,7 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
     allarmi.
 - **Sonda di pubblicazione**:
   `curl -s https://roccobot.github.io/RoccobotOS/RoccobotOS.js | grep -o 'VERSIONE = "[^"]*"'`.
-  ⚠️ Non `head -c 30`: il commento in testa non porta il numero, e chi usa quel comando crede che
+  ⚠️ Non `head -c 30`: il commento in testa non contiene il numero, e chi usa quel comando crede che
   il deploy non sia passato.
 
 ### 🎛️ Comandi e controlli fissi

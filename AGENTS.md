@@ -1,7 +1,7 @@
 # AGENTS.md: le regole di `Roccobot/RoccobotOS`
 
 > **Cos'è questo file.** Quello che ogni agente legge all'avvio in questo repo: Codex, Cursor e
-> Antigravity lo leggono da sé, Claude Code lo importa da `CLAUDE.md`. Porta due blocchi: il
+> Antigravity lo leggono da sé, Claude Code lo importa da `CLAUDE.md`. Contiene due blocchi: il
 > **nucleo universale**, copiato da `rules/Core.md` di `Roccobot/tools` e da modificare solo là,
 > e il **nucleo del repo**, cioè le sue regole in una riga col rimando a `Rules.md`, che ne dà il
 > testo completo e il perché.
@@ -251,7 +251,7 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   (`Rules.md` § '🔢 Versione del progetto: VISIBILE in pagina').
 - **Verifica di pubblicazione**:
   `curl -s https://roccobot.github.io/RoccobotOS/RoccobotOS.js | grep -o 'VERSIONE = "[^"]*"'`;
-  il commento in testa al file non porta il numero, quindi `head -c 30` non mostra niente
+  il commento in testa al file non contiene il numero, quindi `head -c 30` non mostra niente
   (`Rules.md` § '🔢 Versione del progetto: VISIBILE in pagina'). Pages serve tutto con `max-age=600`: una versione nuova può comparire
   con dieci minuti di ritardo.
 - **Decisioni dell'utente che non si rovesciano senza di lui**: il cache-busting `?v=N` non si
@@ -270,7 +270,7 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   non agganciano niente apposta. La misura si rifà con Prism in locale e negli otto stati
   combinati (`Rules.md` § '🧹 Il CSS: che cosa si pota e che cosa no').
 - **Tabelle a bordi tondi**: modello `separate`, raggio 8 px sulla tabella e 7 sulle celle
-  d'angolo; la cella accanto a un `rowspan` porta la classe `not-last-col`. Un `rowspan` si
+  d'angolo; la cella accanto a un `rowspan` ha la classe `not-last-col`. Un `rowspan` si
   verifica su tutti e quattro i lati delle celle che tocca, bordi e raggi insieme (`Rules.md`
   § '🎨 La styleguide e i valori visivi').
 - **Comandi fissi**: una sola regola di visibilità per i due formati (compaiono scorrendo e
