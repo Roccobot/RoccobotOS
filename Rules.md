@@ -4,7 +4,8 @@
 > (<https://roccobot.github.io/RoccobotOS>), cioè il testo completo delle regole di questo
 > repo; le regole trasversali vivono nell'hub, il repo `roccobot.github.io`.
 > Vale per **tutti gli agenti**: il nucleo, cioè ogni regola in una riga, vive in `AGENTS.md`,
-> e questo file ne dà il perché. Claude Code lo carica da sé, perché `CLAUDE.md` lo importa.
+> e questo file ne dà il perché. Dal 2026-10-10 nessun agente lo carica da sé, Claude Code
+> compreso: si legge per intero prima di lavorare su una cosa di cui parla.
 > ⚠️ **Fino al 2026-09-27 questo testo era il `CLAUDE.md` del repo**: una nota che nomina il
 > `CLAUDE.md` di RoccobotOS per una di queste sezioni parla di questo file. I file del sito sono
 > alla **radice** del repo: il prefisso `RoccobotOS/` che si trova in testi vecchi è di quando il
