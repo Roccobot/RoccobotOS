@@ -1,7 +1,7 @@
 /* RoccobotOS - il numero di versione NON si scrive qui: la sua unica fonte è la costante
    VERSIONE poco sotto, che il numero in pagina legge a runtime. Un numero in questo commento
    sarebbe un secondo posto, e due posti prima o poi divergono.
-   Vedi RoccobotOS/CLAUDE.md, sezione sulla versione. */
+   Vedi Rules.md, § '🔢 Versione del progetto: VISIBILE in pagina'. */
 
 // ── Numero di versione in pagina ──
 // Visibile dal 2026-07-31, in due punti alternativi secondo il formato (dal 2026-08-01): una
@@ -10,7 +10,7 @@
 // index.html nascono VUOTI: se questo script non gira il CSS li nasconde con :empty, invece di
 // mostrare una 'v' senza numero.
 !function () {
-  const VERSIONE = "3.98";
+  const VERSIONE = "3.99";
   // Due punti di resa, uno per formato: la pillola nell'angolo dell'indice su desktop,
   // il numero sopra il logo su mobile. A deciderlo è il CSS, qui si scrivono entrambi.
   for (const id of ["siteVersion", "tocVersion"]) {
