@@ -27,6 +27,13 @@
       "version": "1.42",
       "note": "The updated RoccobotOS web palette, with green code and soft green table headers.",
       "comment": "Light and dark colours with the original responsive layout."
+    },
+    {
+      "file": "RoccobotOS143.css",
+      "name": "RoccobotOS",
+      "version": "1.43",
+      "note": "The updated RoccobotOS web palette, with green code, soft green table headers and a green index.",
+      "comment": "Light and dark colours with the original responsive layout and a terracotta accent."
     }
   ]
 }
