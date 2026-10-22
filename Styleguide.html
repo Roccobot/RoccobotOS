@@ -399,6 +399,34 @@
     mattone <code>#bc4a61</code>, che con quel codice non c'entrava nulla e per giunta dava
     3,33:1.</p>
 
+  <p>Lo stile predefinito, <code>Styles/RoccobotOS141.css</code>, ha un codice proprio e
+    l'intestazione delle tabelle scura. I contrasti sono dichiarati sul fondo vero del componente.</p>
+
+  <div class="griglia">
+    <div class="scheda">
+      <div class="facce">
+        <div class="faccia chiara" style="color:#14594C;background:#E6F4EF;border:1px solid #43B59E;border-radius:.25rem;font-family:'SF Mono',SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;font-size:.95rem">codice</div>
+        <div class="faccia scura" style="color:#9FE3CF;background:#16302A;border:1px solid #43B59E;border-radius:.25rem;font-family:'SF Mono',SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;font-size:.95rem">codice</div>
+      </div>
+      <div class="scheda-piede">
+        <span class="scheda-nome">codice-1.41</span>
+        <span class="scheda-ruolo">&lt;code&gt; e &lt;pre&gt;, filo #43B59E, raggio .25rem in linea e 8 px nei blocchi, corpo 95%</span>
+        <span class="valori">#14594C su #E6F4EF <span class="rapporto ok">7,24:1</span> &middot; #9FE3CF su #16302A <span class="rapporto ok">9,64:1</span></span>
+      </div>
+    </div>
+    <div class="scheda">
+      <div class="facce">
+        <div class="faccia chiara" style="color:#FFFFFF;background:#14594C;font-weight:600">Intestazione</div>
+        <div class="faccia scura" style="color:#FFFFFF;background:#1E5A4C;font-weight:600">Intestazione</div>
+      </div>
+      <div class="scheda-piede">
+        <span class="scheda-nome">intestazione-1.41</span>
+        <span class="scheda-ruolo">celle &lt;th&gt;, separatori #3D7E70 e #2E6F60; link #E0F5EE (7,20:1) e #E6F4EF (7,08:1)</span>
+        <span class="valori">#FFFFFF su #14594C <span class="rapporto ok">8,19:1</span> &middot; #FFFFFF su #1E5A4C <span class="rapporto ok">8,01:1</span></span>
+      </div>
+    </div>
+  </div>
+
   <h3>2.4 Indice laterale</h3>
 
   <div class="griglia">
@@ -487,8 +515,10 @@
       BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif</code>, più le due famiglie
       emoji. Nessun webfont, di proposito: il sito deve aprirsi subito e funzionare offline.</li>
     <li><strong>Famiglia monospaziata</strong>: <code>SFMono-Regular, Consolas, 'Liberation Mono',
-      Menlo, monospace</code>, per codice, blocchi e tasti.</li>
-    <li><strong>Codice inline</strong>: 85% del contesto.</li>
+      Menlo, monospace</code>, per codice, blocchi e tasti; nello stile 1.41 il codice usa
+      <code>'SF Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace</code>,
+      Prism compreso.</li>
+    <li><strong>Codice inline</strong>: 85% del contesto, 95% nello stile 1.41.</li>
     <li>Il numero di versione usa <code>font-variant-numeric: tabular-nums</code>.</li>
   </ul>
 
