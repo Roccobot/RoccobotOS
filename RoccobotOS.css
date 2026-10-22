@@ -1,9 +1,0 @@
-/*
-#NAME: RoccobotOS
-#VERSION: 1.40
-#NOTE: The updated RoccobotOS web palette.
-#COMMENT: Light and dark colours with the original responsive layout.
-*/
-
-/* Keep the public stylesheet URL aligned with the default site appearance. */
-@import url('Styles/RoccobotPaper.css');

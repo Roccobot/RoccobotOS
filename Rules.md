@@ -23,7 +23,7 @@
 - ⚠️ **Deroghe dichiarate alle regole di sviluppo** (`Roccobot.md` § '🏗️ Sviluppo software'):
   la **lingua del sito è l'italiano**, perché è un riferimento personale e non un prodotto per un
   pubblico anglofono; il numero di versione è in cima per scelta dell'utente.
-- **Struttura.** `index.html` con `RoccobotOS.css` e `RoccobotOS.js`; quattro sotto-pagine
+- **Struttura.** `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS140.css`, gli altri dal selettore); quattro sotto-pagine
   (`Characters.html`, `Formats.html`, `AdServers.html`, `BlendModes.html`) con `Pages.css` e
   `Pages.js`; la styleguide in `Styleguide.html`.
   - ⚠️ **Nomi dei file in inglese, testi visibili in italiano**: sono due scelte indipendenti
@@ -58,7 +58,7 @@
   - ⚠️ **Le classi sono due**, `narrow-cols-odd` e `narrow-cols-even`, perché la colonna stretta è
     la prima nelle tabelle dei tasti e la seconda in quelle dei caratteri e delle sostituzioni:
     un solo `nth-child` colorerebbe la colonna sbagliata in metà delle tabelle. Vivono in
-    `RoccobotOS.css` e in `Pages.css`, perché le due famiglie di pagine non condividono il foglio.
+    ogni stile di `Styles/` e in `Pages.css`, perché le due famiglie di pagine non condividono il foglio.
 - ⚠️⚠️ **Angoli stondati di 8 px: non è una riga di CSS.** Col modello `collapse` un
   `border-radius` sulla tabella non agisce, perché la cornice la disegnano le celle. Serve il
   modello `separate`, la cornice sulla tabella, i soli tratti interni sulle celle e il raggio
@@ -90,7 +90,7 @@
     un angolo tondo mostrerebbe la pagina sotto.
 - ⚠️ **Il LOGO in testata è SVG inline**, e `RoccobotOS.svg` non esiste più: un `<img>` non si
   ricolora, e in tema scuro cambia colore la sola parte grigia della scritta, il marchio verde no.
-  Le due parti hanno le classi `.logo-word` e `.logo-mark`, i colori sono in `RoccobotOS.css`. Gli `id`
+  Le due parti hanno le classi `.logo-word` e `.logo-mark`, i colori sono in ogni stile di `Styles/`. Gli `id`
   dell'export si sono tolti, perché inline avrebbero potuto collidere con quelli della pagina.
 
 ### 🧹 Il CSS: che cosa si pota e che cosa no

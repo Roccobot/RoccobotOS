@@ -15,7 +15,7 @@ async function check(name, action) { await action(); results.push(name); }
       await page.goto(url,{waitUntil:'domcontentloaded'});
       const trigger=page.locator(width>860?'#tocVersion':'#siteVersion');
       await trigger.waitFor({state:'visible'});
-      await check(`${width}/${theme}: 1.40 is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotPaper.css'));
+      await check(`${width}/${theme}: 1.40 is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS140.css'));
       await check(`${width}/${theme}: both formats expose one version`,async()=>assert.equal(await page.locator('[data-style-picker]:visible').count(),1));
       const before=await page.locator('h1').first().evaluate(e=>({font:getComputedStyle(e).fontSize,width:e.getBoundingClientRect().width,padding:getComputedStyle(e).paddingBottom}));
       await trigger.click();
@@ -28,34 +28,34 @@ async function check(name, action) { await action(); results.push(name); }
         assert.equal(await page.getByRole('link',{name:'Aggiungi uno stile'}).count(),0);
       });
       await page.getByRole('option').first().click();
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS100.css'));
       await check(`${width}/${theme}: original 1.00 can be previewed`,async()=>{
         assert.equal(await page.locator('body').evaluate(e=>getComputedStyle(e).backgroundColor),theme==='light'?'rgb(254, 255, 255)':'rgb(18, 18, 18)');
         assert.equal(await page.locator('h1').first().evaluate(e=>getComputedStyle(e).borderBottomWidth),'1px');
       });
       await check(`${width}/${theme}: typography and layout preserved`,async()=>assert.deepEqual(await page.locator('h1').first().evaluate(e=>({font:getComputedStyle(e).fontSize,width:e.getBoundingClientRect().width,padding:getComputedStyle(e).paddingBottom})),before));
       await list.press('Escape');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('RoccobotPaper.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS140.css'));
       await check(`${width}/${theme}: Escape restores initial style and focus`,async()=>{
         assert.equal(await page.getByRole('dialog').isVisible(),false);
         assert.equal(await trigger.evaluate(e=>document.activeElement===e),true);
       });
       await trigger.click();
       await list.press('ArrowUp');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS100.css'));
       await list.press('Enter');
       await check(`${width}/${theme}: keyboard selection commits on Enter`,async()=>assert.equal(await page.getByRole('dialog').isVisible(),false));
       await trigger.click();
       await list.press('End'); await list.press('Home'); await list.press('End');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('RoccobotPaper.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS140.css'));
       await check(`${width}/${theme}: rapid selection leaves one active sheet`,async()=>assert.equal(await page.locator('link[data-site-style]').count(),1));
       await page.getByRole('button',{name:'Chiudi il selettore'}).click();
       await trigger.click();
       await list.press('Home');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS100.css'));
       await list.press('Enter');
       await page.reload({waitUntil:'domcontentloaded'});
-      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotPaper.css'));
+      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS140.css'));
       await check(`${width}/${theme}: no JavaScript errors`,async()=>assert.deepEqual(errors,[]));
       await page.goto(url+'Styles/admin/manage.html',{waitUntil:'domcontentloaded'});
       await check(`${width}/${theme}: management remains closed without configuration`,async()=>{
@@ -70,10 +70,10 @@ async function check(name, action) { await action(); results.push(name); }
     await page.goto(url,{waitUntil:'domcontentloaded'});
     await page.locator('#tocVersion').click();
     await page.getByRole('option').last().waitFor();
-    await page.route('**/Styles/RoccobotOS.css',route=>route.abort());
+    await page.route('**/Styles/RoccobotOS100.css',route=>route.abort());
     await page.getByRole('option').first().click();
     await page.getByText('Lo stile non si carica. La pagina conserva quello precedente.').waitFor();
-    await check('failed stylesheet leaves default 1.40 active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotPaper.css'));
+    await check('failed stylesheet leaves default 1.40 active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS140.css'));
     await context.close();
     if (process.env.VERIFICATION_REPORT) await fs.writeFile(process.env.VERIFICATION_REPORT, JSON.stringify({ passed: results.length, checks: results }, null, 2));
     console.log(JSON.stringify({passed:results.length,checks:results},null,2));

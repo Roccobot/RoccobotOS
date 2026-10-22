@@ -1,5 +1,5 @@
 /* Author: Rocco Casadei, a.k.a. Roccobot. */
-import { validateUpload, readMetadata } from '../../styles-core.mjs';
+import { compareStyles, validateUpload, readMetadata } from '../../styles-core.mjs';
 
 const REPOSITORY = '/repos/Roccobot/RoccobotOS';
 const REPOSITORY_ID = '1389294896';
@@ -243,7 +243,7 @@ async function upload(request, env, config) {
     const entries = directory ? await tree(directory.sha, current.token) : [];
     if (entries.some(entry => entry.path.toLowerCase() === style.filename.toLowerCase())) throw new Failure(409, 'Esiste già un file con questo nome. Scegli un altro nome.');
     const styles = [...await catalogue(entries, current.token), metadata];
-    styles.sort((a, b) => a.file === 'RoccobotOS.css' ? -1 : b.file === 'RoccobotOS.css' ? 1 : a.name.localeCompare(b.name, 'it') || a.file.localeCompare(b.file));
+    styles.sort(compareStyles);
     const cssBlob = await github(`${REPOSITORY}/git/blobs`, current.token, 'POST', { content: style.content, encoding: 'utf-8' });
     const indexBlob = await github(`${REPOSITORY}/git/blobs`, current.token, 'POST', { content: JSON.stringify({ styles }, null, 2) + '\n', encoding: 'utf-8' });
     const newTree = await github(`${REPOSITORY}/git/trees`, current.token, 'POST', { base_tree: base, tree: [

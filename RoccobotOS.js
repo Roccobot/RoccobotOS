@@ -10,7 +10,7 @@
 // index.html nascono VUOTI: se questo script non gira il CSS li nasconde con :empty, invece di
 // mostrare una 'v' senza numero.
 !function () {
-  const VERSIONE = "4.10";
+  const VERSIONE = "4.11";
   // Due punti di resa, uno per formato: la pillola nell'angolo dell'indice su desktop,
   // il numero sopra il logo su mobile. A deciderlo è il CSS, qui si scrivono entrambi.
   for (const id of ["siteVersion", "tocVersion"]) {
@@ -75,7 +75,7 @@
 
   // Chi ha chiesto meno animazioni al sistema non riceve nemmeno lo scorrimento animato: la
   // query si legge a ogni salto, non una volta sola, perché l'impostazione può cambiare a
-  // pagina aperta. La controparte CSS sta in RoccobotOS.css.
+  // pagina aperta. La controparte CSS è nei fogli di Styles/.
   const andatura = () => mqMenoMoto.matches ? "auto" : "smooth";
 
   // ── Tema ──

@@ -12,6 +12,12 @@ export function readMetadata(source) {
   return result;
 }
 
+/* Order the catalogue: the original 1.00 style first, then by name and file. */
+const PINNED_STYLE = 'RoccobotOS100.css';
+export function compareStyles(a, b) {
+  return (b.file === PINNED_STYLE) - (a.file === PINNED_STYLE) || a.name.localeCompare(b.name, 'it') || a.file.localeCompare(b.file);
+}
+
 /* Accept self-contained styles and restrict uploads to a single directory. */
 export function validateUpload(filename, content) {
   if (!/^[A-Za-z0-9][A-Za-z0-9_-]{0,79}\.css$/.test(filename)) throw new Error('Il nome deve terminare in .css e contenere solo lettere, numeri, trattini o underscore.');

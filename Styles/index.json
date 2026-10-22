@@ -1,14 +1,14 @@
 {
   "styles": [
     {
-      "file": "RoccobotOS.css",
+      "file": "RoccobotOS100.css",
       "name": "RoccobotOS",
       "version": "1.00",
       "note": "The original RoccobotOS web palette.",
       "comment": "Light and dark colours with the original responsive layout."
     },
     {
-      "file": "RoccobotPaper.css",
+      "file": "RoccobotOS140.css",
       "name": "RoccobotOS",
       "version": "1.40",
       "note": "The updated RoccobotOS web palette.",
