@@ -3,16 +3,16 @@
     {
       "file": "RoccobotOS.css",
       "name": "RoccobotOS",
-      "version": "1.0",
+      "version": "1.00",
       "note": "The original RoccobotOS web palette.",
       "comment": "Light and dark colours with the original responsive layout."
     },
     {
       "file": "RoccobotPaper.css",
-      "name": "RoccobotOS Paper",
+      "name": "RoccobotOS",
       "version": "1.40",
-      "note": "A softer paper palette for the Web.",
-      "comment": "Paper colours with the original responsive layout."
+      "note": "The updated RoccobotOS web palette.",
+      "comment": "Light and dark colours with the original responsive layout."
     }
   ]
 }

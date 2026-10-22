@@ -26,7 +26,7 @@ async function initialize() {
   const list = make('div', '', { role: 'listbox', 'aria-label': 'Stili disponibili', tabindex: '0' });
   const status = make('p', '', { role: 'status', 'aria-live': 'polite', class: 'status' });
   const footer = make('footer');
-  footer.append(make('span', '↑ ↓ Anteprima · Invio Chiudi · Esc Annulla'), make('a', 'Aggiungi uno stile', { href: new URL('admin/manage.html', rootURL).href }));
+  footer.append(make('span', '↑ ↓ Anteprima · Invio Chiudi · Esc Annulla'));
   dialog.append(header, hint, list, status, footer);
   shadow.append(dialog);
   document.body.append(host);
@@ -118,7 +118,7 @@ async function initialize() {
             const option = make('div', '', { role: 'option', id: `style-${index}`, 'aria-selected': 'false' });
             const swatch = make('span', '', { class: 'swatch', 'aria-hidden': 'true' });
             const text = make('span');
-            text.append(make('strong', item.name), make('small', item.file));
+            text.append(make('strong', item.name));
             option.append(swatch, text, make('span', item.version, { class: 'version' }));
             option.addEventListener('click', () => apply(index));
             list.append(option);

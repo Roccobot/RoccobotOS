@@ -37,12 +37,10 @@ p { margin: 6px 0 18px; color: var(--muted); font-size: 13px; }
 [role='option']:hover { border-color: var(--line); }
 [role='option'][aria-selected='true'] { background: var(--selected); border-color: color-mix(in srgb, var(--action) 45%, transparent); }
 strong { display: block; font-size: 15px; font-weight: 600; }
-small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
 .version { margin-left: auto; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
 .swatch { flex: 0 0 32px; height: 40px; border-radius: 6px; border: 1px solid var(--line); background: linear-gradient(#236c80, #236c80) 7px 10px/15px 3px no-repeat, repeating-linear-gradient(transparent 0 4px, #626b6660 4px 5px) 7px 18px/18px 13px no-repeat, #f7f8f5; }
 .status { min-height: 1.45em; margin: 10px 3px; }
-footer { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 14px; font-size: 11px; color: var(--muted); }
-a { color: var(--action); text-underline-offset: 3px; }
+footer { border-top: 1px solid var(--line); padding-top: 14px; font-size: 11px; color: var(--muted); }
 :focus-visible { outline: 2px solid var(--action); outline-offset: 3px; }
-@media (max-width: 480px) { dialog { padding: 18px; } footer span { display: none; } }
+@media (max-width: 480px) { dialog { padding: 18px; } footer { display: none; } }
 @media (prefers-reduced-transparency: reduce) { dialog { background: var(--panel); backdrop-filter: none; } }
