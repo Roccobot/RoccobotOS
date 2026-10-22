@@ -1,10 +1,11 @@
 # 🎨 Stili di RoccobotOS
 
-Il sito si apre con `RoccobotOS 1.41`. Il numero di versione della pagina apre il selettore, disponibile a chiunque senza accesso. Un clic su uno stile o le frecce della tastiera applicano l'anteprima; `Invio`, il pulsante di chiusura o un clic fuori dal pannello conservano la scelta nella pagina aperta. `Esc` ripristina lo stile presente all'apertura. Nessuna scelta viene memorizzata: il ricaricamento riparte sempre dalla `1.41`.
+Il sito si apre con `RoccobotOS 1.42`. Il numero di versione della pagina apre il selettore, disponibile a chiunque senza accesso. Un clic su uno stile o le frecce della tastiera applicano l'anteprima; `Invio`, il pulsante di chiusura o un clic fuori dal pannello conservano la scelta nella pagina aperta. `Esc` ripristina lo stile presente all'apertura. Nessuna scelta viene memorizzata: il ricaricamento riparte sempre dalla `1.42`.
 
 - `RoccobotOS100.css`, versione dello stile `1.00`: aspetto originale.
 - `RoccobotOS140.css`, versione dello stile `1.40`: geometria Web originale, titolo H1 senza separatore. I link sulle intestazioni e sulle colonne strette usano `#196E5E` per conservarne la leggibilità.
-- `RoccobotOS141.css`, versione dello stile `1.41`: aspetto predefinito, la `1.40` con il codice in verde (filo `#43B59E`, corpo 95%, una sola famiglia monospaziata) e l'intestazione delle tabelle in verde scuro, distinta dalle celle e dalle colonne strette.
+- `RoccobotOS141.css`, versione dello stile `1.41`: la `1.40` con il codice in verde (filo `#43B59E`, corpo 95%, una sola famiglia monospaziata) e l'intestazione delle tabelle in verde scuro, distinta dalle celle e dalle colonne strette.
+- `RoccobotOS142.css`, versione dello stile `1.42`: aspetto predefinito, la `1.41` con l'intestazione delle tabelle in tema chiaro su verde tenue `#C5DED3`, testo `#0F4A3F` (7,13:1) e separatori `#A3C2B5`; tema scuro invariato.
 - `index.json`: catalogo generato dalle quattro voci dell'intestazione Aomidori.
 - `admin/manage.html`: pagina per aggiungere file dopo l'accesso GitHub.
 
@@ -18,4 +19,4 @@ node scripts/styles-catalog.mjs
 
 Il caricamento dalla pagina di gestione aggiorna CSS e catalogo nello stesso commit e rifiuta nomi esistenti. La configurazione del servizio è descritta in [cloud/styles/README.md](../cloud/styles/README.md). Finché `admin/config.json` non contiene l'indirizzo del servizio, la pagina indica che l'accesso deve essere attivato.
 
-`index.html` carica direttamente `RoccobotOS141.css` da questa cartella, senza fogli intermedi; il selettore sostituisce quel collegamento con lo stile scelto. Il caricamento autenticato è predisposto ma inattivo, senza collegamento nel selettore.
+`index.html` carica direttamente `RoccobotOS142.css` da questa cartella, senza fogli intermedi; il selettore sostituisce quel collegamento con lo stile scelto. Il caricamento autenticato è predisposto ma inattivo, senza collegamento nel selettore.
