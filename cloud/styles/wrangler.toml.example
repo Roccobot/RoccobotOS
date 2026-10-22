@@ -1,0 +1,25 @@
+# Author: Rocco Casadei, a.k.a. Roccobot.
+name = 'roccobotos-styles'
+main = 'worker.mjs'
+compatibility_date = '2026-10-22'
+workers_dev = true
+preview_urls = false
+
+[vars]
+PUBLIC_BASE_URL = 'https://REPLACE_WITH_THE_WORKER_HOST'
+GITHUB_CLIENT_ID = 'REPLACE_WITH_THE_GITHUB_APP_CLIENT_ID'
+GITHUB_REPOSITORY_ID = '1389294896'
+
+# Configure GITHUB_CLIENT_SECRET and SESSION_KEY as Worker secrets.
+# SESSION_KEY must be a base64-encoded, cryptographically random 32-byte value.
+
+[[kv_namespaces]]
+binding = 'SESSIONS'
+id = 'REPLACE_WITH_THE_KV_NAMESPACE_ID'
+
+[assets]
+directory = './public'
+binding = 'ASSETS'
+run_worker_first = true
+html_handling = 'none'
+not_found_handling = 'none'

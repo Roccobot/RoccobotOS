@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="RoccobotOS.css">
+  <link rel="stylesheet" href="Styles/RoccobotOS.css" data-site-style>
   <link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
   <link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
@@ -43,13 +43,13 @@
   <div class="mweb_ct_wrap">
     <div class="mweb_toc_wrap">
       <div class="mweb_toc_wrap_ct">
-        <div class="toc-version-row"><span class="toc-version" id="tocVersion" role="note"
-            aria-label="Versione del sito"></span></div>
+        <div class="toc-version-row"><button type="button" class="toc-version" id="tocVersion" data-style-picker
+            aria-label="Versione del sito: scegli lo stile"></button></div>
         <div id="mweb_toc_list_iid" class="mweb_toc markdown-body"></div>
       </div>
     </div>
-    <div id="markdown_content" class="markdown-body" tabindex="-1"><span class="site-version" id="siteVersion"
-        role="note" aria-label="Versione del sito"></span><a
+    <div id="markdown_content" class="markdown-body" tabindex="-1"><button type="button" class="site-version" id="siteVersion" data-style-picker
+        aria-label="Versione del sito: scegli lo stile"></button><a
         href="https://roccobot.github.io/RoccobotOS/" style="white-space:nowrap"><!-- Logo INLINE, non più <img src="RoccobotOS.svg">: un'immagine esterna non si può ricolorare
         dal foglio di stile, e in tema scuro la sola parte grigia deve andare a #DEDEDE (il verde
         resta). Gli id dell'export sono stati tolti: non servivano a nulla e rischiavano di
@@ -3535,6 +3535,7 @@ defaults write com.apple.finder CreateDesktop false
     id="scrollBottomToggle" aria-label="Vai in fondo alla pagina" title="Fine pagina"><span
       class="scroll-glyph">↧</span></button>
   <script src="RoccobotOS.js"></script>
+  <script type="module" src="style-switcher.mjs"></script>
 </body>
 
 </html>
