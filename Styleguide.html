@@ -399,9 +399,10 @@
     mattone <code>#bc4a61</code>, che con quel codice non c'entrava nulla e per giunta dava
     3,33:1.</p>
 
-  <p>Lo stile predefinito, <code>Styles/RoccobotOS143.css</code>, ha un codice proprio,
+  <p>Lo stile predefinito, <code>Styles/RoccobotOS144.css</code>, ha un codice proprio,
     l'intestazione delle tabelle verde, tenue in tema chiaro e scura in tema scuro, l'indice su
-    fondo verde e un accento terracotta sulla voce attiva e sul filo degli H2. I contrasti sono dichiarati sul fondo vero del componente.</p>
+    fondo verde con la voce attiva in verde scuro, i titoli H1 in indaco e gli H2 senza filo.
+    La <code>1.43</code> resta nel selettore con l'accento terracotta. I contrasti sono dichiarati sul fondo vero del componente.</p>
 
   <div class="griglia">
     <div class="scheda">
@@ -446,6 +447,39 @@
         <span class="scheda-nome">accento-1.43</span>
         <span class="scheda-ruolo">voce attiva con binario di 3 px e filo di 2 px sotto gli H2; 5,67:1 e 8,11:1 sul fondo della pagina</span>
         <span class="valori">#A3471E su #D9E8E0 <span class="rapporto ok">4,76:1</span> &middot; #F2A07B su #1B2E28 <span class="rapporto ok">6,87:1</span></span>
+      </div>
+    </div>
+    <div class="scheda">
+      <div class="facce">
+        <div class="faccia chiara" style="color:#0F4A3F;background:#D9E8E0;border-left:3px solid #0F4A3F;font-weight:800">Voce attiva</div>
+        <div class="faccia scura" style="color:#E6F4EF;background:#1B2E28;border-left:3px solid #E6F4EF;font-weight:800">Voce attiva</div>
+      </div>
+      <div class="scheda-piede">
+        <span class="scheda-nome">toc-attiva-1.44</span>
+        <span class="scheda-ruolo">voce attiva in verde scuro, binario di 3 px, peso 800</span>
+        <span class="valori">#0F4A3F su #D9E8E0 <span class="rapporto ok">8,00:1</span> &middot; #E6F4EF su #1B2E28 <span class="rapporto ok">12,64:1</span></span>
+      </div>
+    </div>
+    <div class="scheda">
+      <div class="facce">
+        <div class="faccia chiara" style="color:#3D4A8F;background:#F7F8F5;font-weight:600;font-size:1.5rem">TASTIERA</div>
+        <div class="faccia scura" style="color:#AEB9F2;background:#191E1D;font-weight:600;font-size:1.5rem">TASTIERA</div>
+      </div>
+      <div class="scheda-piede">
+        <span class="scheda-nome">h1-1.44</span>
+        <span class="scheda-ruolo">titoli H1 in indaco; gli H2 non hanno più il filo sotto</span>
+        <span class="valori">#3D4A8F su #F7F8F5 <span class="rapporto ok">7,65:1</span> &middot; #AEB9F2 su #191E1D <span class="rapporto ok">8,85:1</span></span>
+      </div>
+    </div>
+    <div class="scheda">
+      <div class="facce">
+        <div class="faccia chiara" style="background:#D9E8E0"><span style="background:#fff;color:#9b9b9b;border-radius:999px;padding:2px 6px;font-size:.75rem">v4.15</span></div>
+        <div class="faccia scura" style="background:#1B2E28"><span style="background:#23382F;color:#9b9b9b;border-radius:999px;padding:2px 6px;font-size:.75rem">v4.15</span></div>
+      </div>
+      <div class="scheda-piede">
+        <span class="scheda-nome">versione-1.44</span>
+        <span class="scheda-ruolo">pillola della versione nell'indice, bianca in chiaro e appena più chiara del riquadro in scuro; testo invariato</span>
+        <span class="valori">#9b9b9b su #fff <span class="rapporto">2,78:1</span> &middot; #9b9b9b su #23382F <span class="rapporto">4,50:1</span></span>
       </div>
     </div>
   </div>
@@ -663,7 +697,7 @@
     <table>
       <thead><tr><th>formato</th><th>dove</th><th>come</th></tr></thead>
       <tbody>
-        <tr><td>desktop, oltre 860 px</td><td>pillola nell'angolo in alto a destra del riquadro dell'indice</td><td>fondo <code>#fff</code> / <code>#0f0f10</code>, testo <code>#9b9b9b</code>, riga <code>sticky</code> ad altezza zero</td></tr>
+        <tr><td>desktop, oltre 860 px</td><td>pillola nell'angolo in alto a destra del riquadro dell'indice</td><td>fondo <code>#fff</code> / <code>#0f0f10</code>, testo <code>#9b9b9b</code> (nello stile 1.44 fondo scuro <code>#23382F</code>, appena più chiaro del riquadro), riga <code>sticky</code> ad altezza zero</td></tr>
         <tr><td>sotto gli 860 px</td><td>numero sopra il logo, allineato al suo bordo sinistro</td><td>nessun fondo, opacità .3 / .25</td></tr>
       </tbody>
     </table>
