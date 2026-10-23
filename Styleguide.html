@@ -399,26 +399,29 @@
     mattone <code>#bc4a61</code>, che con quel codice non c'entrava nulla e per giunta dava
     3,33:1.</p>
 
-  <p>Lo stile predefinito, <code>Styles/RoccobotOS147.css</code>, ha l'intestazione delle tabelle verde,
+  <p>Lo stile predefinito, <code>Styles/RoccobotOS148.css</code>, ha l'intestazione delle tabelle verde,
     tenue in tema chiaro e scura in tema scuro, l'indice su fondo verde con la voce attiva in verde scuro
     e in grassetto, <strong>senza barra laterale</strong> in entrambi i temi, e gli H2 senza filo. In tema
     scuro il codice, in riga e a blocchi, è un riquadro <strong>giallo pieno <code>#E6F0AF</code>, senza bordo,
     nel carattere del testo</strong>, con inchiostro <code>#16302A</code>: angoli di 8 px in riga e di 16 px
-    nei blocchi, che occupano solo la larghezza necessaria. I titoli e i link hanno una tavolozza propria:
+    nei blocchi, che occupano solo la larghezza necessaria. Il riquadro in riga ha il peso 500 e il
+    margine verticale in em (<code>.364em</code> sopra e <code>.386em</code> sotto, 1,45 volte il corpo in
+    altezza), e le righe di testo delle tabelle sono alte 1,639 volte il corpo, 2 px in più a 14,4 px,
+    perché due righe di codice impilate non si tocchino. I titoli e i link hanno una tavolozza propria:
     H1 menta, H2 ambra, H3 lime, con le due divisioni Sistema e Applicazioni in ambra come gli H2, e link
     lime chiaro <code>#F0F4D8</code>, bianchi e sottolineati al passaggio. In entrambi i temi il pulsante Copia
     è una sola icona senza riquadro, e il doppio clic sul codice ne copia il testo. Il tema chiaro è quello
-    della <code>1.46</code>. I contrasti sono dichiarati sul fondo vero del componente.</p>
+    della <code>1.46</code>, salvo la riga delle tabelle. I contrasti sono dichiarati sul fondo vero del componente.</p>
 
   <div class="griglia">
     <div class="scheda">
       <div class="facce">
         <div class="faccia chiara" style="color:#14594C;background:#E6F4EF;border:1px solid #43B59E;border-radius:.25rem;font-family:'SF Mono',SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;font-size:.95rem">codice</div>
-        <div class="faccia scura" style="background:#191E1D"><span style="display:inline-block;color:#16302A;background:#E6F0AF;border-radius:.5rem;padding:.28rem .35rem;font-family:inherit;font-size:.95rem">codice</span></div>
+        <div class="faccia scura" style="background:#191E1D"><span style="display:inline-block;color:#16302A;background:#E6F0AF;border-radius:.5rem;padding:.364em .35rem .386em;text-box:trim-both cap alphabetic;font-weight:500;font-family:inherit;font-size:.95rem">codice</span></div>
       </div>
       <div class="scheda-piede">
-        <span class="scheda-nome">codice-1.47</span>
-        <span class="scheda-ruolo">&lt;code&gt;, &lt;pre&gt; e riquadro plist; tema chiaro come nella 1.46 (filo #43B59E, carattere monospaziato); tema scuro giallo pieno, senza filo, nel carattere del testo, raggio 8 px in riga e 16 px nei blocchi</span>
+        <span class="scheda-nome">codice-1.48</span>
+        <span class="scheda-ruolo">&lt;code&gt;, &lt;pre&gt; e riquadro plist; tema chiaro come nella 1.46 (filo #43B59E, carattere monospaziato); tema scuro giallo pieno, senza filo, nel carattere del testo, peso 500 in riga, raggio 8 px in riga e 16 px nei blocchi; margine verticale del riquadro in riga in em, .364em sopra e .386em sotto</span>
         <span class="valori">#14594C su #E6F4EF <span class="rapporto ok">7,24:1</span> &middot; #16302A su #E6F0AF <span class="rapporto ok">11,71:1</span></span>
       </div>
     </div>
@@ -530,6 +533,17 @@
         <span class="scheda-nome">copia-contorno-1.47</span>
         <span class="scheda-ruolo">conferma del doppio clic sul codice: contorno di 2 px a 2 px dal riquadro, per 1,2 s; in tema scuro #2E8B76 è visibile sul fondo pagina e sul giallo</span>
         <span class="valori">#14594C su #F7F8F5 <span class="rapporto ok">7,69:1</span> &middot; #2E8B76 su #191E1D <span class="rapporto ok">4,07:1</span> &middot; #2E8B76 su #E6F0AF <span class="rapporto">3,44:1</span></span>
+      </div>
+    </div>
+    <div class="scheda">
+      <div class="facce">
+        <div class="faccia chiara" style="background:#F7F8F5;color:#303735;font-size:.9rem;line-height:1.639">Riga<br>di testo</div>
+        <div class="faccia scura" style="background:#191E1D;color:#E6E9E7;font-size:.9rem;line-height:1.639">Riga<br>di testo</div>
+      </div>
+      <div class="scheda-piede">
+        <span class="scheda-nome">tabelle-riga-1.48</span>
+        <span class="scheda-ruolo">celle &lt;td&gt; e &lt;th&gt;, in entrambi i temi: interlinea 1,639 volte il corpo (1,5 più .139), cioè 23,6 px invece di 21,6 px a 14,4 px; in em e senza px, segue il corpo della cella</span>
+        <span class="valori">interlinea 1,639</span>
       </div>
     </div>
   </div>

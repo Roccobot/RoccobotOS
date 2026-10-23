@@ -62,6 +62,13 @@
       "version": "1.47",
       "note": "The 1.46 palette with no rail on the active index entry and, in the dark theme, flat yellow code in the text font, pale lime links and a copy icon with no box.",
       "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles and a double click that copies code."
+    },
+    {
+      "file": "RoccobotOS148.css",
+      "name": "RoccobotOS",
+      "version": "1.48",
+      "note": "The 1.47 style with the dark inline code box sized in em, medium weight, and table rows 2px taller at the default size.",
+      "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
     }
   ]
 }
