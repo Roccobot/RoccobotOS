@@ -399,22 +399,27 @@
     mattone <code>#bc4a61</code>, che con quel codice non c'entrava nulla e per giunta dava
     3,33:1.</p>
 
-  <p>Lo stile predefinito, <code>Styles/RoccobotOS146.css</code>, ha un codice proprio,
-    l'intestazione delle tabelle verde, tenue in tema chiaro e scura in tema scuro, l'indice su
-    fondo verde con la voce attiva in verde scuro e gli H2 senza filo. In tema scuro i titoli e i link
-    hanno una tavolozza propria: H1 menta, H2 e link ambra, H3 lime, con le due divisioni Sistema e Applicazioni in ambra come gli H2; il tema chiaro è quello
-    della <code>1.45</code>, che resta nel selettore con i titoli e i link rosa in tema scuro. I contrasti sono dichiarati sul fondo vero del componente.</p>
+  <p>Lo stile predefinito, <code>Styles/RoccobotOS147.css</code>, ha l'intestazione delle tabelle verde,
+    tenue in tema chiaro e scura in tema scuro, l'indice su fondo verde con la voce attiva in verde scuro
+    e in grassetto, <strong>senza barra laterale</strong> in entrambi i temi, e gli H2 senza filo. In tema
+    scuro il codice, in riga e a blocchi, è un riquadro <strong>giallo pieno <code>#E6F0AF</code>, senza bordo,
+    nel carattere del testo</strong>, con inchiostro <code>#16302A</code>: angoli di 8 px in riga e di 16 px
+    nei blocchi, che occupano solo la larghezza necessaria. I titoli e i link hanno una tavolozza propria:
+    H1 menta, H2 ambra, H3 lime, con le due divisioni Sistema e Applicazioni in ambra come gli H2, e link
+    lime chiaro <code>#F0F4D8</code>, bianchi e sottolineati al passaggio. In entrambi i temi il pulsante Copia
+    è una sola icona senza riquadro, e il doppio clic sul codice ne copia il testo. Il tema chiaro è quello
+    della <code>1.46</code>. I contrasti sono dichiarati sul fondo vero del componente.</p>
 
   <div class="griglia">
     <div class="scheda">
       <div class="facce">
         <div class="faccia chiara" style="color:#14594C;background:#E6F4EF;border:1px solid #43B59E;border-radius:.25rem;font-family:'SF Mono',SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;font-size:.95rem">codice</div>
-        <div class="faccia scura" style="color:#9FE3CF;background:#16302A;border:1px solid #43B59E;border-radius:.25rem;font-family:'SF Mono',SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;font-size:.95rem">codice</div>
+        <div class="faccia scura" style="background:#191E1D"><span style="display:inline-block;color:#16302A;background:#E6F0AF;border-radius:.5rem;padding:.28rem .35rem;font-family:inherit;font-size:.95rem">codice</span></div>
       </div>
       <div class="scheda-piede">
-        <span class="scheda-nome">codice-1.41</span>
-        <span class="scheda-ruolo">&lt;code&gt; e &lt;pre&gt;, filo #43B59E, raggio .25rem in linea e 8 px nei blocchi, corpo 95%</span>
-        <span class="valori">#14594C su #E6F4EF <span class="rapporto ok">7,24:1</span> &middot; #9FE3CF su #16302A <span class="rapporto ok">9,64:1</span></span>
+        <span class="scheda-nome">codice-1.47</span>
+        <span class="scheda-ruolo">&lt;code&gt;, &lt;pre&gt; e riquadro plist; tema chiaro come nella 1.46 (filo #43B59E, carattere monospaziato); tema scuro giallo pieno, senza filo, nel carattere del testo, raggio 8 px in riga e 16 px nei blocchi</span>
+        <span class="valori">#14594C su #E6F4EF <span class="rapporto ok">7,24:1</span> &middot; #16302A su #E6F0AF <span class="rapporto ok">11,71:1</span></span>
       </div>
     </div>
     <div class="scheda">
@@ -452,12 +457,12 @@
     </div>
     <div class="scheda">
       <div class="facce">
-        <div class="faccia chiara" style="color:#0F4A3F;background:#D9E8E0;border-left:3px solid #0F4A3F;font-weight:800">Voce attiva</div>
-        <div class="faccia scura" style="color:#E6F4EF;background:#1B2E28;border-left:3px solid #E6F4EF;font-weight:800">Voce attiva</div>
+        <div class="faccia chiara" style="color:#0F4A3F;background:#D9E8E0;font-weight:800">Voce attiva</div>
+        <div class="faccia scura" style="color:#E6F4EF;background:#1B2E28;font-weight:800">Voce attiva</div>
       </div>
       <div class="scheda-piede">
-        <span class="scheda-nome">toc-attiva-1.44</span>
-        <span class="scheda-ruolo">voce attiva in verde scuro, binario di 3 px, peso 800</span>
+        <span class="scheda-nome">toc-attiva-1.47</span>
+        <span class="scheda-ruolo">voce attiva in verde scuro, senza barra laterale (tolta dalla 1.47), distinta da colore e peso 800</span>
         <span class="valori">#0F4A3F su #D9E8E0 <span class="rapporto ok">8,00:1</span> &middot; #E6F4EF su #1B2E28 <span class="rapporto ok">12,64:1</span></span>
       </div>
     </div>
@@ -489,7 +494,7 @@
         <div class="faccia scura" style="background:#191E1D;font-weight:600"><span style="color:#C0FFE5;font-size:1.5rem">TASTIERA</span><br><span style="color:#E8B86A;font-size:1.35rem">Sistema</span><br><span style="color:#E8B86A;font-size:1.2rem">Tasti di macOS</span><br><span style="color:#EEFAAD;font-size:1rem">Azioni contestuali <sup>§</sup></span></div>
       </div>
       <div class="scheda-piede">
-        <span class="scheda-nome">titoli-scuri-1.46</span>
+        <span class="scheda-nome">titoli-scuri-1.47</span>
         <span class="scheda-ruolo">tema scuro: H1 menta, H2 e divisioni di sezione ambra, H3 lime, ancore comprese; il segno § resta ambra e nell'H3 segue il lime; tema chiaro come nella 1.45</span>
         <span class="valori">#C0FFE5 su #191E1D <span class="rapporto ok">15,00:1</span> &middot; #E8B86A <span class="rapporto ok">9,23:1</span> &middot; #EEFAAD <span class="rapporto ok">15,19:1</span></span>
       </div>
@@ -497,12 +502,34 @@
     <div class="scheda">
       <div class="facce">
         <div class="faccia chiara" style="color:#1c7a68;background:#F7F8F5">Link</div>
-        <div class="faccia scura" style="color:#E8B86A;background:#191E1D">Link</div>
+        <div class="faccia scura" style="color:#F0F4D8;background:#191E1D">Link</div>
       </div>
       <div class="scheda-piede">
-        <span class="scheda-nome">link-scuri-1.46</span>
-        <span class="scheda-ruolo">tema scuro: link ambra come gli H2, sottolineati e più chiari (#F2CB8C, 11,00:1) al passaggio; indice, intestazioni delle tabelle e codice invariati</span>
-        <span class="valori">#1c7a68 su #F7F8F5 <span class="rapporto ok">4,88:1</span> &middot; #E8B86A su #191E1D <span class="rapporto ok">9,23:1</span></span>
+        <span class="scheda-nome">link-scuri-1.47</span>
+        <span class="scheda-ruolo">tema scuro: link lime chiaro, bianchi (#FFFFFF, 16,87:1) e sottolineati al passaggio; indice e intestazioni delle tabelle invariati</span>
+        <span class="valori">#1c7a68 su #F7F8F5 <span class="rapporto ok">4,88:1</span> &middot; #F0F4D8 su #191E1D <span class="rapporto ok">14,97:1</span></span>
+      </div>
+    </div>
+    <div class="scheda">
+      <div class="facce">
+        <div class="faccia chiara" style="color:#14594C;background:#E6F4EF"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="3"/><path d="M4 16a2 2 0 0 1-2-2V5a3 3 0 0 1 3-3h9a2 2 0 0 1 2 2"/></svg></div>
+        <div class="faccia scura" style="color:#16302A;background:#E6F0AF"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="3"/><path d="M4 16a2 2 0 0 1-2-2V5a3 3 0 0 1 3-3h9a2 2 0 0 1 2 2"/></svg></div>
+      </div>
+      <div class="scheda-piede">
+        <span class="scheda-nome">copia-icona-1.47</span>
+        <span class="scheda-ruolo">pulsante Copia di Prism: solo icona, senza riquadro, in alto a destra del blocco; compare al passaggio o al fuoco, sempre visibile sui dispositivi senza mouse</span>
+        <span class="valori">#14594C su #E6F4EF <span class="rapporto ok">7,24:1</span> &middot; #16302A su #E6F0AF <span class="rapporto ok">11,71:1</span></span>
+      </div>
+    </div>
+    <div class="scheda">
+      <div class="facce">
+        <div class="faccia chiara" style="background:#F7F8F5"><span style="display:inline-block;color:#14594C;background:#E6F4EF;outline:2px solid #14594C;outline-offset:2px;border-radius:.25rem;padding:.1rem .35rem">copiato</span></div>
+        <div class="faccia scura" style="background:#191E1D"><span style="display:inline-block;color:#16302A;background:#E6F0AF;outline:2px solid #2E8B76;outline-offset:2px;border-radius:.5rem;padding:.28rem .35rem">copiato</span></div>
+      </div>
+      <div class="scheda-piede">
+        <span class="scheda-nome">copia-contorno-1.47</span>
+        <span class="scheda-ruolo">conferma del doppio clic sul codice: contorno di 2 px a 2 px dal riquadro, per 1,2 s; in tema scuro #2E8B76 è visibile sul fondo pagina e sul giallo</span>
+        <span class="valori">#14594C su #F7F8F5 <span class="rapporto ok">7,69:1</span> &middot; #2E8B76 su #191E1D <span class="rapporto ok">4,07:1</span> &middot; #2E8B76 su #E6F0AF <span class="rapporto">3,44:1</span></span>
       </div>
     </div>
   </div>
@@ -597,7 +624,7 @@
     <li><strong>Famiglia monospaziata</strong>: <code>SFMono-Regular, Consolas, 'Liberation Mono',
       Menlo, monospace</code>, per codice, blocchi e tasti; dallo stile 1.41 il codice usa
       <code>'SF Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace</code>,
-      Prism compreso.</li>
+      Prism compreso; dallo stile 1.47 il codice in tema scuro usa invece il carattere del testo.</li>
     <li><strong>Codice inline</strong>: 85% del contesto, 95% dallo stile 1.41.</li>
     <li>Il numero di versione usa <code>font-variant-numeric: tabular-nums</code>.</li>
   </ul>

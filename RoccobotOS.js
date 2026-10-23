@@ -10,7 +10,7 @@
 // index.html nascono VUOTI: se questo script non gira il CSS li nasconde con :empty, invece di
 // mostrare una 'v' senza numero.
 !function () {
-  const VERSIONE = "4.19";
+  const VERSIONE = "4.20";
   // Due punti di resa, uno per formato: la pillola nell'angolo dell'indice su desktop,
   // il numero sopra il logo su mobile. A deciderlo è il CSS, qui si scrivono entrambi.
   for (const id of ["siteVersion", "tocVersion"]) {
@@ -320,7 +320,65 @@
     chiudiIndice();
     aggiornaComandi();
   });
-}(),document.addEventListener("DOMContentLoaded",()=>{const t=document.getElementById("markdown_content");if(!t)return;const e=t.querySelectorAll("h1,h2,h3,h4,h5,h6");const n=new Set;t.querySelectorAll("[id]").forEach(t=>{t.id&&n.add(t.id)}),e.forEach(t=>{if(t.id&&!/^mweb_tt_id_\d+$/.test(t.id))return void n.add(t.id);let e=function(t){if(!t)return"Section";const e=(""+t).trim();let n=e.replace(/[^A-Za-z0-9\u00C0-\u017F]+/g," ");if(n=n.replace(/\s+/g," ").trim(),!n)return"Section";const o=n.split(/\s+/),s=o.every(t=>t===t.toUpperCase());let r=e.replace(/[^\w\u00C0-\u017F]+/g,"_").replace(/^_+|_+$/g,"").replace(/_+/g,"_");if(r||(r=o.join("_")),s){let t=r.toUpperCase();return t=t.replace(/^[^A-Za-z]+/,""),t||(t="Section"),t}let a=o.map(t=>t.charAt(0).toUpperCase()+t.slice(1)).join("");return a=a.replace(/^[^A-Za-z]+/,""),a||(a="Section"),a}(t.getAttribute("data-heading-label")||t.textContent||t.innerText||""),o=e,s=2;for(;n.has(o);)o=e+"_"+s,s+=1;t.id=o,n.add(o)}),"undefined"!=typeof tocbot&&tocbot.init({tocSelector:"#mweb_toc_list_iid",contentSelector:"#markdown_content",headingSelector:"h1, h2, h3, h4, h5, h6",orderedList:!1,collapseDepth:6,scrollEndCallback:function(){const t=document.querySelector("#mweb_toc_list_iid li.is-active-li"),e=document.querySelector("#mweb_toc_list_iid>ul>li:first-child");if(e&&e.classList.contains("is-active-li")){const t=document.getElementById("mweb_toc_list_iid");return void(t&&(t.scrollTop=0))}t&&("function"==typeof t.scrollIntoViewIfNeeded?t.scrollIntoViewIfNeeded():t.scrollIntoView(!0))}})}),// ── Caricamento pigro delle immagini ──
+}(),
+// ── Doppio clic sul codice: copia il testo ──
+// Vale per il codice in riga, per i blocchi <pre> e per i
+// .plist-box, in entrambi i temi. Un solo ascoltatore delegato sul documento: i blocchi li
+// crea Prism dopo il caricamento, quindi agganciarsi a ogni elemento non basterebbe.
+// Il doppio clic seleziona tutto il codice (non la sola parola, come farebbe di suo) e ne
+// copia il testo: per i blocchi è il testo del solo <code>, senza il pulsante Copia, che sta
+// nella barra fuori dal <pre>. Se la copia fallisce la selezione resta, e Ctrl+C basta.
+!function () {
+  const ESITO_MS = 1200;
+  const timer = new WeakMap();
+
+  // Copia con l'API moderna (solo contesti sicuri) e, se manca o rifiuta, con execCommand.
+  const copiaTesto = testo => {
+    const ripiego = () => {
+      const area = document.createElement("textarea");
+      area.value = testo;
+      area.setAttribute("readonly", "");
+      area.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+      document.body.appendChild(area);
+      area.select();
+      let ok = false;
+      try { ok = document.execCommand("copy") } catch (e) { }
+      area.remove();
+      return ok;
+    };
+    if (navigator.clipboard && window.isSecureContext)
+      return navigator.clipboard.writeText(testo).then(() => true, () => ripiego());
+    return Promise.resolve(ripiego());
+  };
+
+  // Conferma visiva: contorno breve sul riquadro (nessuna animazione, quindi niente da
+  // spegnere con prefers-reduced-motion) e, per i blocchi, la spunta sul pulsante di Prism.
+  const segnala = riquadro => {
+    riquadro.classList.add("copiato");
+    const tasto = riquadro.closest(".code-toolbar")?.querySelector(".copy-to-clipboard-button");
+    if (tasto) tasto.dataset.copyState = "copy-success";
+    clearTimeout(timer.get(riquadro));
+    timer.set(riquadro, setTimeout(() => {
+      riquadro.classList.remove("copiato");
+      if (tasto && tasto.dataset.copyState === "copy-success") tasto.dataset.copyState = "copy";
+    }, ESITO_MS));
+  };
+
+  document.addEventListener("dblclick", ev => {
+    const el = ev.target.closest?.("code, .plist-box");
+    if (!el || el.closest("a")) return;
+    const riquadro = el.closest("pre") || el;
+    // Il .plist-box nasce con a capo e rientro del sorgente HTML: si tolgono. Il codice in
+    // riga resta com'è (uno spazio può essere il contenuto stesso), ai blocchi si leva il
+    // solo a capo finale.
+    const testo = el.classList.contains("plist-box") ? el.textContent.trim() : el.textContent.replace(/\n$/, "");
+    const seleziona = () => window.getSelection().selectAllChildren(el);
+    seleziona();
+    // La copia di riserva passa da un campo di testo e perde la selezione: si rifà dopo.
+    copiaTesto(testo).then(ok => { seleziona(); if (ok) segnala(riquadro) });
+  });
+}(),
+document.addEventListener("DOMContentLoaded",()=>{const t=document.getElementById("markdown_content");if(!t)return;const e=t.querySelectorAll("h1,h2,h3,h4,h5,h6");const n=new Set;t.querySelectorAll("[id]").forEach(t=>{t.id&&n.add(t.id)}),e.forEach(t=>{if(t.id&&!/^mweb_tt_id_\d+$/.test(t.id))return void n.add(t.id);let e=function(t){if(!t)return"Section";const e=(""+t).trim();let n=e.replace(/[^A-Za-z0-9\u00C0-\u017F]+/g," ");if(n=n.replace(/\s+/g," ").trim(),!n)return"Section";const o=n.split(/\s+/),s=o.every(t=>t===t.toUpperCase());let r=e.replace(/[^\w\u00C0-\u017F]+/g,"_").replace(/^_+|_+$/g,"").replace(/_+/g,"_");if(r||(r=o.join("_")),s){let t=r.toUpperCase();return t=t.replace(/^[^A-Za-z]+/,""),t||(t="Section"),t}let a=o.map(t=>t.charAt(0).toUpperCase()+t.slice(1)).join("");return a=a.replace(/^[^A-Za-z]+/,""),a||(a="Section"),a}(t.getAttribute("data-heading-label")||t.textContent||t.innerText||""),o=e,s=2;for(;n.has(o);)o=e+"_"+s,s+=1;t.id=o,n.add(o)}),"undefined"!=typeof tocbot&&tocbot.init({tocSelector:"#mweb_toc_list_iid",contentSelector:"#markdown_content",headingSelector:"h1, h2, h3, h4, h5, h6",orderedList:!1,collapseDepth:6,scrollEndCallback:function(){const t=document.querySelector("#mweb_toc_list_iid li.is-active-li"),e=document.querySelector("#mweb_toc_list_iid>ul>li:first-child");if(e&&e.classList.contains("is-active-li")){const t=document.getElementById("mweb_toc_list_iid");return void(t&&(t.scrollTop=0))}t&&("function"==typeof t.scrollIntoViewIfNeeded?t.scrollIntoViewIfNeeded():t.scrollIntoView(!0))}})}),// ── Caricamento pigro delle immagini ──
 // Restava solo il ramo utile. C'era anche un IntersectionObserver che sorvegliava img[data-src]
 // e aggiungeva la classe lazy-loaded: nessuna immagine della pagina usa data-src, quindi non
 // osservava niente e la classe non arrivava mai (le sue regole CSS sono cadute con lui). Il
