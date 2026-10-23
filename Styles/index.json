@@ -48,6 +48,13 @@
       "version": "1.45",
       "note": "The updated RoccobotOS web palette, with green code, soft green table headers, a green index and, in the dark theme, mint, blue and amber headings with rose links.",
       "comment": "Light and dark colours with the original responsive layout and no rule under h2 titles."
+    },
+    {
+      "file": "RoccobotOS146.css",
+      "name": "RoccobotOS",
+      "version": "1.46",
+      "note": "The updated RoccobotOS web palette, with green code, soft green table headers, a green index and, in the dark theme, mint, amber and lime headings with amber links.",
+      "comment": "Light and dark colours with the original responsive layout and no rule under h2 titles."
     }
   ]
 }
