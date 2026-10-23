@@ -97,6 +97,13 @@
       "version": "1.52",
       "note": "The 1.51 style with the dark-only code box shapes, spacing, font and copy icon position also in the light theme; every light colour is unchanged.",
       "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
+    },
+    {
+      "file": "RoccobotOS153.css",
+      "name": "RoccobotOS",
+      "version": "1.53",
+      "note": "The 1.52 style with a darker light code box, the old box colour now on the light index, orange h1, section dividers in body text, and the dark table header at the light contrast.",
+      "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
     }
   ]
 }
