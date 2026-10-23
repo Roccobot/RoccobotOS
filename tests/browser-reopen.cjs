@@ -16,7 +16,7 @@ const assert=require('node:assert/strict');
  await page.getByRole('option').first().waitFor();
  await page.waitForLoadState('networkidle');
  assert.equal(requests,1,'a reopened selector shares its existing catalogue request');
- assert.equal(await page.getByRole('option').count(),6);
- console.log('Riapertura durante il caricamento: una richiesta e sei stili, senza duplicati.');
+ assert.equal(await page.getByRole('option').count(),7);
+ console.log('Riapertura durante il caricamento: una richiesta e sette stili, senza duplicati.');
  }finally{await browser.close()}
 })().catch(e=>{console.error(e);process.exit(1)});
