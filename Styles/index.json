@@ -90,6 +90,13 @@
       "version": "1.51",
       "note": "The 1.50 style with very dark text and copy icon (#0A1A12) on the dark sage code boxes, and the dark section titles Sistema and Applicazioni in the body text colour.",
       "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
+    },
+    {
+      "file": "RoccobotOS152.css",
+      "name": "RoccobotOS",
+      "version": "1.52",
+      "note": "The 1.51 style with the dark-only code box shapes, spacing, font and copy icon position also in the light theme; every light colour is unchanged.",
+      "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
     }
   ]
 }
