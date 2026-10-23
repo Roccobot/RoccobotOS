@@ -7,6 +7,7 @@ async function check(name, action) { await action(); results.push(name); }
 (async () => {
   const browser = await webkit.launch({...(process.env.PLAYWRIGHT_WEBKIT_EXECUTABLE ? { executablePath: process.env.PLAYWRIGHT_WEBKIT_EXECUTABLE } : {}),headless:true});
   try {
+    const lay={};
     for(const width of [390,1440]) for(const theme of ['light','dark']) {
       const context = await browser.newContext({viewport:{width,height:1000},colorScheme:theme});
       const page = await context.newPage();
@@ -15,7 +16,7 @@ async function check(name, action) { await action(); results.push(name); }
       await page.goto(url,{waitUntil:'domcontentloaded'});
       const trigger=page.locator(width>860?'#tocVersion':'#siteVersion');
       await trigger.waitFor({state:'visible'});
-      await check(`${width}/${theme}: 1.53 is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS153.css'));
+      await check(`${width}/${theme}: 1.54 is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS154.css'));
       await check(`${width}/${theme}: table header stands apart from body and narrow cells`,async()=>{
         const fills=await page.evaluate(()=>{const bg=e=>getComputedStyle(e).backgroundColor;const t=document.querySelector('.markdown-body table.narrow-cols-odd, .markdown-body table.narrow-cols-even');return {th:bg(t.querySelector('th')),row:bg(t.querySelector('tbody tr')),narrow:bg(t.querySelector(t.classList.contains('narrow-cols-odd')?'tbody td:nth-child(odd)':'tbody td:nth-child(2n)'))};});
         assert.notEqual(fills.th,fills.row); assert.notEqual(fills.th,fills.narrow);
@@ -24,6 +25,11 @@ async function check(name, action) { await action(); results.push(name); }
         const m=await page.evaluate(()=>{const t=[...document.querySelectorAll('#markdown_content table')].find(x=>x.querySelector('td code'));const td=t.querySelector('td');const c=getComputedStyle(td);const k=[...document.querySelectorAll('#markdown_content :not(pre)>code')].find(e=>!e.closest('a,pre,table'));const ks=getComputedStyle(k);return {lh:parseFloat(c.lineHeight)/parseFloat(c.fontSize),top:parseFloat(ks.paddingTop)/parseFloat(ks.fontSize),bottom:parseFloat(ks.paddingBottom)/parseFloat(ks.fontSize),weight:ks.fontWeight,trim:ks.textBox||ks.getPropertyValue('text-box')}});
         assert.ok(Math.abs(m.lh-1.639)<.002,'table line height '+m.lh);
         assert.ok(Math.abs(m.top-.264)<.002,'padding top '+m.top);assert.ok(Math.abs(m.bottom-.286)<.002,'padding bottom '+m.bottom);assert.equal(m.weight,'500');
+      });
+      await check(`${width}/${theme}: anti-jitter, light and dark have the same layout (every element box and the page length)`,async()=>{
+        const m=await page.evaluate(()=>{const r=[];for(const e of document.querySelectorAll('#markdown_content, #markdown_content *')){const b=e.getBoundingClientRect();r.push([e.tagName,+(b.left+scrollX).toFixed(2),+(b.top+scrollY).toFixed(2),+b.width.toFixed(2),+b.height.toFixed(2)].join(','))}const g=e=>getComputedStyle(e);const ic=[...document.querySelectorAll('#markdown_content code')].find(e=>!e.closest('pre,a,table'));const pre=document.querySelector('#markdown_content pre');const td=document.querySelector('#markdown_content td');const css=e=>['fontFamily','fontSize','fontWeight','lineHeight','paddingTop','paddingBottom','paddingLeft','paddingRight','borderTopWidth','borderBottomWidth','marginTop','marginBottom','letterSpacing'].map(k=>g(e)[k]).join('|');return {page:document.documentElement.scrollHeight,boxes:r,css:[css(ic),css(pre),css(pre.querySelector('code')),css(td)]}});
+        lay[width+theme]=m;
+        if(theme==='dark'){const l=lay[width+'light'];assert.ok(l,'light measured first');assert.deepEqual(m.css,l.css);assert.equal(m.page,l.page);assert.equal(m.boxes.length,l.boxes.length);const diff=m.boxes.filter((x,i)=>x!==l.boxes[i]).length;assert.equal(diff,0,diff+' elements move between the themes');}
       });
       await check(`${width}/${theme}: page lengths follow the root font size`,async()=>{
         const m=await page.evaluate(()=>{const v=()=>{const b=getComputedStyle(document.body);const k=document.querySelector('#markdown_content table:not(.index-grid) td');return [parseFloat(b.paddingLeft),parseFloat(getComputedStyle(k).paddingLeft)]};const a=v();document.documentElement.style.fontSize='20px';const z=v();document.documentElement.style.fontSize='';return {a,z}});
@@ -65,14 +71,14 @@ async function check(name, action) { await action(); results.push(name); }
         assert.ok(Math.abs(r.pre-.9)<.005,'pre '+r.pre);
         assert.equal(r.inner,1);
       });
-      await check(`${width}/${theme}: 1.53 light index, orange h1, section dividers, code contrast, equal header contrast`,async()=>{
+      await check(`${width}/${theme}: 1.54 light index, orange h1, section dividers, teal code with white text, equal header contrast`,async()=>{
         const r=await page.evaluate(()=>{const g=e=>getComputedStyle(e);const lum=c=>{const v=c.match(/\d+/g).slice(0,3).map(x=>{x=x/255;return x<=.03928?x/12.92:Math.pow((x+.055)/1.055,2.4)});return .2126*v[0]+.7152*v[1]+.0722*v[2]};const cr=(a,b)=>{const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)};const ic=[...document.querySelectorAll('#markdown_content code')].find(e=>!e.closest('pre,a')&&e.parentElement.tagName==='P');const pre=document.querySelector('#markdown_content pre');const th=document.querySelector('#markdown_content table th');const hs=['SezioneSistema','ScorciatoieApp'].map(i=>{const a=document.getElementById(i);return [g(a.closest('h1')).color,g(a).color]});const h1=[...document.querySelectorAll('#markdown_content h1')].find(h=>!h.querySelector('#SezioneSistema,#ScorciatoieApp'));return {toc:g(document.querySelector('.mweb_toc_wrap_ct')).backgroundColor,h1:g(h1).color,hs,body:g(document.querySelector('.markdown-body')).color,icr:cr(g(ic).color,g(ic).backgroundColor),pcr:cr(g(pre).color,g(pre).backgroundColor),pbc:g(pre).borderTopColor,thc:g(th).color,thb:g(th).backgroundColor,thr:cr(g(th).color,g(th).backgroundColor),tha:(()=>{const a=document.querySelector('#markdown_content th a');return a?g(a).color:null})(),h1cr:cr(g(h1).color,g(document.body).backgroundColor)}});
         assert.ok(r.icr>=4.5&&r.pcr>=4.5,'code text contrast '+r.icr+' '+r.pcr);
         if(theme==='light'){
           assert.equal(r.toc,'rgb(230, 244, 239)');
-          assert.equal(r.h1,'rgb(123, 72, 14)');assert.ok(r.h1cr>=7,'h1 contrast '+r.h1cr);
-          for(const h of r.hs){assert.equal(h[0],r.body);assert.equal(h[1],r.body);assert.equal(h[0],'rgb(48, 55, 53)')}
-          assert.equal(r.pbc,'rgba(0, 0, 0, 0)');
+          assert.equal(r.h1,'rgb(157, 90, 24)');assert.ok(r.h1cr>=4.5&&r.h1cr<5.1,'h1 contrast '+r.h1cr);
+          for(const h of r.hs){assert.equal(h[0],h[1]);assert.equal(h[0],'rgb(82, 99, 95)');assert.notEqual(h[0],r.body)}
+          assert.ok(r.icr>=5.6&&r.pcr>=5.6,'white on teal '+r.icr+' '+r.pcr);
           assert.equal(r.thc,'rgb(15, 74, 63)');assert.equal(r.thb,'rgb(197, 222, 211)');assert.ok(Math.abs(r.thr-7.13)<.01,'light header '+r.thr);
         }else{
           assert.equal(r.toc,'rgb(27, 46, 40)');
@@ -101,23 +107,24 @@ async function check(name, action) { await action(); results.push(name); }
           assert.equal(r.ibw,'0px');assert.equal(r.pbw,'0px');
           assert.equal(r.h,r.body);assert.equal(r.h,'rgb(222, 229, 225)');assert.equal(r.hfs,r.h1fs);
         }else{
-          assert.equal(r.ib,'rgb(146, 162, 121)');assert.equal(r.ic,'rgb(10, 26, 18)');
-          assert.equal(r.pb,'rgb(146, 162, 121)');assert.equal(r.pc,'rgb(10, 26, 18)');
+          assert.equal(r.ib,'rgb(0, 114, 123)');assert.equal(r.ic,'rgb(255, 255, 255)');
+          assert.equal(r.pb,'rgb(0, 114, 123)');assert.equal(r.pc,'rgb(255, 255, 255)');
+          assert.equal(r.ibw,'0px');assert.equal(r.pbw,'0px');
         }
         if(r.tables!=='cards')assert.equal(r.rad,'16px');
       });
       await check(`${width}/${theme}: code boxes have the same shape in both themes (the Prism toolbar is rebuilt by hand because the CDN is blocked)`,async()=>{
         const r=await page.evaluate(()=>{const g=e=>getComputedStyle(e);const ic=[...document.querySelectorAll('#markdown_content code')].find(e=>!e.closest('pre,a,table')&&e.parentElement.tagName==='P');const pre=[...document.querySelectorAll('#markdown_content pre')].find(e=>e.textContent.includes('NOMEAPP</string>'));let wrap=pre.parentElement;if(!wrap.classList.contains('code-toolbar')){wrap=document.createElement('div');wrap.className='code-toolbar';pre.replaceWith(wrap);wrap.appendChild(pre);const t0=document.createElement('div');t0.className='toolbar';t0.innerHTML='<div class="toolbar-item"><button type="button" class="copy-to-clipboard-button"><span>Copy</span></button></div>';wrap.appendChild(t0);}const tb=wrap.querySelector('.toolbar');const btn=wrap.querySelector('button.copy-to-clipboard-button');const bb=g(btn);const rem=parseFloat(g(document.documentElement).fontSize);return {icb:[g(ic).borderTopWidth,g(ic).borderRadius,g(ic).fontFamily===g(ic.parentElement).fontFamily,g(ic).fontWeight],ibc:g(ic).borderTopColor,pb:[g(pre).borderTopWidth,g(pre).borderRadius,g(pre).fontFamily===g(wrap).fontFamily],pbc:g(pre).borderTopColor,wrapFit:g(wrap).width===Math.round(wrap.getBoundingClientRect().width*100)/100+'px'||Math.abs(wrap.getBoundingClientRect().width-pre.getBoundingClientRect().width)<1,narrower:wrap.getBoundingClientRect().width<=wrap.parentElement.getBoundingClientRect().width+.5,pr:parseFloat(g(pre).paddingRight)/rem,top:parseFloat(g(tb).top)/rem,right:parseFloat(g(tb).right)/rem,btn:{bg:bb.backgroundColor,shadow:bb.boxShadow,radius:bb.borderTopLeftRadius,color:bb.color,bw:bb.borderTopWidth},code:g(pre.querySelector('code')).fontFamily===g(pre).fontFamily&&!/mono/i.test(g(pre).fontFamily)}});
         assert.deepEqual(r.icb,['0px','8px',true,'500']);
-        assert.deepEqual(r.pb,[theme==='dark'?'0px':'1px','16px',true]);
+        assert.deepEqual(r.pb,['0px','16px',true]);
         assert.equal(r.code,true);
         assert.equal(r.wrapFit,true);assert.equal(r.narrower,true);
         assert.ok(Math.abs(r.pr-2.6)<.01,'pre right padding '+r.pr);
         assert.ok(Math.abs(r.top-.6)<.01&&Math.abs(r.right-.7)<.01,'toolbar '+r.top+' '+r.right);
         assert.equal(r.btn.bg,'rgba(0, 0, 0, 0)');assert.equal(r.btn.shadow,'none');assert.equal(r.btn.radius,'0px');assert.equal(r.btn.bw,'0px');
         if(theme==='light'){
-          assert.equal(r.btn.color,'rgb(10, 26, 18)');
-          assert.equal(r.ibc,'rgb(67, 181, 158)');assert.equal(r.pbc,'rgba(0, 0, 0, 0)');
+          assert.equal(r.btn.color,'rgb(255, 255, 255)');
+          assert.equal(r.ibc,'rgb(67, 181, 158)');assert.equal(r.pbc,'rgb(67, 181, 158)');
         }else assert.equal(r.btn.color,'rgb(10, 26, 18)');
       });
       await check(`${width}/${theme}: both formats expose one version`,async()=>assert.equal(await page.locator('[data-style-picker]:visible').count(),1));
@@ -125,10 +132,10 @@ async function check(name, action) { await action(); results.push(name); }
       await trigger.click();
       const list=page.getByRole('listbox');
       await page.getByRole('option').last().waitFor();
-      await check(`${width}/${theme}: fifteen registered styles`,async()=>assert.equal(await page.getByRole('option').count(),15));
+      await check(`${width}/${theme}: three registered styles`,async()=>assert.equal(await page.getByRole('option').count(),3));
       await check(`${width}/${theme}: SlimVer names without Paper`,async()=>{
         const labels=await page.getByRole('option').allTextContents();
-        assert.deepEqual(labels,['RoccobotOS1.00','RoccobotOS1.40','RoccobotOS1.41','RoccobotOS1.42','RoccobotOS1.43','RoccobotOS1.44','RoccobotOS1.45','RoccobotOS1.46','RoccobotOS1.47','RoccobotOS1.48','RoccobotOS1.49','RoccobotOS1.50','RoccobotOS1.51','RoccobotOS1.52','RoccobotOS1.53']);
+        assert.deepEqual(labels,['RoccobotOS1.00','RoccobotOS1.42','RoccobotOS1.54']);
         assert.equal(await page.getByRole('link',{name:'Aggiungi uno stile'}).count(),0);
       });
       await page.getByRole('option').first().click();
@@ -139,19 +146,19 @@ async function check(name, action) { await action(); results.push(name); }
       });
       await check(`${width}/${theme}: typography and layout preserved`,async()=>assert.deepEqual(await page.locator('h1').first().evaluate(e=>({font:getComputedStyle(e).fontSize,width:e.getBoundingClientRect().width,padding:getComputedStyle(e).paddingBottom})),before));
       await list.press('Escape');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS153.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS154.css'));
       await check(`${width}/${theme}: Escape restores initial style and focus`,async()=>{
         assert.equal(await page.getByRole('dialog').isVisible(),false);
         assert.equal(await trigger.evaluate(e=>document.activeElement===e),true);
       });
       await trigger.click();
       await list.press('ArrowUp');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS152.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS142.css'));
       await list.press('Enter');
       await check(`${width}/${theme}: keyboard selection commits on Enter`,async()=>assert.equal(await page.getByRole('dialog').isVisible(),false));
       await trigger.click();
       await list.press('End'); await list.press('Home'); await list.press('End');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS153.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS154.css'));
       await check(`${width}/${theme}: rapid selection leaves one active sheet`,async()=>assert.equal(await page.locator('link[data-site-style]').count(),1));
       await page.getByRole('button',{name:'Chiudi il selettore'}).click();
       await trigger.click();
@@ -159,7 +166,7 @@ async function check(name, action) { await action(); results.push(name); }
       await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS100.css'));
       await list.press('Enter');
       await page.reload({waitUntil:'domcontentloaded'});
-      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS153.css'));
+      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS154.css'));
       await check(`${width}/${theme}: no JavaScript errors`,async()=>assert.deepEqual(errors,[]));
       await page.goto(url+'Styles/admin/manage.html',{waitUntil:'domcontentloaded'});
       await check(`${width}/${theme}: management remains closed without configuration`,async()=>{
@@ -177,7 +184,7 @@ async function check(name, action) { await action(); results.push(name); }
     await page.route('**/Styles/RoccobotOS100.css',route=>route.abort());
     await page.getByRole('option').first().click();
     await page.getByText('Lo stile non si carica. La pagina conserva quello precedente.').waitFor();
-    await check('failed stylesheet leaves default 1.53 active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS153.css'));
+    await check('failed stylesheet leaves default 1.54 active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS154.css'));
     await context.close();
     if (process.env.VERIFICATION_REPORT) await fs.writeFile(process.env.VERIFICATION_REPORT, JSON.stringify({ passed: results.length, checks: results }, null, 2));
     console.log(JSON.stringify({passed:results.length,checks:results},null,2));

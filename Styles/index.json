@@ -8,20 +8,6 @@
       "comment": "Light and dark colours with the original responsive layout."
     },
     {
-      "file": "RoccobotOS140.css",
-      "name": "RoccobotOS",
-      "version": "1.40",
-      "note": "The updated RoccobotOS web palette.",
-      "comment": "Light and dark colours with the original responsive layout."
-    },
-    {
-      "file": "RoccobotOS141.css",
-      "name": "RoccobotOS",
-      "version": "1.41",
-      "note": "The updated RoccobotOS web palette, with green code and dark table headers.",
-      "comment": "Light and dark colours with the original responsive layout."
-    },
-    {
       "file": "RoccobotOS142.css",
       "name": "RoccobotOS",
       "version": "1.42",
@@ -29,80 +15,10 @@
       "comment": "Light and dark colours with the original responsive layout."
     },
     {
-      "file": "RoccobotOS143.css",
+      "file": "RoccobotOS154.css",
       "name": "RoccobotOS",
-      "version": "1.43",
-      "note": "The updated RoccobotOS web palette, with green code, soft green table headers and a green index.",
-      "comment": "Light and dark colours with the original responsive layout and a terracotta accent."
-    },
-    {
-      "file": "RoccobotOS144.css",
-      "name": "RoccobotOS",
-      "version": "1.44",
-      "note": "The updated RoccobotOS web palette, with green code, soft green table headers, a green index and indigo h1 titles.",
-      "comment": "Light and dark colours with the original responsive layout and no rule under h2 titles."
-    },
-    {
-      "file": "RoccobotOS145.css",
-      "name": "RoccobotOS",
-      "version": "1.45",
-      "note": "The updated RoccobotOS web palette, with green code, soft green table headers, a green index and, in the dark theme, mint, blue and amber headings with rose links.",
-      "comment": "Light and dark colours with the original responsive layout and no rule under h2 titles."
-    },
-    {
-      "file": "RoccobotOS146.css",
-      "name": "RoccobotOS",
-      "version": "1.46",
-      "note": "The updated RoccobotOS web palette, with green code, soft green table headers, a green index and, in the dark theme, mint, amber and lime headings with amber links.",
-      "comment": "Light and dark colours with the original responsive layout and no rule under h2 titles."
-    },
-    {
-      "file": "RoccobotOS147.css",
-      "name": "RoccobotOS",
-      "version": "1.47",
-      "note": "The 1.46 palette with no rail on the active index entry and, in the dark theme, flat yellow code in the text font, pale lime links and a copy icon with no box.",
-      "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles and a double click that copies code."
-    },
-    {
-      "file": "RoccobotOS148.css",
-      "name": "RoccobotOS",
-      "version": "1.48",
-      "note": "The 1.47 style with the dark inline code box sized in em, medium weight, and table rows 2px taller at the default size.",
-      "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
-    },
-    {
-      "file": "RoccobotOS149.css",
-      "name": "RoccobotOS",
-      "version": "1.49",
-      "note": "The 1.48 style with every length in rem or em, so the page follows the browser text size; only 1px and 2px hairlines and the media query breakpoints stay in pixels.",
-      "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
-    },
-    {
-      "file": "RoccobotOS150.css",
-      "name": "RoccobotOS",
-      "version": "1.50",
-      "note": "The 1.49 style (every length in rem or em) with flat sage code boxes and white text in the dark theme, code at 90% of the text, rounder tables and a rosé dark section title.",
-      "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
-    },
-    {
-      "file": "RoccobotOS151.css",
-      "name": "RoccobotOS",
-      "version": "1.51",
-      "note": "The 1.50 style with very dark text and copy icon (#0A1A12) on the dark sage code boxes, and the dark section titles Sistema and Applicazioni in the body text colour.",
-      "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
-    },
-    {
-      "file": "RoccobotOS152.css",
-      "name": "RoccobotOS",
-      "version": "1.52",
-      "note": "The 1.51 style with the dark-only code box shapes, spacing, font and copy icon position also in the light theme; every light colour is unchanged.",
-      "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
-    },
-    {
-      "file": "RoccobotOS153.css",
-      "name": "RoccobotOS",
-      "version": "1.53",
-      "note": "The 1.52 style with a darker light code box, the old box colour now on the light index, orange h1, section dividers in body text, and the dark table header at the light contrast.",
+      "version": "1.54",
+      "note": "The 1.53 style with teal light code boxes with white text, no light-only block border so both themes have the same layout, a lighter orange h1 and grey-teal section dividers.",
       "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
     }
   ]

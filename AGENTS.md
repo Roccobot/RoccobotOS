@@ -292,10 +292,11 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
 - **Deroga dichiarata alle regole di sviluppo**: la lingua del sito è l'italiano (i nomi dei
   file sono in inglese, i testi visibili in italiano); la versione è in cima (`Rules.md`, prima
   sezione).
-- **Struttura**: `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS153.css`, gli altri dal selettore); quattro sotto-pagine
+- **Struttura**: `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS154.css`, gli altri dal selettore); quattro sotto-pagine
   (`Characters.html`, `Formats.html`, `AdServers.html`, `BlendModes.html`) con `Pages.css` e
   `Pages.js`; la styleguide in `Styleguide.html`. I file sono alla radice del repo, anche dove
   un testo vecchio li nomina col prefisso `RoccobotOS/` di quando il sito era una cartella dell'hub.
+- **Regola anti-jitter (non rovesciare).** Tema chiaro e tema scuro hanno la stessa impaginazione: stessi pesi, stessi caratteri, stesse interlinee (compresa quella delle celle di tabella, 1,639), stessi riquadri del codice, stessi bordi, stessi a capo e stessa altezza di pagina. Cambiano solo i colori, così il cambio tema non sposta nulla. Ogni stile nuovo si verifica misurando ogni elemento nei due temi (a 1440, 900 e 390 px), e `tests/browser.cjs` lo controlla. Le `1.51` e `1.53` la violavano (+443/+563/+392 px e +112 px di pagina in tema chiaro); la `1.54` la rispetta.
 - **`index.html` è la fonte e si modifica direttamente**: non si rigenera più da markdown, quindi
   un errore là non si recupera rigenerando (`Rules.md` § '🚩 Flag, sotto-pagine e decisioni da non rovesciare').
 - **La styleguide è la fonte unica dei valori visivi**: i campioni sono scritti a mano, quindi un

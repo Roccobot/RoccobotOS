@@ -1,7 +1,7 @@
 /*
 #NAME: RoccobotOS
-#VERSION: 1.51
-#NOTE: The 1.50 style with very dark text and copy icon (#0A1A12) on the dark sage code boxes, and the dark section titles Sistema and Applicazioni in the body text colour.
+#VERSION: 1.54
+#NOTE: The 1.53 style with teal light code boxes with white text, no light-only block border so both themes have the same layout, a lighter orange h1 and grey-teal section dividers.
 #COMMENT: Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches.
 */
 
@@ -50,7 +50,7 @@ body,html {
   background-color: #F7F8F5;
 }
 
-/* The active index entry has no rail, only colour and weight. Active entry in deep green: #0F4A3F is 8.00:1 on #D9E8E0, #E6F4EF is 12.64:1 on #1B2E28. */
+/* The active index entry has no rail, only colour and weight. Active entry in deep green: #0F4A3F is 8.96:1 on the light index #E6F4EF, #E6F4EF is 12.64:1 on #1B2E28. */
 .toc-list a.toc-link.is-active-link {
   color: #0F4A3F !important;
   font-weight: 800;
@@ -217,7 +217,7 @@ html[data-theme=dark] .markdown-body table tr:nth-child(odd) {
 
 html[data-theme=dark] .markdown-body table th {
   background-color: #1E5A4C;
-  color: #FFFFFF;
+  color: #E7F5F0;
 }
 
 html[data-theme=dark] .markdown-body kbd {
@@ -226,38 +226,42 @@ html[data-theme=dark] .markdown-body kbd {
   color: #DBADB9;
 }
 
-/* Dark code is a flat sage box with no border, in the text font. The text is #0A1A12, 6.56:1 on #92A279 (white was only 2.74:1). Inline code has 8px corners, blocks 16px and are only as wide as their longest line. */
+/* Dark code is a flat sage box. The text is #0A1A12, 6.56:1 on #92A279 (white was only 2.74:1). Only the colours stay dark-only; the shapes are in the next block for both themes. */
 html[data-theme=dark] .markdown-body code,html[data-theme=dark] .markdown-body pre,html[data-theme=dark] .markdown-body .highlight pre {
   background-color: #92A279;
   color: #0A1A12;
-  border: 0;
-  font-family: inherit;
 }
 
 html[data-theme=dark] .markdown-body pre code {
   background-color: transparent;
 }
 
-html[data-theme=dark] .markdown-body :not(pre)>code {
+/* Code boxes have the same shape in both themes: no border (the width is 0, so the light border colour #43B59E is kept but not drawn), the text font, 8px corners in line and 16px in blocks, and blocks only as wide as their longest line. The light box is teal #00727B with white text (5.69:1), 5.33:1 on the page #F7F8F5 and 5.02:1 on the light index. Every size, weight, font and line height is the same in both themes, so switching theme never moves the layout: only colours differ. The leading html raises the specificity over the base rules further down the sheet. */
+html .markdown-body code,html .markdown-body pre,html .markdown-body .highlight pre {
+  border-width: 0;
+  font-family: inherit;
+}
+
+html .markdown-body :not(pre)>code {
   border-radius: .5rem;
 }
 
-html[data-theme=dark] .markdown-body pre,html[data-theme=dark] .markdown-body .highlight pre {
+html .markdown-body pre,html .markdown-body .highlight pre {
   border-radius: 1rem;
 }
 
-html[data-theme=dark] div.code-toolbar {
+html div.code-toolbar {
   width: fit-content;
   max-width: 100%;
 }
 
-html[data-theme=dark] div.code-toolbar>pre {
+html .markdown-body div.code-toolbar>pre {
   padding-right: 2.6rem;
 }
 
-/* The inline box is trimmed to the capitals, so the text sits at the visual centre of the yellow. The vertical padding is in em, so the box is 1.25em tall and scales with the code size: .264em above and .286em below (.1em less than in 1.49 on each side) keep air around descenders, accents and brackets at 14.4px. The weight is 500. Browsers without text-box keep the plain padding. */
+/* The inline box is trimmed to the capitals, so the text sits at the visual centre of the box. The vertical padding is in em, so the box is 1.25em tall and scales with the code size: .264em above and .286em below keep air around descenders, accents and brackets at 14.4px. The weight is 500. Browsers without text-box keep the plain padding. Both themes. */
 @supports (text-box:trim-both cap alphabetic) {
-  html[data-theme=dark] .markdown-body :not(pre)>code {
+  html .markdown-body :not(pre)>code {
     text-box: trim-both cap alphabetic;
     padding: .264em .35rem .286em;
     font-weight: 500;
@@ -772,8 +776,8 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
   padding: .1rem .35rem;
   margin: 0;
   font-size: 90%;
-  background-color: #E6F4EF;
-  color: #14594C;
+  background-color: #00727B;
+  color: #FFFFFF;
   border: 1px solid #43B59E;
   border-radius: .25rem;
 }
@@ -806,7 +810,8 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
   overflow: auto;
   font-size: 90%;
   line-height: 1.45;
-  background-color: #E6F4EF;
+  background-color: #00727B;
+  color: #FFFFFF;
   border: 1px solid #43B59E;
   border-radius: .5rem;
 }
@@ -887,7 +892,7 @@ pre[class*=language-] {
 }
 
 :not(pre)>code[class*=language-],pre[class*=language-] {
-  background-color: #E6F4EF;
+  background-color: #00727B;
 }
 
 :not(pre)>code[class*=language-] {
@@ -968,11 +973,11 @@ div.code-toolbar>.toolbar>.toolbar-item>a:focus,div.code-toolbar>.toolbar>.toolb
   text-decoration: none;
 }
 
-/* The copy button is only an icon, with no box, fill or shadow. The extra class and the state selectors beat the Prism sheet, which loads after this one. The icon is #14594C, 7.24:1 on the light code #E6F4EF, and #0A1A12 in the dark theme, 6.56:1 on #92A279. */
+/* The copy button is only an icon, with no box, fill or shadow. The extra class and the state selectors beat the Prism sheet, which loads after this one. The icon follows the code text: white on the light teal box #00727B (5.69:1) and #0A1A12 on the dark sage box #92A279 (6.56:1). */
 div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button,div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:hover,div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:focus {
   position: relative;
   padding: .25rem;
-  color: #14594C;
+  color: #FFFFFF;
   background: none;
   box-shadow: none;
   border-radius: 0;
@@ -1024,7 +1029,7 @@ div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:focus-vi
   border-radius: .25rem;
 }
 
-html[data-theme=dark] div.code-toolbar>.toolbar {
+html div.code-toolbar>.toolbar {
   top: .6rem;
   right: .7rem;
 }
@@ -1037,9 +1042,9 @@ html[data-theme=dark] div.code-toolbar>.toolbar {
 
 }
 
-/* Visual confirmation after a double click copy on code. The outline sits outside the box: #14594C is 7.69:1 on the light page. In the dark theme the ring stays white: 16.87:1 on the page #191E1D, which shows in the gap around the box, and 2.74:1 on the sage #92A279. A dark ring would vanish on the page, and no colour reaches 3:1 on both. */
+/* Visual confirmation after a double click copy on code. The outline sits outside the box, in the gap on the page. In light it is #0A1A12: 16.85:1 on the page #F7F8F5 and 3.16:1 on the teal box #00727B, so it shows on both. In the dark theme the ring stays white: 16.87:1 on the page #191E1D and 2.74:1 on the sage #92A279. */
 .markdown-body .copiato {
-  outline: 2px solid #14594C;
+  outline: 2px solid #0A1A12;
   outline-offset: .13158em;
 }
 
@@ -1071,7 +1076,7 @@ a.toc-link {
   height: 100%;
 }
 
-/* Index links: #14594C is 6.46:1 on #D9E8E0, #9FE3CF is 9.78:1 on #1B2E28. */
+/* Index links: #14594C is 7.24:1 on the light index #E6F4EF, #9FE3CF is 9.78:1 on #1B2E28. */
 .mweb_toc_wrap_ct a.toc-link {
   color: #14594C;
 }
@@ -1147,7 +1152,7 @@ html[data-theme=dark] .mweb_toc_wrap_ct a.toc-link {
 }
 
 .mweb_toc_wrap_ct {
-  background-color: #D9E8E0;
+  background-color: #E6F4EF;
 }
 
 .mweb_ct_wrap {
@@ -1405,9 +1410,14 @@ html[data-theme=dark] .markdown-body em,html[data-theme=dark] .markdown-body str
   color: #DEE5E1;
 }
 
-/* Light h1 is indigo: #3D4A8F is 7.65:1 on #F7F8F5. Dark headings on #191E1D: h1 mint #C0FFE5 is 15.00:1, h2 and the section divider h1 amber #E8B86A are 9.23:1 (the two section dividers use the body text colour #DEE5E1, same size as the other h1), h3 pale lime #EEFAAD is 15.19:1. */
-.markdown-body h1 {
-  color: #3D4A8F;
+/* Light h1 is a muted orange: #9D5A18 is 5.04:1 on #F7F8F5 (the lightest orange that keeps 4.5:1 is #A86019, 4.53:1). The section dividers below are a grey with a hint of teal. Dark headings on #191E1D: h1 mint #C0FFE5 is 15.00:1, h2 and the section divider h1 amber #E8B86A are 9.23:1 (the two section dividers use the body text colour #DEE5E1, same size as the other h1), h3 pale lime #EEFAAD is 15.19:1. */
+html:not([data-theme=dark]) .markdown-body h1,html:not([data-theme=dark]) .markdown-body h1 a {
+  color: #9D5A18;
+}
+
+/* The two light section dividers, Sistema and Applicazioni, are a very desaturated teal grey #52635F, 5.95:1 on #F7F8F5, set on the anchors too as in dark. They stay h1 and keep the h1 size. */
+html:not([data-theme=dark]) .markdown-body h1:has(> a#SezioneSistema),html:not([data-theme=dark]) .markdown-body h1:has(> a#SezioneSistema) a,html:not([data-theme=dark]) .markdown-body h1:has(> a#ScorciatoieApp),html:not([data-theme=dark]) .markdown-body h1:has(> a#ScorciatoieApp) a {
+  color: #52635F;
 }
 
 html[data-theme=dark] .markdown-body h1,html[data-theme=dark] .markdown-body h1 a {
@@ -1643,11 +1653,11 @@ html:not([data-theme=dark]) .markdown-body table.narrow-cols-odd td:nth-child(od
   color: #196E5E;
 }
 
-/* Header links follow the header text: #0F4A3F on #C5DED3 is 7.13:1, #E6F4EF on #1E5A4C is 7.08:1. */
+/* Header links follow the header text: #0F4A3F on #C5DED3 is 7.13:1 and #E7F5F0 on #1E5A4C is 7.14:1, the same contrast in both themes. */
 html:not([data-theme=dark]) .markdown-body th a {
   color: #0F4A3F;
 }
 
 html[data-theme=dark] .markdown-body th a {
-  color: #E6F4EF;
+  color: #E7F5F0;
 }
