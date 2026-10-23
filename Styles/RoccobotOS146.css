@@ -1317,8 +1317,8 @@ html[data-theme=dark] .markdown-body h1,html[data-theme=dark] .markdown-body h1 
   color: #C0FFE5;
 }
 
-/* The two section dividers, Sistema and Applicazioni, are h1 elements that take the h2 amber. Applicazioni holds the empty anchor ScorciatoieApp, and Sistema is the h1 right after the SCORCIATOIE one. */
-html[data-theme=dark] .markdown-body h1:has(> a#ScorciatoieApp),html[data-theme=dark] .markdown-body h1:has(> a#ScorciatoieApp) a,html[data-theme=dark] .markdown-body h1:has(> a#ScorciatoieSistema) + h1,html[data-theme=dark] .markdown-body h1:has(> a#ScorciatoieSistema) + h1 a {
+/* The two section dividers, Sistema and Applicazioni, are h1 elements that take the h2 amber. Each holds an empty hand-made anchor, SezioneSistema and ScorciatoieApp, used as a stable hook. */
+html[data-theme=dark] .markdown-body h1:has(> a#SezioneSistema),html[data-theme=dark] .markdown-body h1:has(> a#SezioneSistema) a,html[data-theme=dark] .markdown-body h1:has(> a#ScorciatoieApp),html[data-theme=dark] .markdown-body h1:has(> a#ScorciatoieApp) a {
   color: #E8B86A;
 }
 
