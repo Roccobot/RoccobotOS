@@ -1,7 +1,7 @@
 /*
 #NAME: RoccobotOS
-#VERSION: 1.54
-#NOTE: The 1.53 style with teal light code boxes with white text, no light-only block border so both themes have the same layout, a lighter orange h1 and grey-teal section dividers.
+#VERSION: 1.55
+#NOTE: The 1.54 style with olive dark code blocks, no mark highlight, a warning border in the h2 colour, no copy button or scrollbar on scrolling code blocks and one-line DiskUtil commands.
 #COMMENT: Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches.
 */
 
@@ -226,14 +226,20 @@ html[data-theme=dark] .markdown-body kbd {
   color: #DBADB9;
 }
 
-/* Dark code is a flat sage box. The text is #0A1A12, 6.56:1 on #92A279 (white was only 2.74:1). Only the colours stay dark-only; the shapes are in the next block for both themes. */
-html[data-theme=dark] .markdown-body code,html[data-theme=dark] .markdown-body pre,html[data-theme=dark] .markdown-body .highlight pre {
+/* Dark inline code is a flat sage box. The text is #0A1A12, 6.56:1 on #92A279 (white was only 2.74:1). Dark code blocks (pre, .highlight pre, code-toolbar blocks) are a deep olive #3D4639 with the light page colour #F7F8F5 as text, 9.23:1 (the block is 1.71:1 against the page #191E1D, 3.59:1 against inline sage code). Only the colours stay dark-only; the shapes are in the next block for both themes. */
+html[data-theme=dark] .markdown-body code {
   background-color: #92A279;
   color: #0A1A12;
 }
 
+html[data-theme=dark] .markdown-body pre,html[data-theme=dark] .markdown-body .highlight pre {
+  background-color: #3D4639;
+  color: #F7F8F5;
+}
+
 html[data-theme=dark] .markdown-body pre code {
   background-color: transparent;
+  color: inherit;
 }
 
 /* Code boxes have the same shape in both themes: no border (the width is 0, so the light border colour #43B59E is kept but not drawn), the text font, 8px corners in line and 16px in blocks, and blocks only as wide as their longest line. The light box is teal #00727B with white text (5.69:1), 5.33:1 on the page #F7F8F5 and 5.02:1 on the light index. Every size, weight, font and line height is the same in both themes, so switching theme never moves the layout: only colours differ. The leading html raises the specificity over the base rules further down the sheet. */
@@ -257,6 +263,20 @@ html div.code-toolbar {
 
 html .markdown-body div.code-toolbar>pre {
   padding-right: 2.6rem;
+}
+
+/* Code blocks scroll sideways without a visible scrollbar, in both themes. Scrolling still works with trackpad, touch, shift and wheel and the keyboard (a block that scrolls is focusable, see RoccobotOS.js). The scrollbar is overlay on macOS and iOS, so hiding it changes nothing there; where the bar takes a strip (Windows, Linux) the block is that strip shorter, the same in both themes. */
+.markdown-body pre {
+  scrollbar-width: none;
+}
+
+.markdown-body pre::-webkit-scrollbar {
+  display: none;
+}
+
+/* The copy button is not shown on a block that scrolls sideways (RoccobotOS.js adds the class .scorre after measuring scrollWidth against clientWidth, and again on resize, font load and when Prism builds a block). It is absolutely placed, and the right padding of the block stays 2.6rem, so hiding it moves nothing and the measure cannot flip back. The double click copy and its notice work on every block. */
+html div.code-toolbar.scorre>.toolbar {
+  display: none;
 }
 
 /* The inline box is trimmed to the capitals, so the text sits at the visual centre of the box. The vertical padding is in em, so the box is 1.25em tall and scales with the code size: .264em above and .286em below keep air around descenders, accents and brackets at 14.4px. The weight is 500. Browsers without text-box keep the plain padding. Both themes. */
@@ -862,11 +882,10 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
   padding-top: 0;
 }
 
-@media (prefers-color-scheme:dark) {
-  .markdown-body mark {
-    color: #111;
-  }
-
+/* Marked text (<mark>, used once, on ATTENZIONE! in the Fastboot and ADB warning) is plain text in both themes. The browser default is black on yellow, and the old dark-scheme rule only changed the text to #111; both are gone. The colour is inherited, so it is the colour of the paragraph, and the background is clear. The element has no padding, border, margin or radius, so nothing moves: the line box is the same as before and the same in light and dark. */
+.markdown-body mark {
+  background-color: transparent;
+  color: inherit;
 }
 
 code[class*=language-],pre[class*=language-] {
@@ -973,7 +992,7 @@ div.code-toolbar>.toolbar>.toolbar-item>a:focus,div.code-toolbar>.toolbar>.toolb
   text-decoration: none;
 }
 
-/* The copy button is only an icon, with no box, fill or shadow. The extra class and the state selectors beat the Prism sheet, which loads after this one. The icon follows the code text: white on the light teal box #00727B (5.69:1) and #0A1A12 on the dark sage box #92A279 (6.56:1). */
+/* The copy button is only an icon, with no box, fill or shadow. The extra class and the state selectors beat the Prism sheet, which loads after this one. The icon follows the code text: white on the light teal box #00727B (5.69:1) and #F7F8F5 on the dark olive block #3D4639 (9.23:1). */
 div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button,div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:hover,div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:focus {
   position: relative;
   padding: .25rem;
@@ -984,7 +1003,7 @@ div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button,div.code
 }
 
 html[data-theme=dark] div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button,html[data-theme=dark] div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:hover,html[data-theme=dark] div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:focus {
-  color: #0A1A12;
+  color: #F7F8F5;
 }
 
 /* The Prism label stays in the page for screen readers and comes back as text if the copy fails. */
@@ -1042,7 +1061,7 @@ html div.code-toolbar>.toolbar {
 
 }
 
-/* Visual confirmation after a double click copy on code. The outline sits outside the box, in the gap on the page. In light it is #0A1A12: 16.85:1 on the page #F7F8F5 and 3.16:1 on the teal box #00727B, so it shows on both. In the dark theme the ring stays white: 16.87:1 on the page #191E1D and 2.74:1 on the sage #92A279. */
+/* Visual confirmation after a double click copy on code. The outline sits outside the box, in the gap on the page. In light it is #0A1A12: 16.85:1 on the page #F7F8F5 and 3.16:1 on the teal box #00727B, so it shows on both. In the dark theme the ring stays white: 16.87:1 on the page #191E1D and 9.84:1 on the olive block #3D4639. */
 .markdown-body .copiato {
   outline: 2px solid #0A1A12;
   outline-offset: .13158em;
@@ -1437,6 +1456,15 @@ html[data-theme=dark] .markdown-body h2,html[data-theme=dark] .markdown-body h2 
   color: #E8B86A;
 }
 
+/* The border of the warning box (ATTENZIONE!, p.avviso in index.html) was a fixed red #B71E1E set in the page. It now takes the h2 colour of each theme, with the same literals as the h2 rules above: #236C80 in light (5.58:1 on the page #F7F8F5) and #E8B86A in dark (9.23:1 on #191E1D). The page keeps the red as the fallback of the custom property, so the older styles still show it. Width, padding and radius stay in the markup, so the box is the same size in both themes and in every style. */
+.markdown-body p.avviso {
+  --avviso-bordo: #236C80;
+}
+
+html[data-theme=dark] .markdown-body p.avviso {
+  --avviso-bordo: #E8B86A;
+}
+
 .markdown-body h3 {
   color: #4A6A72;
 }
@@ -1660,4 +1688,40 @@ html:not([data-theme=dark]) .markdown-body th a {
 
 html[data-theme=dark] .markdown-body th a {
   color: #E7F5F0;
+}
+
+/* DiskUtil table (table.cmd-scorrevoli in index.html): the commands in the left column stay on one line and the cell scrolls sideways instead of wrapping, with no visible scrollbar (trackpad, touch and keyboard still scroll it). Above 600px the table is a fixed layout of full width, so a long command cannot widen it: the left column is half of the table, and a fixed 357px once the page is wide enough (1064px and up) for the table to reach its 760px maximum, which are the widths it had when the commands wrapped (357px at 1440, 275px at 900), and the right column keeps the rest. The code stays one box per command. Light and dark share every metric. Below 600px the standard table already keeps cells on one line and scrolls as a whole, and the cards view wraps, so both stay as they were. */
+@media screen and (min-width:601px) {
+  html:not([data-tables=cards]) .markdown-body table.cmd-scorrevoli {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  html:not([data-tables=cards]) .markdown-body table.cmd-scorrevoli th:first-child {
+    width: 50%;
+  }
+
+  html:not([data-tables=cards]) .markdown-body table.cmd-scorrevoli td>div.cmd {
+    display: block;
+    overflow-x: auto;
+    scrollbar-width: none;
+    white-space: nowrap;
+  }
+
+  html:not([data-tables=cards]) .markdown-body table.cmd-scorrevoli td>div.cmd::-webkit-scrollbar {
+    display: none;
+  }
+
+  html:not([data-tables=cards]) .markdown-body table.cmd-scorrevoli td>div.cmd code {
+    white-space: nowrap;
+  }
+
+}
+
+@media screen and (min-width:1064px) {
+  html:not([data-tables=cards]) .markdown-body table.cmd-scorrevoli th:first-child {
+    width: 357px;
+  }
+
 }

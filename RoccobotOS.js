@@ -10,7 +10,7 @@
 // index.html nascono VUOTI: se questo script non gira il CSS li nasconde con :empty, invece di
 // mostrare una 'v' senza numero.
 !function () {
-  const VERSIONE = "4.27";
+  const VERSIONE = "4.28";
   // Due punti di resa, uno per formato: la pillola nell'angolo dell'indice su desktop,
   // il numero sopra il logo su mobile. A deciderlo è il CSS, qui si scrivono entrambi.
   for (const id of ["siteVersion", "tocVersion"]) {
@@ -426,13 +426,22 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("img:not([loading])").forEach(img => img.setAttribute("loading", "lazy"));
 });
 
-// ── Scorrimento da tastiera dei contenitori larghi ──
+// ── Scorrimento da tastiera dei contenitori larghi, e pulsante Copia ──
 // Tabelle e blocchi di codice che sbordano in orizzontale si scorrevano solo col dito o col
 // mouse. Il tabindex si mette SOLO dove serve davvero (scrollWidth > clientWidth): metterlo su
-// tutte le tabelle infilerebbe una quarantina di fermate inutili nel giro del Tab. La misura si
-// rifà al ridimensionamento, perché una tabella stretta può diventare larga e viceversa.
+// tutte le tabelle infilerebbe una quarantina di fermate inutili nel giro del Tab. Dalla 1.55 la
+// barra di scorrimento dei blocchi di codice è nascosta, quindi il tabindex è l'unico modo di
+// scorrerli con le frecce e di vedere il contorno del focus.
+// La stessa misura decide il pulsante Copia: un blocco che sborda in orizzontale (per esempio quello
+// col csrf_token di Instagram) non lo mostra, e il suo contenitore .code-toolbar prende la classe
+// .scorre (il CSS nasconde la barra). Il doppio clic e l'avviso "Codice copiato" restano su tutti i
+// blocchi. Il pulsante è fuori dal flusso e il padding destro del blocco non cambia, quindi
+// nasconderlo non sposta nulla e la misura non può ribaltarsi da sola.
+// La misura si rifà al caricamento, al ridimensionamento, a font caricati e quando Prism costruisce
+// un blocco (il contenitore .code-toolbar nasce dopo, e un blocco avvolto può diventare più stretto
+// della pagina e quindi scorrere): per questo c'è l'osservatore sui nuovi nodi.
 document.addEventListener("DOMContentLoaded", () => {
-  const CANDIDATI = ".markdown-body table, .markdown-body pre, .markdown-body div > pre";
+  const CANDIDATI = ".markdown-body table, .markdown-body pre, .markdown-body div > pre, .markdown-body table.cmd-scorrevoli td > div.cmd";
   function sync() {
     document.querySelectorAll(CANDIDATI).forEach(el => {
       const ov = getComputedStyle(el).overflowX;
@@ -448,10 +457,19 @@ document.addEventListener("DOMContentLoaded", () => {
         el.removeAttribute("role");
         el.removeAttribute("aria-label");
       }
+      const box = el.parentElement;
+      if (el.tagName === "PRE" && box.matches("div.code-toolbar")) box.classList.toggle("scorre", scorre);
     });
   }
+  let raf = 0;
+  const pianifica = () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; sync() }) };
   sync();
-  window.addEventListener("load", sync);
+  window.addEventListener("load", pianifica);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(pianifica);
   let t = null;
   window.addEventListener("resize", () => { null !== t && clearTimeout(t); t = setTimeout(sync, 200) });
+  const radice = document.getElementById("markdown_content");
+  if (radice) new MutationObserver(ms => {
+    if (ms.some(m => [...m.addedNodes].some(n => n.nodeType === 1 && (n.matches("div.code-toolbar") || n.querySelector("div.code-toolbar"))))) pianifica();
+  }).observe(radice, { childList: true, subtree: true });
 });

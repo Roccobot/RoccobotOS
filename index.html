@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="Styles/RoccobotOS154.css" data-site-style>
+  <link rel="stylesheet" href="Styles/RoccobotOS155.css" data-site-style>
   <link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
   <link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
@@ -2911,7 +2911,7 @@ defaults write com.apple.finder CreateDesktop false
 </code></pre>
       <h2>Operazioni avanzate su dischi e volumi</h2>
       <h3>DiskUtil</h3>
-      <table>
+      <table class="cmd-scorrevoli">
         <thead>
           <tr>
             <th style="text-align:left">Comando Terminale</th>
@@ -2920,45 +2920,45 @@ defaults write com.apple.finder CreateDesktop false
         </thead>
         <tbody>
           <tr>
-            <td style="text-align:left"><code>diskutil list</code></td>
+            <td style="text-align:left"><div class="cmd"><code>diskutil list</code></div></td>
             <td style="text-align:left">Mostra un elenco dei dischi connessi e relativi ID (es. 'disk2')</td>
           </tr>
           <tr>
-            <td style="text-align:left"><code>diskutil mountDisk DiskName</code></td>
+            <td style="text-align:left"><div class="cmd"><code>diskutil mountDisk DiskName</code></div></td>
             <td style="text-align:left">Monta l'unità indicata; per i dischi partizionati quella corretta è l'unità
               'contenitore'</td>
           </tr>
           <tr>
-            <td style="text-align:left"><code>diskutil unmountDisk force DiskName</code></td>
+            <td style="text-align:left"><div class="cmd"><code>diskutil unmountDisk force DiskName</code></div></td>
             <td style="text-align:left">Smonta l'unità indicata; per i dischi partizionati quella corretta è l'unità
               'contenitore'</td>
           </tr>
           <tr>
-            <td style="text-align:left"><code>sudo dd if=/dev/zero of=/dev/DiskName bs=1024 count=1024</code></td>
+            <td style="text-align:left"><div class="cmd"><code>sudo dd if=/dev/zero of=/dev/DiskName bs=1024 count=1024</code></div></td>
             <td style="text-align:left">Sovrascrive il settore di avvio con una serie di zeri</td>
           </tr>
           <tr>
-            <td style="text-align:left"><code>diskutil partitionDisk DiskName gpt jhfs+ &quot;MyDisk&quot; 0g</code>
+            <td style="text-align:left"><div class="cmd"><code>diskutil partitionDisk DiskName gpt jhfs+ &quot;MyDisk&quot; 0g</code></div>
             </td>
             <td style="text-align:left">Inizializza l'unità con struttura GPT e filesystem HFS+ Journaled</td>
           </tr>
           <tr>
-            <td style="text-align:left"><code>diskutil partitionDisk DiskName gpt apfs &quot;MyDisk&quot; 0g</code></td>
+            <td style="text-align:left"><div class="cmd"><code>diskutil partitionDisk DiskName gpt apfs &quot;MyDisk&quot; 0g</code></div></td>
             <td style="text-align:left">Inizializza l'unità con struttura GPT e filesystem APFS</td>
           </tr>
           <tr>
-            <td style="text-align:left"><code>diskutil partitionDisk DiskName MBR exfat &quot;MyDisk&quot; 100%</code>
+            <td style="text-align:left"><div class="cmd"><code>diskutil partitionDisk DiskName MBR exfat &quot;MyDisk&quot; 100%</code></div>
             </td>
             <td style="text-align:left">Inizializza l'unità con struttura MBR e filesystem exFAT</td>
           </tr>
           <tr>
             <td style="text-align:left">
-              <code>diskutil partitionDisk DiskName MBR &quot;MS-DOS FAT32&quot; &quot;MyDisk&quot; 100%</code>
+              <div class="cmd"><code>diskutil partitionDisk DiskName MBR &quot;MS-DOS FAT32&quot; &quot;MyDisk&quot; 100%</code></div>
             </td>
             <td style="text-align:left">Inizializza l'unità con struttura MBR e filesystem FAT32</td>
           </tr>
           <tr>
-            <td style="text-align:left"><code>diskutil resetUserPermissions / `id -u`</code></td>
+            <td style="text-align:left"><div class="cmd"><code>diskutil resetUserPermissions / `id -u`</code></div></td>
             <td style="text-align:left">Riparo dei permessi disco<br>(macOS ≥ 10.13)</td>
           </tr>
         </tbody>
@@ -3086,7 +3086,7 @@ defaults write com.apple.finder CreateDesktop false
       </table><br>
       <h2>Comandi Fastboot e ADB (Android Platform Tools)</h2>
       <p>Installazione: <code>brew install android-platform-tools</code></p>
-      <p style="padding:1rem;border:2px solid #b71e1e;border-radius:1rem">⚠️ <mark><strong>ATTENZIONE!</strong></mark>
+      <p class="avviso" style="padding:1rem;border:2px solid var(--avviso-bordo,#b71e1e);border-radius:1rem">⚠️ <mark><strong>ATTENZIONE!</strong></mark>
         ⚠️<br>Modificare le app di sistema tramite Platform Tools <em>alla prima accensione</em>, in modo da poter
         eventualmente fare un ripristino alle impostazioni di fabbrica. <u>Non rimuovere mai</u> i pacchetti
         <code>com.google.android.gms</code> (<a href="https://www.apkmirror.com/apk/google-inc/google-play-services/"

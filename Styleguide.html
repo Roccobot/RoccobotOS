@@ -131,7 +131,7 @@
     /* La tabella d'esempio deve essere la tabella VERA, angoli compresi: se qui restasse
        quadrata mentre il sito è stondato, la pagina mentirebbe proprio sul componente che
        sta descrivendo. Perciò anche qui il modello è 'separate' e le celle d'angolo hanno
-       il loro raggio. Il perché della tecnica è spiegato in Styles/RoccobotOS154.css e non si ripete. */
+       il loro raggio. Il perché della tecnica è spiegato in Styles/RoccobotOS155.css e non si ripete. */
     .guscio { overflow-x: auto; margin: 0 0 1rem; }
     table {
       border-collapse: separate; border-spacing: 0; width: 100%; font-size: .9rem;
@@ -383,13 +383,13 @@
     </div>
     <div class="scheda">
       <div class="facce">
-        <div class="faccia chiara" style="color:#000"><span style="background:#ff0;padding:0 .3em">Evidenziato</span></div>
-        <div class="faccia scura" style="color:#000"><span style="background:#ff0;padding:0 .3em">Evidenziato</span></div>
+        <div class="faccia chiara" style="background:#F7F8F5;color:#303735"><span style="display:inline-block;padding:.6rem .8rem;border:2px solid #236C80;border-radius:1rem"><strong>ATTENZIONE!</strong> testo</span></div>
+        <div class="faccia scura" style="background:#191E1D;color:#DEE5E1"><span style="display:inline-block;padding:.6rem .8rem;border:2px solid #E8B86A;border-radius:1rem"><strong>ATTENZIONE!</strong> testo</span></div>
       </div>
       <div class="scheda-piede">
-        <span class="scheda-nome">evidenziato</span>
-        <span class="scheda-ruolo">&lt;mark&gt;</span>
-        <span class="valori">#000 su #ff0 <span class="rapporto ok">19,6:1</span> nei due temi</span>
+        <span class="scheda-nome">avviso-contorno-1.55</span>
+        <span class="scheda-ruolo">riquadro di avviso (<code>p.avviso</code>, ATTENZIONE! sotto Comandi Fastboot e ADB): contorno di 2 px nel colore degli H2 di ciascun tema, prima rosso <code>#B71E1E</code>; la parola in grassetto è testo normale, senza evidenziatore (<code>&lt;mark&gt;</code> non ha più sfondo né colore proprio)</span>
+        <span class="valori">#236C80 su #F7F8F5 <span class="rapporto ok">5,58:1</span> &middot; #E8B86A su #191E1D <span class="rapporto ok">9,23:1</span></span>
       </div>
     </div>
   </div>
@@ -399,11 +399,11 @@
     mattone <code>#bc4a61</code>, che con quel codice non c'entrava nulla e per giunta dava
     3,33:1.</p>
 
-  <p>Lo stile predefinito, <code>Styles/RoccobotOS154.css</code>, ha l'intestazione delle tabelle verde,
+  <p>Lo stile predefinito, <code>Styles/RoccobotOS155.css</code>, ha l'intestazione delle tabelle verde,
     tenue in tema chiaro e scura in tema scuro, l'indice su fondo verde con la voce attiva in verde scuro
-    e in grassetto, <strong>senza barra laterale</strong> in entrambi i temi, e gli H2 senza filo. Il codice, in riga e a blocchi, ha in entrambi i temi la stessa forma: <strong>senza bordo, nel carattere del testo</strong>, angoli di 8 px in riga e di 16 px nei blocchi, blocchi larghi quanto serve, riquadro in riga di peso 500 con margine verticale in em, icona di copia nello stesso punto. In tema
-    scuro è un riquadro <strong>verde salvia pieno <code>#92A279</code></strong>, con testo e icona di copia <strong>verde quasi nero</strong> <code>#0A1A12</code>, che su quel fondo
-    dà <span class="rapporto ok">6,56:1</span> (il bianco della 1.50 dava solo 2,74:1). In tema chiaro, dalla 1.54, il riquadro è <strong>verde acqua <code>#00727B</code></strong> con testo e icona di copia <strong>bianchi</strong> (<span class="rapporto ok">5,69:1</span>, il massimo possibile con il bianco su quel fondo), che sul fondo pagina dà <span class="rapporto ok">5,33:1</span> e sull'indice <code>#E6F4EF</code> <span class="rapporto ok">5,02:1</span>. Il riquadro è identico nei due temi in tutto tranne il colore: stesso peso, stesso carattere, stesse misure, nessun bordo, stessa interlinea. È la regola anti-jitter: il cambio tema non deve spostare nulla (misurato su ogni elemento a 1440, 900 e 390 px, differenze zero). Il codice ha il 90% del
+    e in grassetto, <strong>senza barra laterale</strong> in entrambi i temi, e gli H2 senza filo. Il codice, in riga e a blocchi, ha in entrambi i temi la stessa forma: <strong>senza bordo, nel carattere del testo</strong>, angoli di 8 px in riga e di 16 px nei blocchi, blocchi larghi quanto serve, riquadro in riga di peso 500 con margine verticale in em, icona di copia nello stesso punto, ma solo sui blocchi che non scorrono in orizzontale (dalla 1.55 gli altri non la mostrano e non hanno barra di scorrimento visibile; il doppio clic copia su tutti). In tema
+    scuro il codice in riga è un riquadro <strong>verde salvia pieno <code>#92A279</code></strong> con testo <strong>verde quasi nero</strong> <code>#0A1A12</code>, che su quel fondo
+    dà <span class="rapporto ok">6,56:1</span> (il bianco della 1.50 dava solo 2,74:1); dalla 1.55 i <strong>blocchi di codice</strong> in tema scuro sono <strong>verde oliva <code>#3D4639</code></strong> con testo e icona di copia <strong>chiari</strong> <code>#F7F8F5</code> (<span class="rapporto ok">9,23:1</span>), e il blocco sul fondo pagina <code>#191E1D</code> dà 1,71:1 (lo distingue la forma, il fondo da solo no). In tema chiaro, dalla 1.54, il riquadro è <strong>verde acqua <code>#00727B</code></strong> con testo e icona di copia <strong>bianchi</strong> (<span class="rapporto ok">5,69:1</span>, il massimo possibile con il bianco su quel fondo), che sul fondo pagina dà <span class="rapporto ok">5,33:1</span> e sull'indice <code>#E6F4EF</code> <span class="rapporto ok">5,02:1</span>. Il riquadro è identico nei due temi in tutto tranne il colore: stesso peso, stesso carattere, stesse misure, nessun bordo, stessa interlinea. È la regola anti-jitter: il cambio tema non deve spostare nulla (misurato su ogni elemento a 1440, 900 e 390 px, differenze zero). Il codice ha il 90% del
     corpo del testo che lo circonda, in riga e a blocchi, in entrambi i temi. Anche l'esempio del file plist è un normale blocco
     di codice. Il riquadro in riga ha il peso 500 e il
     margine verticale in em (<code>.264em</code> sopra e <code>.286em</code> sotto, 1,25 volte il corpo in
@@ -421,8 +421,8 @@
       </div>
       <div class="scheda-piede">
         <span class="scheda-nome">codice-1.54</span>
-        <span class="scheda-ruolo">&lt;code&gt; e &lt;pre&gt;, compreso l'esempio plist; testo al 90% del corpo; stessa forma nei due temi: senza filo, nel carattere del testo, peso 500 in riga, raggio 8 px in riga e 16 px nei blocchi, blocchi larghi quanto serve; margine verticale del riquadro in riga in em, .264em sopra e .286em sotto; stessa interlinea e stessa altezza di pagina nei due temi; tema scuro verde salvia pieno #92A279 con testo #0A1A12, tema chiaro verde acqua #00727B con testo #FFFFFF</span>
-        <span class="valori">#FFFFFF su #00727B <span class="rapporto ok">5,69:1</span> &middot; #00727B su #F7F8F5 <span class="rapporto ok">5,33:1</span> &middot; #00727B su #E6F4EF <span class="rapporto ok">5,02:1</span> &middot; #0A1A12 su #92A279 <span class="rapporto ok">6,56:1</span> (scuro)</span>
+        <span class="scheda-ruolo">&lt;code&gt; e &lt;pre&gt;, compreso l'esempio plist; testo al 90% del corpo; stessa forma nei due temi: senza filo, nel carattere del testo, peso 500 in riga, raggio 8 px in riga e 16 px nei blocchi, blocchi larghi quanto serve; margine verticale del riquadro in riga in em, .264em sopra e .286em sotto; stessa interlinea e stessa altezza di pagina nei due temi; tema scuro: in riga verde salvia pieno #92A279 con testo #0A1A12, nei blocchi (dalla 1.55) verde oliva #3D4639 con testo #F7F8F5; tema chiaro verde acqua #00727B con testo #FFFFFF</span>
+        <span class="valori">#FFFFFF su #00727B <span class="rapporto ok">5,69:1</span> &middot; #00727B su #F7F8F5 <span class="rapporto ok">5,33:1</span> &middot; #00727B su #E6F4EF <span class="rapporto ok">5,02:1</span> &middot; #0A1A12 su #92A279 <span class="rapporto ok">6,56:1</span> (scuro, in riga) &middot; #F7F8F5 su #3D4639 <span class="rapporto ok">9,23:1</span> (scuro, blocchi)</span>
       </div>
     </div>
     <div class="scheda">
@@ -516,23 +516,23 @@
     <div class="scheda">
       <div class="facce">
         <div class="faccia chiara" style="color:#FFFFFF;background:#00727B"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="3"/><path d="M4 16a2 2 0 0 1-2-2V5a3 3 0 0 1 3-3h9a2 2 0 0 1 2 2"/></svg></div>
-        <div class="faccia scura" style="color:#0A1A12;background:#92A279"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="3"/><path d="M4 16a2 2 0 0 1-2-2V5a3 3 0 0 1 3-3h9a2 2 0 0 1 2 2"/></svg></div>
+        <div class="faccia scura" style="color:#F7F8F5;background:#3D4639"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="3"/><path d="M4 16a2 2 0 0 1-2-2V5a3 3 0 0 1 3-3h9a2 2 0 0 1 2 2"/></svg></div>
       </div>
       <div class="scheda-piede">
         <span class="scheda-nome">copia-icona-1.54</span>
         <span class="scheda-ruolo">pulsante Copia di Prism: solo icona, senza riquadro, in alto a destra del blocco, nello stesso punto nei due temi; compare al passaggio o al fuoco, sempre visibile sui dispositivi senza mouse</span>
-        <span class="valori">#FFFFFF su #00727B <span class="rapporto ok">5,69:1</span> (chiaro) &middot; #0A1A12 su #92A279 <span class="rapporto ok">6,56:1</span> (scuro)</span>
+        <span class="valori">#FFFFFF su #00727B <span class="rapporto ok">5,69:1</span> (chiaro) &middot; #F7F8F5 su #3D4639 <span class="rapporto ok">9,23:1</span> (scuro)</span>
       </div>
     </div>
     <div class="scheda">
       <div class="facce">
         <div class="faccia chiara" style="background:#F7F8F5"><span style="display:inline-block;color:#FFFFFF;background:#00727B;outline:2px solid #0A1A12;outline-offset:2px;border-radius:.5rem;padding:.28rem .35rem">copiato</span></div>
-        <div class="faccia scura" style="background:#191E1D"><span style="display:inline-block;color:#0A1A12;background:#92A279;outline:2px solid #FFFFFF;outline-offset:2px;border-radius:.5rem;padding:.28rem .35rem">copiato</span></div>
+        <div class="faccia scura" style="background:#191E1D"><span style="display:inline-block;color:#F7F8F5;background:#3D4639;outline:2px solid #FFFFFF;outline-offset:2px;border-radius:.5rem;padding:.28rem .35rem">copiato</span></div>
       </div>
       <div class="scheda-piede">
         <span class="scheda-nome">copia-contorno-1.54</span>
         <span class="scheda-ruolo">conferma del doppio clic sul codice: contorno di 2 px a 2 px dal riquadro, per 1,2 s; in tema scuro il contorno resta bianco, ben visibile sul fondo pagina (uno scuro vi sparirebbe); in tema chiaro è verde quasi nero, visibile sul fondo pagina e sul riquadro verde acqua</span>
-        <span class="valori">#0A1A12 su #F7F8F5 <span class="rapporto ok">16,85:1</span> &middot; #0A1A12 su #00727B <span class="rapporto ok">3,16:1</span> &middot; #FFFFFF su #191E1D <span class="rapporto ok">16,87:1</span> (scuro)</span>
+        <span class="valori">#0A1A12 su #F7F8F5 <span class="rapporto ok">16,85:1</span> &middot; #0A1A12 su #00727B <span class="rapporto ok">3,16:1</span> &middot; #FFFFFF su #191E1D <span class="rapporto ok">16,87:1</span> &middot; #FFFFFF su #3D4639 <span class="rapporto ok">9,84:1</span> (scuro)</span>
       </div>
     </div>
     <div class="scheda">
