@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="Styles/RoccobotOS149.css" data-site-style>
+  <link rel="stylesheet" href="Styles/RoccobotOS150.css" data-site-style>
   <link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
   <link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
@@ -2546,14 +2546,23 @@
       <ol>
         <li>Aprire un editor testuale e inserire il seguente codice:</li>
       </ol>
-      <div class="plist-box">
-        <small>&lt;?xml version="1.0" encoding="UTF-8"?&gt; &lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-          "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt; &lt;plist version="1.0"&gt; &lt;dict&gt;
-          &lt;key&gt;Label&lt;/key&gt;&lt;string&gt;NOMEAPP&lt;/string&gt; &lt;key&gt;ProgramArguments&lt;/key&gt;
-          &lt;array&gt; &lt;string&gt;/usr/bin/open&lt;/string&gt; &lt;string&gt;-a&lt;/string&gt;
-          &lt;string&gt;/Applications/NOMEAPP.app&lt;/string&gt; &lt;/array&gt;
-          &lt;key&gt;RunAtLoad&lt;/key&gt;&lt;true/&gt; &lt;/dict&gt; &lt;/plist&gt;</small>
-      </div>
+      <pre><code class="language-plain_text">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
+&lt;plist version="1.0"&gt;
+&lt;dict&gt;
+  &lt;key&gt;Label&lt;/key&gt;
+  &lt;string&gt;NOMEAPP&lt;/string&gt;
+  &lt;key&gt;ProgramArguments&lt;/key&gt;
+  &lt;array&gt;
+    &lt;string&gt;/usr/bin/open&lt;/string&gt;
+    &lt;string&gt;-a&lt;/string&gt;
+    &lt;string&gt;/Applications/NOMEAPP.app&lt;/string&gt;
+  &lt;/array&gt;
+  &lt;key&gt;RunAtLoad&lt;/key&gt;
+  &lt;true/&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;
+</code></pre>
       <ol start="2">
         <li>
           <p>Al posto di <strong>NOMEAPP</strong>, inserire il nome dell'applicazione; verificare che il percorso sia

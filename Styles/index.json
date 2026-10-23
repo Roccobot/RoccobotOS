@@ -76,6 +76,13 @@
       "version": "1.49",
       "note": "The 1.48 style with every length in rem or em, so the page follows the browser text size; only 1px and 2px hairlines and the media query breakpoints stay in pixels.",
       "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
+    },
+    {
+      "file": "RoccobotOS150.css",
+      "name": "RoccobotOS",
+      "version": "1.50",
+      "note": "The 1.49 style (every length in rem or em) with flat sage code boxes and white text in the dark theme, code at 90% of the text, rounder tables and a rosé dark section title.",
+      "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
     }
   ]
 }

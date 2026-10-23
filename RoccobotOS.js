@@ -10,7 +10,7 @@
 // index.html nascono VUOTI: se questo script non gira il CSS li nasconde con :empty, invece di
 // mostrare una 'v' senza numero.
 !function () {
-  const VERSIONE = "4.22";
+  const VERSIONE = "4.23";
   // Due punti di resa, uno per formato: la pillola nell'angolo dell'indice su desktop,
   // il numero sopra il logo su mobile. A deciderlo è il CSS, qui si scrivono entrambi.
   for (const id of ["siteVersion", "tocVersion"]) {
@@ -322,12 +322,12 @@
   });
 }(),
 // ── Doppio clic sul codice: copia il testo ──
-// Vale per il codice in riga, per i blocchi <pre> e per i
-// .plist-box, in entrambi i temi. Un solo ascoltatore delegato sul documento: i blocchi li
+// Vale per il codice in riga e per i blocchi <pre>, in entrambi i temi. Un solo ascoltatore delegato sul documento: i blocchi li
 // crea Prism dopo il caricamento, quindi agganciarsi a ogni elemento non basterebbe.
 // Il doppio clic seleziona tutto il codice (non la sola parola, come farebbe di suo) e ne
 // copia il testo: per i blocchi è il testo del solo <code>, senza il pulsante Copia, che sta
 // nella barra fuori dal <pre>. Se la copia fallisce la selezione resta, e Ctrl+C basta.
+// A copia riuscita compare anche l'avviso "Codice copiato" (vedi avvisoCopia qui sotto).
 !function () {
   const ESITO_MS = 1200;
   const timer = new WeakMap();
@@ -351,6 +351,46 @@
     return Promise.resolve(ripiego());
   };
 
+  // Avviso "Codice copiato": un solo elemento role=status creato subito (le aree live vanno
+  // nel DOM prima del testo, altrimenti gli screen reader non annunciano), fisso in basso al
+  // centro e fuori dal flusso, quindi senza spostare nulla. Lo stile è qui dentro perché vale
+  // per qualunque stile scelto: unità in rem/em, colori per tema chiaro e scuro, e con
+  // prefers-reduced-motion niente dissolvenza.
+  const AVVISO_MS = 1500;
+  const avvisoCopia = (() => {
+    const css = document.createElement("style");
+    css.textContent =
+      ".avviso-codice{position:fixed;left:0;right:0;bottom:calc(1.5rem + env(safe-area-inset-bottom));" +
+      "margin:0 auto;width:max-content;max-width:calc(100% - 2rem);box-sizing:border-box;padding:.5rem 1rem;" +
+      "border-radius:.75rem;font:500 .9375rem/1.4 system-ui,-apple-system,\"Segoe UI\",sans-serif;text-align:center;" +
+      "background:#16302A;color:#FFFFFF;box-shadow:0 .25rem 1rem rgba(0,0,0,.25);pointer-events:none;" +
+      "z-index:2147483000;opacity:0;visibility:hidden;transition:opacity .15s ease,visibility 0s linear .15s}" +
+      "html[data-theme=dark] .avviso-codice{background:#E6F0AF;color:#16302A}" +
+      ".avviso-codice.visibile{opacity:1;visibility:visible;transition:opacity .15s ease}" +
+      "@media (prefers-reduced-motion:reduce){.avviso-codice,.avviso-codice.visibile{transition:none}}";
+    document.head.appendChild(css);
+    const el = document.createElement("div");
+    el.className = "avviso-codice";
+    el.setAttribute("role", "status");
+    el.setAttribute("aria-live", "polite");
+    el.setAttribute("aria-atomic", "true");
+    document.body.appendChild(el);
+    let t1 = 0, t2 = 0;
+    return () => {
+      clearTimeout(t1); clearTimeout(t2);
+      el.textContent = "";
+      // Il testo arriva un attimo dopo lo svuotamento, così anche il secondo avviso di fila viene letto.
+      t1 = setTimeout(() => {
+        el.textContent = "Codice copiato";
+        el.classList.add("visibile");
+        t2 = setTimeout(() => {
+          el.classList.remove("visibile");
+          t2 = setTimeout(() => { el.textContent = "" }, 250);
+        }, AVVISO_MS);
+      }, 30);
+    };
+  })();
+
   // Conferma visiva: contorno breve sul riquadro (nessuna animazione, quindi niente da
   // spegnere con prefers-reduced-motion) e, per i blocchi, la spunta sul pulsante di Prism.
   const segnala = riquadro => {
@@ -365,17 +405,16 @@
   };
 
   document.addEventListener("dblclick", ev => {
-    const el = ev.target.closest?.("code, .plist-box");
+    const el = ev.target.closest?.("code");
     if (!el || el.closest("a")) return;
     const riquadro = el.closest("pre") || el;
-    // Il .plist-box nasce con a capo e rientro del sorgente HTML: si tolgono. Il codice in
-    // riga resta com'è (uno spazio può essere il contenuto stesso), ai blocchi si leva il
-    // solo a capo finale.
-    const testo = el.classList.contains("plist-box") ? el.textContent.trim() : el.textContent.replace(/\n$/, "");
+    // Il codice in riga resta com'è (uno spazio può essere il contenuto stesso), ai blocchi si
+    // leva il solo a capo finale.
+    const testo = el.textContent.replace(/\n$/, "");
     const seleziona = () => window.getSelection().selectAllChildren(el);
     seleziona();
     // La copia di riserva passa da un campo di testo e perde la selezione: si rifà dopo.
-    copiaTesto(testo).then(ok => { seleziona(); if (ok) segnala(riquadro) });
+    copiaTesto(testo).then(ok => { seleziona(); if (ok) { segnala(riquadro); avvisoCopia() } });
   });
 }(),
 document.addEventListener("DOMContentLoaded",()=>{const t=document.getElementById("markdown_content");if(!t)return;const e=t.querySelectorAll("h1,h2,h3,h4,h5,h6");const n=new Set;t.querySelectorAll("[id]").forEach(t=>{t.id&&n.add(t.id)}),e.forEach(t=>{if(t.id&&!/^mweb_tt_id_\d+$/.test(t.id))return void n.add(t.id);let e=function(t){if(!t)return"Section";const e=(""+t).trim();let n=e.replace(/[^A-Za-z0-9\u00C0-\u017F]+/g," ");if(n=n.replace(/\s+/g," ").trim(),!n)return"Section";const o=n.split(/\s+/),s=o.every(t=>t===t.toUpperCase());let r=e.replace(/[^\w\u00C0-\u017F]+/g,"_").replace(/^_+|_+$/g,"").replace(/_+/g,"_");if(r||(r=o.join("_")),s){let t=r.toUpperCase();return t=t.replace(/^[^A-Za-z]+/,""),t||(t="Section"),t}let a=o.map(t=>t.charAt(0).toUpperCase()+t.slice(1)).join("");return a=a.replace(/^[^A-Za-z]+/,""),a||(a="Section"),a}(t.getAttribute("data-heading-label")||t.textContent||t.innerText||""),o=e,s=2;for(;n.has(o);)o=e+"_"+s,s+=1;t.id=o,n.add(o)}),"undefined"!=typeof tocbot&&tocbot.init({tocSelector:"#mweb_toc_list_iid",contentSelector:"#markdown_content",headingSelector:"h1, h2, h3, h4, h5, h6",orderedList:!1,collapseDepth:6,scrollEndCallback:function(){const t=document.querySelector("#mweb_toc_list_iid li.is-active-li"),e=document.querySelector("#mweb_toc_list_iid>ul>li:first-child");if(e&&e.classList.contains("is-active-li")){const t=document.getElementById("mweb_toc_list_iid");return void(t&&(t.scrollTop=0))}t&&("function"==typeof t.scrollIntoViewIfNeeded?t.scrollIntoViewIfNeeded():t.scrollIntoView(!0))}})}),// ── Caricamento pigro delle immagini ──
@@ -393,7 +432,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // tutte le tabelle infilerebbe una quarantina di fermate inutili nel giro del Tab. La misura si
 // rifà al ridimensionamento, perché una tabella stretta può diventare larga e viceversa.
 document.addEventListener("DOMContentLoaded", () => {
-  const CANDIDATI = ".markdown-body table, .markdown-body pre, .markdown-body div > pre, .plist-box";
+  const CANDIDATI = ".markdown-body table, .markdown-body pre, .markdown-body div > pre";
   function sync() {
     document.querySelectorAll(CANDIDATI).forEach(el => {
       const ov = getComputedStyle(el).overflowX;
