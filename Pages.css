@@ -126,7 +126,7 @@ table {
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid var(--pg-bordo-cella);
-  border-radius: 8px;
+  border-radius: .5rem;
 }
 table tr th, table tr td, th, td {
   border: 0;
@@ -135,10 +135,10 @@ table tr th, table tr td, th, td {
 }
 table tr th:last-child, table tr td:last-child { border-right: 0 }
 table tr:last-child td { border-bottom: 0 }
-table thead tr:first-child th:first-child { border-top-left-radius: 7px }
-table thead tr:first-child th:last-child { border-top-right-radius: 7px }
-table tbody tr:last-child td:first-child { border-bottom-left-radius: 7px }
-table tbody tr:last-child td:last-child { border-bottom-right-radius: 7px }
+table thead tr:first-child th:first-child { border-top-left-radius: .4375rem }
+table thead tr:first-child th:last-child { border-top-right-radius: .4375rem }
+table tbody tr:last-child td:first-child { border-bottom-left-radius: .4375rem }
+table tbody tr:last-child td:last-child { border-bottom-right-radius: .4375rem }
 
 /* Colonne strette in grigio nelle tabelle a colonne ripetute: regola generale del progetto,
    spiegata per esteso in Styles/RoccobotOS140.css. Qui serve alle due tabelle dei caratteri, dove la
@@ -188,14 +188,14 @@ html[data-theme="light"] img[src$=".jpg"] { opacity: 1 }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 50%;
   border: 1px solid var(--pg-bordo);
   background: var(--pg-fondo);
   color: var(--pg-link);
   text-decoration: none;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, .18);
+  box-shadow: 0 .0625rem .25rem rgba(0, 0, 0, .18);
 }
 
 .pg-back:hover,
@@ -204,7 +204,7 @@ html[data-theme="light"] img[src$=".jpg"] { opacity: 1 }
 }
 
 .pg-back-glyph {
-  font-size: 20px;
+  font-size: 1.25rem;
   line-height: 1;
 }
 

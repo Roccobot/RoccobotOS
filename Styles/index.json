@@ -69,6 +69,13 @@
       "version": "1.48",
       "note": "The 1.47 style with the dark inline code box sized in em, medium weight, and table rows 2px taller at the default size.",
       "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
+    },
+    {
+      "file": "RoccobotOS149.css",
+      "name": "RoccobotOS",
+      "version": "1.49",
+      "note": "The 1.48 style with every length in rem or em, so the page follows the browser text size; only 1px and 2px hairlines and the media query breakpoints stay in pixels.",
+      "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
     }
   ]
 }

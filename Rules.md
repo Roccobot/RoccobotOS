@@ -23,7 +23,7 @@
 - ⚠️ **Deroghe dichiarate alle regole di sviluppo** (`Roccobot.md` § '🏗️ Sviluppo software'):
   la **lingua del sito è l'italiano**, perché è un riferimento personale e non un prodotto per un
   pubblico anglofono; il numero di versione è in cima per scelta dell'utente.
-- **Struttura.** `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS148.css`, gli altri dal selettore); quattro sotto-pagine
+- **Struttura.** `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS149.css`, gli altri dal selettore); quattro sotto-pagine
   (`Characters.html`, `Formats.html`, `AdServers.html`, `BlendModes.html`) con `Pages.css` e
   `Pages.js`; la styleguide in `Styleguide.html`.
   - ⚠️ **Nomi dei file in inglese, testi visibili in italiano**: sono due scelte indipendenti

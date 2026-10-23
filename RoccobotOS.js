@@ -10,7 +10,7 @@
 // index.html nascono VUOTI: se questo script non gira il CSS li nasconde con :empty, invece di
 // mostrare una 'v' senza numero.
 !function () {
-  const VERSIONE = "4.21";
+  const VERSIONE = "4.22";
   // Due punti di resa, uno per formato: la pillola nell'angolo dell'indice su desktop,
   // il numero sopra il logo su mobile. A deciderlo è il CSS, qui si scrivono entrambi.
   for (const id of ["siteVersion", "tocVersion"]) {
@@ -254,7 +254,7 @@
     if (!el) return;
     el.style.opacity = "0";
     el.style.pointerEvents = "none";
-    el.style.transform = "translateX(var(--hide-shift,16px))";
+    el.style.transform = "translateX(var(--hide-shift,1rem))";
   }
   function aiBordi() {
     const d = document.documentElement, b = document.body;
