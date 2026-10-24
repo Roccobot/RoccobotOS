@@ -15,10 +15,10 @@
       "comment": "Light and dark colours with the original responsive layout."
     },
     {
-      "file": "RoccobotOS168.css",
+      "file": "RoccobotOS169.css",
       "name": "RoccobotOS",
-      "version": "1.68",
-      "note": "The 1.67 style with the Fn globe back on the centre of its inline code box and a slightly desaturated dark inline code box #6CBC88.",
+      "version": "1.69",
+      "note": "The 1.68 style with the Mission Control key inside inline code, .875em tall and centred in the box.",
       "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
     }
   ]

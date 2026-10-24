@@ -292,7 +292,7 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
 - **Deroga dichiarata alle regole di sviluppo**: la lingua del sito è l'italiano (i nomi dei
   file sono in inglese, i testi visibili in italiano); la versione è in cima (`Rules.md`, prima
   sezione).
-- **Struttura**: `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS168.css`, gli altri dal selettore); quattro sotto-pagine
+- **Struttura**: `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS169.css`, gli altri dal selettore); quattro sotto-pagine
   (`Characters.html`, `Formats.html`, `AdServers.html`, `BlendModes.html`) con `Pages.css` e
   `Pages.js`; la styleguide in `Styleguide.html`. I file sono alla radice del repo, anche dove
   un testo vecchio li nomina col prefisso `RoccobotOS/` di quando il sito era una cartella dell'hub.
@@ -347,7 +347,7 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   hanno sostituito; allineamento verticale al centro di una maiuscola, con `translateY` e un
   `--nudge` ottico che dà l'utente in pixel a DPR 2, da convertire in em sul corpo del contesto
   (16 px nel testo, 14,4 nelle tabelle). La taratura si legge nel CSS (`Rules.md` § '🖼️ Le iconcine del testo: SVG che seguono il colore').
-- **Fn nelle scorciatoie**: dentro `<code>` è il globo SVG (`ic-fn`, `aria-label` e `<title>` Fn, così la copia col doppio clic dà ancora `Fn`; dalla `1.68` al centro verticale del riquadro, `vertical-align: -.161em`), legato al carattere che segue da uno `<span style="white-space:nowrap">`, senza il quale le celle strette vanno a capo (`Rules.md` § '🖼️ Le iconcine del testo: SVG che seguono il colore').
+- **Fn nelle scorciatoie**: dentro `<code>` è il globo SVG (`ic-fn`, `aria-label` e `<title>` Fn, così la copia col doppio clic dà ancora `Fn`; dalla `1.68` al centro verticale del riquadro, `vertical-align: -.161em`; dalla `1.69` anche il tasto Mission Control dopo `⌘`, alto .875em con `vertical-align: -.099em`), legato al carattere che segue da uno `<span style="white-space:nowrap">`, senza il quale le celle strette vanno a capo (`Rules.md` § '🖼️ Le iconcine del testo: SVG che seguono il colore').
 - **Un'icona di 16 px si giudica sui pixel veri**, e quando la sua forma viene respinta due
   volte si chiede l'asset all'utente. Un SVG da Illustrator si bonifica e si confronta col
   grezzo a rendering, controllando che le due immagini si siano caricate (`Rules.md` § '🖼️ Le iconcine del testo: SVG che seguono il colore').

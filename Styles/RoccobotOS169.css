@@ -1,7 +1,7 @@
 /*
 #NAME: RoccobotOS
-#VERSION: 1.68
-#NOTE: The 1.67 style with the Fn globe back on the centre of its inline code box and a slightly desaturated dark inline code box #6CBC88.
+#VERSION: 1.69
+#NOTE: The 1.68 style with the Mission Control key inside inline code, .875em tall and centred in the box.
 #COMMENT: Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches.
 */
 
@@ -1215,6 +1215,12 @@ html[data-theme=dark] .mweb_toc_wrap_ct a.toc-link {
 /* The Fn globe inside inline code (from 1.65): 1em tall from its height attribute, so it fits the box without changing it. The box is trimmed to the capitals, so its centre hangs from the baseline; the globe is placed from the baseline with a length instead of middle, which depends on the x-height and differs between engines. In 1.66 -.164em put its centre on the centre of the padding box (within .05px in Chromium and WebKit); in 1.67 -.095em put it 1px higher at 14.4px, which the user rejected; from 1.68 it is -.161em, back on the centre (.003em above it). The arrows next to it are text and do not move. */
 .ic-fn {
   vertical-align: -.161em;
+  --nudge: 0;
+}
+
+/* The Mission Control key inside inline code (from 1.69): .875em tall from its height attribute, so its full-height drawing fits the box without changing it (12.6px in a 17.8px box at 14.4px); placed from the baseline like the Fn globe, -.099em puts its centre on the centre of the box (within .08px in Chromium and WebKit). */
+code .ic-mission {
+  vertical-align: -.099em;
   --nudge: 0;
 }
 

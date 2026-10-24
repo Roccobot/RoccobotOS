@@ -23,7 +23,7 @@
 - ⚠️ **Deroghe dichiarate alle regole di sviluppo** (`Roccobot.md` § '🏗️ Sviluppo software'):
   la **lingua del sito è l'italiano**, perché è un riferimento personale e non un prodotto per un
   pubblico anglofono; il numero di versione è in cima per scelta dell'utente.
-- **Struttura.** `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS168.css`, gli altri dal selettore); quattro sotto-pagine
+- **Struttura.** `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS169.css`, gli altri dal selettore); quattro sotto-pagine
   (`Characters.html`, `Formats.html`, `AdServers.html`, `BlendModes.html`) con `Pages.css` e
   `Pages.js`; la styleguide in `Styleguide.html`.
   - ⚠️ **Nomi dei file in inglese, testi visibili in italiano**: sono due scelte indipendenti
@@ -283,6 +283,11 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
   - **Nella `1.67` il globo stava 1 px più su** (`-.095em`) e l'utente l'ha respinto: dalla
     `1.68` è `vertical-align: -.161em`, di nuovo al centro (.003em sopra), e il test vuole lo
     scarto sotto .25 px.
+  - **Dalla `1.69` anche il tasto Mission Control sta nel codice in riga**, dopo `⌘` (Mostra
+    Scrivania): alto .875em dal suo attributo `height` (12,6 px nel riquadro di 17,8 px a 14,4 px,
+    perché il disegno occupa tutta l'altezza), `code .ic-mission { vertical-align: -.099em; }`
+    lo mette al centro (sotto .08 px in Chromium e WebKit) e il riquadro resta alto come quelli
+    col solo testo. Il test controlla altezza, centro e riga singola.
   - ⚠️ **Il globo e il carattere che lo segue stanno in uno `<span style="white-space:nowrap">`**:
     un SVG in riga apre un punto di a capo che il testo Fn non aveva, e senza lo span le celle
     strette andavano a capo dopo il globo (+23,6 px di riga). Con lo span altezze e posizioni di
