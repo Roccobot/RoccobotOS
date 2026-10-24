@@ -15,10 +15,10 @@
       "comment": "Light and dark colours with the original responsive layout."
     },
     {
-      "file": "RoccobotOS157.css",
+      "file": "RoccobotOS158.css",
       "name": "RoccobotOS",
-      "version": "1.57",
-      "note": "The 1.56 style with paler mint code blocks and raspberry h1 titles in the light theme.",
+      "version": "1.58",
+      "note": "The 1.57 style with pale aqua inline code and dark teal text in the light theme.",
       "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
     }
   ]

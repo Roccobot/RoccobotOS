@@ -1,7 +1,7 @@
 /*
 #NAME: RoccobotOS
-#VERSION: 1.57
-#NOTE: The 1.56 style with paler mint code blocks and raspberry h1 titles in the light theme.
+#VERSION: 1.58
+#NOTE: The 1.57 style with pale aqua inline code and dark teal text in the light theme.
 #COMMENT: Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches.
 */
 
@@ -242,7 +242,7 @@ html[data-theme=dark] .markdown-body pre code {
   color: inherit;
 }
 
-/* Code boxes have the same shape in both themes: no border (the width is 0, so the light border colour #43B59E is kept but not drawn), the text font, 8px corners in line and 16px in blocks, and blocks only as wide as their longest line. The light inline box is teal #0A787F with white text (5.24:1), 4.92:1 on the page #F7F8F5 and 4.63:1 on the light index. The light block is a very pale mint #C1DDD3 with near black text #06120C (13.23:1); the block is 1.35:1 against the page, 1.27:1 against the index and the grey table rows, 1.17:1 against narrow cells and 1.01:1 against the table header (there the shape tells them apart), and the inline teal is 3.63:1 against the block. Every size, weight, font and line height is the same in both themes, so switching theme never moves the layout: only colours differ. The leading html raises the specificity over the base rules further down the sheet. */
+/* Code boxes have the same shape in both themes: no border (the width is 0, so the light border colour #43B59E is kept but not drawn), the text font, 8px corners in line and 16px in blocks, and blocks only as wide as their longest line. The light inline box is a pale aqua #ABD3D5 with dark teal text #1C595D (4.93:1); the box is 1.51:1 on the page #F7F8F5, 1.43:1 on the light index, 1.13:1 on the table header and 1.12:1 on the blocks. The light block is a very pale mint #C1DDD3 with near black text #06120C (13.23:1); the block is 1.35:1 against the page, 1.27:1 against the index and the grey table rows, 1.17:1 against narrow cells and 1.01:1 against the table header (there the shape tells them apart), and the inline box is 1.12:1 against the block. Every size, weight, font and line height is the same in both themes, so switching theme never moves the layout: only colours differ. The leading html raises the specificity over the base rules further down the sheet. */
 html .markdown-body code,html .markdown-body pre,html .markdown-body .highlight pre {
   border-width: 0;
   font-family: inherit;
@@ -796,8 +796,8 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
   padding: .1rem .35rem;
   margin: 0;
   font-size: 90%;
-  background-color: #0A787F;
-  color: #FFFFFF;
+  background-color: #ABD3D5;
+  color: #1C595D;
   border: 1px solid #43B59E;
   border-radius: .25rem;
 }
@@ -912,7 +912,7 @@ pre[class*=language-] {
 }
 
 :not(pre)>code[class*=language-] {
-  background-color: #0A787F;
+  background-color: #ABD3D5;
 }
 
 pre[class*=language-] {
@@ -1066,7 +1066,7 @@ html div.code-toolbar>.toolbar {
 
 }
 
-/* Visual confirmation after a double click copy on code. The outline sits outside the box, in the gap on the page. In light it is #0A1A12: 16.85:1 on the page #F7F8F5 and 12.44:1 on the mint block #C1DDD3, so it shows on both. In the dark theme the ring stays white: 16.87:1 on the page #191E1D and 9.84:1 on the olive block #3D4639. */
+/* Visual confirmation after a double click copy on code. The outline sits outside the box, in the gap on the page. In light it is #0A1A12: 16.85:1 on the page #F7F8F5, 12.44:1 on the mint block #C1DDD3 and 11.13:1 on the inline box #ABD3D5, so it shows on all of them. In the dark theme the ring stays white: 16.87:1 on the page #191E1D and 9.84:1 on the olive block #3D4639. */
 .markdown-body .copiato {
   outline: 2px solid #0A1A12;
   outline-offset: .13158em;
