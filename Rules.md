@@ -23,7 +23,7 @@
 - ⚠️ **Deroghe dichiarate alle regole di sviluppo** (`Roccobot.md` § '🏗️ Sviluppo software'):
   la **lingua del sito è l'italiano**, perché è un riferimento personale e non un prodotto per un
   pubblico anglofono; il numero di versione è in cima per scelta dell'utente.
-- **Struttura.** `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS170.css`, gli altri dal selettore); quattro sotto-pagine
+- **Struttura.** `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS171.css`, gli altri dal selettore); quattro sotto-pagine
   (`Characters.html`, `Formats.html`, `AdServers.html`, `BlendModes.html`) con `Pages.css` e
   `Pages.js`; la styleguide in `Styleguide.html`.
   - ⚠️ **Nomi dei file in inglese, testi visibili in italiano**: sono due scelte indipendenti
@@ -296,6 +296,11 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
   chiaro o `#384541` in scuro, nessuno spostamento). Non aggiunge voci alla cronologia. I richiami
   senza `id` ricevono `rif-NotaN-k`. Una nota senza richiami (oggi `NotaFTop`, in un titolo come
   `NotaVar`) non ha `↩`. Le note si scrivono a mano senza `↩`: lo mette lo script.
+- **Tabelle dalla `1.71`** (pagina 4.44): angoli `.5rem` (prima `1rem`), uguali nei due temi. Sotto
+  i 600 px nessuna barra di scorrimento orizzontale nelle tabelle (scorrono col tocco), la cella
+  `cell-extra-line` tiene il margine sotto di una riga e resta al centro, e l'indice
+  (`table.index-grid`) va a capo con margini `.5rem .375rem` ed entra intero a 390 px. Il test
+  controlla i tre punti a 390.
   - ⚠️ **Il globo e il carattere che lo segue stanno in uno `<span style="white-space:nowrap">`**:
     un SVG in riga apre un punto di a capo che il testo Fn non aveva, e senza lo span le celle
     strette andavano a capo dopo il globo (+23,6 px di riga). Con lo span altezze e posizioni di

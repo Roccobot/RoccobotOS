@@ -1,7 +1,7 @@
 /*
 #NAME: RoccobotOS
-#VERSION: 1.70
-#NOTE: The 1.69 style with a back link at the end of each note and a short flash on the row it returns to.
+#VERSION: 1.71
+#NOTE: The 1.70 style with tables half as rounded, and on phones a centred Tasti funzione cell, no table scrollbars and an index table that fits.
 #COMMENT: Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches.
 */
 
@@ -399,6 +399,29 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
     font-size: .65rem;
   }
 
+  /* From 1.71 a table that overflows on a phone scrolls by touch with no visible bar, like the code blocks. */
+  html[data-tables=standard] .markdown-body table {
+    scrollbar-width: none;
+  }
+
+  html[data-tables=standard] .markdown-body table::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* A cell-extra-line cell opens with a br, an empty line that the extra bottom padding balances above 600px. The phone padding above dropped that balance and the content sat at the bottom; from 1.71 one line of the cell (1lh) is added back, so it is centred (within 1.6px in Chromium and WebKit). */
+  html[data-tables=standard] .markdown-body table td.cell-extra-line {
+    padding-bottom: calc(.125rem + 1lh);
+  }
+
+  /* From 1.71 the index table fits a 390px screen: the links are .5rem by .375rem instead of .75rem by .9rem and may wrap. */
+  html[data-tables=standard] .markdown-body table.index-grid td {
+    white-space: normal;
+  }
+
+  html[data-tables=standard] .markdown-body table.index-grid td a {
+    padding: .5rem .375rem;
+  }
+
   html[data-tables=cards] .markdown-body table thead {
     display: none;
   }
@@ -421,7 +444,7 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
     margin: 0 auto .75rem;
     padding: .375rem .625rem .375rem 1rem;
     border: 1px solid #d0d0d0;
-    border-radius: .5rem;
+    border-radius: .25rem;
     background-color: #F8F7F2;
     position: relative;
     box-shadow: 0 .06945em .13889em rgba(0,0,0,.04);
@@ -438,7 +461,7 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
     bottom: .125rem;
     width: .1875rem;
     background-color: #43b59e;
-    border-radius: .5rem 0 0 .5rem;
+    border-radius: .25rem 0 0 .25rem;
   }
 
   html[data-tables=cards] .markdown-body table td {
@@ -1616,12 +1639,12 @@ html[data-theme=dark] .skip-link {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Tables have 1rem corners. The table is a scroll box, so its overflow clips the cell fills to the curve, and the corner cells carry the inner radius (1rem less the 1px border) so the header row and the borders follow it. */
+/* Tables have .5rem corners (1rem until 1.70, halved in 1.71 in both themes). The table is a scroll box, so its overflow clips the cell fills to the curve, and the corner cells carry the inner radius (.5rem less the 1px border) so the header row and the borders follow it. */
 .markdown-body table {
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid #C8D1CA;
-  border-radius: 1rem;
+  border-radius: .5rem;
   width: fit-content;
 }
 
@@ -1644,19 +1667,19 @@ html[data-tables=standard] .markdown-body table {
 }
 
 .markdown-body table thead tr:first-child th:first-child {
-  border-top-left-radius: .9375rem;
+  border-top-left-radius: .4375rem;
 }
 
 .markdown-body table thead tr:first-child th:last-child {
-  border-top-right-radius: .9375rem;
+  border-top-right-radius: .4375rem;
 }
 
 .markdown-body table tbody tr:last-child td:first-child {
-  border-bottom-left-radius: .9375rem;
+  border-bottom-left-radius: .4375rem;
 }
 
 .markdown-body table tbody tr:last-child td:last-child {
-  border-bottom-right-radius: .9375rem;
+  border-bottom-right-radius: .4375rem;
 }
 
 html[data-theme=dark] .markdown-body table {
@@ -1684,7 +1707,7 @@ html[data-theme=dark] .markdown-body table th {
 }
 
 .markdown-body table tbody tr:nth-last-child(2) td[rowspan="2"]:last-child {
-  border-bottom-right-radius: .9375rem;
+  border-bottom-right-radius: .4375rem;
 }
 
 .markdown-body table tbody tr td.not-last-col:last-child {

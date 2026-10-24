@@ -16,7 +16,7 @@ async function check(name, action) { await action(); results.push(name); }
       await page.goto(url,{waitUntil:'domcontentloaded'});
       const trigger=page.locator(width>860?'#tocVersion':'#siteVersion');
       await trigger.waitFor({state:'visible'});
-      await check(`${width}/${theme}: 1.70 is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS170.css'));
+      await check(`${width}/${theme}: 1.71 is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS171.css'));
       await check(`${width}/${theme}: table header stands apart from body and narrow cells`,async()=>{
         const fills=await page.evaluate(()=>{const bg=e=>getComputedStyle(e).backgroundColor;const t=document.querySelector('.markdown-body table.narrow-cols-odd, .markdown-body table.narrow-cols-even');return {th:bg(t.querySelector('th')),row:bg(t.querySelector('tbody tr')),narrow:bg(t.querySelector(t.classList.contains('narrow-cols-odd')?'tbody td:nth-child(odd)':'tbody td:nth-child(2n)'))};});
         assert.notEqual(fills.th,fills.row); assert.notEqual(fills.th,fills.narrow);
@@ -183,7 +183,7 @@ async function check(name, action) { await action(); results.push(name); }
         assert.equal(lines[lines.length-1],'');
         assert.equal(lines[8],'    <string>/usr/bin/open</string>');
       });
-      await check(`${width}/${theme}: inline code is green in dark and peach in light, dark blocks are green grey with light text, tables have 1rem corners`,async()=>{
+      await check(`${width}/${theme}: inline code is green in dark and peach in light, dark blocks are green grey with light text, tables have .5rem corners`,async()=>{
         const r=await page.evaluate(()=>{const g=e=>getComputedStyle(e);const ic=[...document.querySelectorAll('#markdown_content code')].find(e=>!e.closest('pre,a')&&e.parentElement.tagName==='P');const pre=document.querySelector('#markdown_content pre');const h=document.querySelector('a#SezioneSistema').closest('h1');const t=document.querySelector('#markdown_content table:not(.index-grid)');const h1o=[...document.querySelectorAll('#markdown_content h1')].find(e=>!e.querySelector('#SezioneSistema,#ScorciatoieApp'));const ap=document.querySelector('a#ScorciatoieApp').closest('h1');return {body:g(document.querySelector('#markdown_content p')).color,hfs:g(h).fontSize+'/'+g(ap).fontSize+'/'+g(ap).color,h1fs:g(h1o).fontSize+'/'+g(h1o).fontSize+'/'+g(h).color,ib:g(ic).backgroundColor,ic:g(ic).color,ibw:g(ic).borderTopWidth,pb:g(pre).backgroundColor,pc:g(pre).color,pbw:g(pre).borderTopWidth,h:g(h).color,rad:g(t).borderTopLeftRadius,tables:document.documentElement.dataset.tables}});
         if(theme==='dark'){
           assert.equal(r.ib,'rgb(108, 188, 136)');assert.equal(r.pb,'rgb(56, 69, 65)');
@@ -195,7 +195,11 @@ async function check(name, action) { await action(); results.push(name); }
           assert.equal(r.pb,'rgb(234, 241, 232)');assert.equal(r.pc,'rgb(6, 18, 12)');
           assert.equal(r.ibw,'0px');assert.equal(r.pbw,'0px');
         }
-        if(r.tables!=='cards')assert.equal(r.rad,'16px');
+        if(r.tables!=='cards')assert.equal(r.rad,'8px');
+      });
+      if(width===390)await check(`${width}/${theme}: 1.71 on a phone the index table fits, tables show no scrollbar and the Tasti funzione cell is centred`,async()=>{
+        const r=await page.evaluate(()=>{const t=document.querySelector('#markdown_content table.index-grid');const td=[...document.querySelectorAll('td.cell-extra-line')].find(e=>e.textContent.includes('tasti Mac'));const b=td.getBoundingClientRect();const cs=[...td.querySelectorAll('code')].map(c=>c.getBoundingClientRect());return {fit:t.scrollWidth<=t.clientWidth,right:t.getBoundingClientRect().right<=innerWidth,bars:[...document.querySelectorAll('#markdown_content table')].every(e=>getComputedStyle(e).scrollbarWidth==='none'),off:Math.abs((Math.min(...cs.map(c=>c.top))-b.top)-(b.bottom-Math.max(...cs.map(c=>c.bottom))))}});
+        assert.ok(r.fit&&r.right,'index table fits');assert.ok(r.bars,'no table scrollbar');assert.ok(r.off<2.5,'Tasti funzione cell off centre by '+r.off);
       });
       await check(`${width}/${theme}: code boxes have the same shape in both themes (the Prism toolbar is rebuilt by hand because the CDN is blocked)`,async()=>{
         const r=await page.evaluate(()=>{const g=e=>getComputedStyle(e);const ic=[...document.querySelectorAll('#markdown_content code')].find(e=>!e.closest('pre,a,table')&&e.parentElement.tagName==='P');const pre=[...document.querySelectorAll('#markdown_content pre')].find(e=>e.textContent.includes('NOMEAPP</string>'));let wrap=pre.parentElement;if(!wrap.classList.contains('code-toolbar')){wrap=document.createElement('div');wrap.className='code-toolbar';pre.replaceWith(wrap);wrap.appendChild(pre);const t0=document.createElement('div');t0.className='toolbar';t0.innerHTML='<div class="toolbar-item"><button type="button" class="copy-to-clipboard-button"><span>Copy</span></button></div>';wrap.appendChild(t0);}const tb=wrap.querySelector('.toolbar');const btn=wrap.querySelector('button.copy-to-clipboard-button');const bb=g(btn);const rem=parseFloat(g(document.documentElement).fontSize);return {icb:[g(ic).borderTopWidth,g(ic).borderRadius,g(ic).fontFamily===g(ic.parentElement).fontFamily,g(ic).fontWeight],ibc:g(ic).borderTopColor,pb:[g(pre).borderTopWidth,g(pre).borderRadius,g(pre).fontFamily===g(wrap).fontFamily],pbc:g(pre).borderTopColor,wrapFit:g(wrap).width===Math.round(wrap.getBoundingClientRect().width*100)/100+'px'||Math.abs(wrap.getBoundingClientRect().width-pre.getBoundingClientRect().width)<1,narrower:wrap.getBoundingClientRect().width<=wrap.parentElement.getBoundingClientRect().width+.5,pr:parseFloat(g(pre).paddingRight)/rem,top:parseFloat(g(tb).top)/rem,right:parseFloat(g(tb).right)/rem,btn:{bg:bb.backgroundColor,shadow:bb.boxShadow,radius:bb.borderTopLeftRadius,color:bb.color,bw:bb.borderTopWidth},code:g(pre.querySelector('code')).fontFamily===g(pre).fontFamily&&!/mono/i.test(g(pre).fontFamily)}});
@@ -219,7 +223,7 @@ async function check(name, action) { await action(); results.push(name); }
       await check(`${width}/${theme}: three registered styles`,async()=>assert.equal(await page.getByRole('option').count(),3));
       await check(`${width}/${theme}: SlimVer names without Paper`,async()=>{
         const labels=await page.getByRole('option').allTextContents();
-        assert.deepEqual(labels,['RoccobotOS1.00','RoccobotOS1.42','RoccobotOS1.70']);
+        assert.deepEqual(labels,['RoccobotOS1.00','RoccobotOS1.42','RoccobotOS1.71']);
         assert.equal(await page.getByRole('link',{name:'Aggiungi uno stile'}).count(),0);
       });
       await page.getByRole('option').first().click();
@@ -230,7 +234,7 @@ async function check(name, action) { await action(); results.push(name); }
       });
       await check(`${width}/${theme}: typography and layout preserved`,async()=>assert.deepEqual(await page.locator('h1').first().evaluate(e=>({font:getComputedStyle(e).fontSize,width:e.getBoundingClientRect().width,padding:getComputedStyle(e).paddingBottom})),before));
       await list.press('Escape');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS170.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS171.css'));
       await check(`${width}/${theme}: Escape restores initial style and focus`,async()=>{
         assert.equal(await page.getByRole('dialog').isVisible(),false);
         assert.equal(await trigger.evaluate(e=>document.activeElement===e),true);
@@ -242,7 +246,7 @@ async function check(name, action) { await action(); results.push(name); }
       await check(`${width}/${theme}: keyboard selection commits on Enter`,async()=>assert.equal(await page.getByRole('dialog').isVisible(),false));
       await trigger.click();
       await list.press('End'); await list.press('Home'); await list.press('End');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS170.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS171.css'));
       await check(`${width}/${theme}: rapid selection leaves one active sheet`,async()=>assert.equal(await page.locator('link[data-site-style]').count(),1));
       await page.getByRole('button',{name:'Chiudi il selettore'}).click();
       await trigger.click();
@@ -250,7 +254,7 @@ async function check(name, action) { await action(); results.push(name); }
       await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS100.css'));
       await list.press('Enter');
       await page.reload({waitUntil:'domcontentloaded'});
-      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS170.css'));
+      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS171.css'));
       await check(`${width}/${theme}: no JavaScript errors`,async()=>assert.deepEqual(errors,[]));
       await page.goto(url+'Styles/admin/manage.html',{waitUntil:'domcontentloaded'});
       await check(`${width}/${theme}: management remains closed without configuration`,async()=>{
@@ -268,7 +272,7 @@ async function check(name, action) { await action(); results.push(name); }
     await page.route('**/Styles/RoccobotOS100.css',route=>route.abort());
     await page.getByRole('option').first().click();
     await page.getByText('Lo stile non si carica. La pagina conserva quello precedente.').waitFor();
-    await check('failed stylesheet leaves default 1.70 active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS170.css'));
+    await check('failed stylesheet leaves default 1.71 active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS171.css'));
     await context.close();
     {
       const context=await browser.newContext({viewport:{width:1200,height:900}});
