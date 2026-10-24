@@ -1,7 +1,7 @@
 /*
 #NAME: RoccobotOS
-#VERSION: 1.60
-#NOTE: The 1.59 style with a green grey background for code blocks in the dark theme.
+#VERSION: 1.61
+#NOTE: The 1.60 style with inline code in the former block colours and paler mint code blocks in the light theme, and a greener sage inline code in the dark theme.
 #COMMENT: Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches.
 */
 
@@ -226,10 +226,10 @@ html[data-theme=dark] .markdown-body kbd {
   color: #DBADB9;
 }
 
-/* Dark inline code is a flat sage box. The text is #0A1A12, 6.56:1 on #92A279 (white was only 2.74:1). Dark code blocks (pre, .highlight pre, code-toolbar blocks) are a deep green grey #384541 with the light page colour #F7F8F5 as text, 9.40:1 (the block is 1.68:1 against the page #191E1D, 3.66:1 against inline sage code). Only the colours stay dark-only; the shapes are in the next block for both themes. */
+/* Dark inline code is a flat green sage box #79A279. The text is #08171A, 6.32:1 on it (white would be only 2.89:1); the box is 5.83:1 against the page #191E1D. Dark code blocks (pre, .highlight pre, code-toolbar blocks) are a deep green grey #384541 with the light page colour #F7F8F5 as text, 9.40:1 (the block is 1.68:1 against the page #191E1D, 3.46:1 against inline sage code). Only the colours stay dark-only; the shapes are in the next block for both themes. */
 html[data-theme=dark] .markdown-body code {
-  background-color: #92A279;
-  color: #0A1A12;
+  background-color: #79A279;
+  color: #08171A;
 }
 
 html[data-theme=dark] .markdown-body pre,html[data-theme=dark] .markdown-body .highlight pre {
@@ -242,7 +242,7 @@ html[data-theme=dark] .markdown-body pre code {
   color: inherit;
 }
 
-/* Code boxes have the same shape in both themes: no border (the width is 0, so the light border colour #43B59E is kept but not drawn), the text font, 8px corners in line and 16px in blocks, and blocks only as wide as their longest line. The light inline box is a pale mint #CCEBE1 with green text #197257 (4.61:1); the box is 1.19:1 on the page #F7F8F5, 1.12:1 on the light index and on the table header, 1.15:1 on the grey table rows #F1F4F0, 1.24:1 on narrow cells #FAFDFA and 1.14:1 on the blocks. The light block is a very pale mint #C1DDD3 with near black text #06120C (13.23:1); the block is 1.35:1 against the page, 1.27:1 against the index, 1.30:1 against the grey table rows #F1F4F0, 1.41:1 against narrow cells #FAFDFA and 1.01:1 against the table header (there the shape tells them apart), and the inline box is 1.14:1 against the block. Every size, weight, font and line height is the same in both themes, so switching theme never moves the layout: only colours differ. The leading html raises the specificity over the base rules further down the sheet. */
+/* Code boxes have the same shape in both themes: no border (the width is 0, so the light border colour #43B59E is kept but not drawn), the text font, 8px corners in line and 16px in blocks, and blocks only as wide as their longest line. The light inline box is a very pale mint #C1DDD3 with near black text #06120C (13.23:1); the box is 1.35:1 on the page #F7F8F5, 1.27:1 on the light index, 1.30:1 on the grey table rows #F1F4F0, 1.41:1 on narrow cells #FAFDFA, 1.01:1 on the table header (there the shape tells them apart) and 1.17:1 on the blocks. The light block is a paler mint #D7ECE6 with the same near black text #06120C (15.49:1); the block is 1.16:1 against the page, 1.09:1 against the index, 1.11:1 against the grey table rows, 1.20:1 against narrow cells and 1.15:1 against the table header. Every size, weight, font and line height is the same in both themes, so switching theme never moves the layout: only colours differ. The leading html raises the specificity over the base rules further down the sheet. */
 html .markdown-body code,html .markdown-body pre,html .markdown-body .highlight pre {
   border-width: 0;
   font-family: inherit;
@@ -796,8 +796,8 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
   padding: .1rem .35rem;
   margin: 0;
   font-size: 90%;
-  background-color: #CCEBE1;
-  color: #197257;
+  background-color: #C1DDD3;
+  color: #06120C;
   border: 1px solid #43B59E;
   border-radius: .25rem;
 }
@@ -831,7 +831,7 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
   overflow: auto;
   font-size: 90%;
   line-height: 1.45;
-  background-color: #C1DDD3;
+  background-color: #D7ECE6;
   color: #06120C;
   border: 1px solid #43B59E;
   border-radius: .5rem;
@@ -912,11 +912,11 @@ pre[class*=language-] {
 }
 
 :not(pre)>code[class*=language-] {
-  background-color: #CCEBE1;
+  background-color: #C1DDD3;
 }
 
 pre[class*=language-] {
-  background-color: #C1DDD3;
+  background-color: #D7ECE6;
 }
 
 :not(pre)>code[class*=language-] {
@@ -997,7 +997,7 @@ div.code-toolbar>.toolbar>.toolbar-item>a:focus,div.code-toolbar>.toolbar>.toolb
   text-decoration: none;
 }
 
-/* The copy button is only an icon, with no box, fill or shadow. The extra class and the state selectors beat the Prism sheet, which loads after this one. The icon follows the code text: #06120C on the light mint block #C1DDD3 (13.23:1) and #F7F8F5 on the dark green grey block #384541 (9.40:1). */
+/* The copy button is only an icon, with no box, fill or shadow. The extra class and the state selectors beat the Prism sheet, which loads after this one. The icon follows the code text: #06120C on the light mint block #D7ECE6 (15.49:1) and #F7F8F5 on the dark green grey block #384541 (9.40:1). */
 div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button,div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:hover,div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:focus {
   position: relative;
   padding: .25rem;
@@ -1066,7 +1066,7 @@ html div.code-toolbar>.toolbar {
 
 }
 
-/* Visual confirmation after a double click copy on code. The outline sits outside the box, in the gap on the page. In light it is #0A1A12: 16.85:1 on the page #F7F8F5, 12.44:1 on the mint block #C1DDD3 and 14.14:1 on the inline box #CCEBE1, so it shows on all of them. In the dark theme the ring stays white: 16.87:1 on the page #191E1D and 10.02:1 on the green grey block #384541. */
+/* Visual confirmation after a double click copy on code. The outline sits outside the box, in the gap on the page. In light it is #0A1A12: 16.85:1 on the page #F7F8F5, 14.56:1 on the mint block #D7ECE6 and 12.44:1 on the inline box #C1DDD3, so it shows on all of them. In the dark theme the ring stays white: 16.87:1 on the page #191E1D and 10.02:1 on the green grey block #384541; on the inline box #79A279 it is only 2.89:1, but the ring sits in the gap on the page, where it is 16.87:1. */
 .markdown-body .copiato {
   outline: 2px solid #0A1A12;
   outline-offset: .13158em;

@@ -16,7 +16,7 @@ async function check(name, action) { await action(); results.push(name); }
       await page.goto(url,{waitUntil:'domcontentloaded'});
       const trigger=page.locator(width>860?'#tocVersion':'#siteVersion');
       await trigger.waitFor({state:'visible'});
-      await check(`${width}/${theme}: 1.60 is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS160.css'));
+      await check(`${width}/${theme}: 1.61 is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS161.css'));
       await check(`${width}/${theme}: table header stands apart from body and narrow cells`,async()=>{
         const fills=await page.evaluate(()=>{const bg=e=>getComputedStyle(e).backgroundColor;const t=document.querySelector('.markdown-body table.narrow-cols-odd, .markdown-body table.narrow-cols-even');return {th:bg(t.querySelector('th')),row:bg(t.querySelector('tbody tr')),narrow:bg(t.querySelector(t.classList.contains('narrow-cols-odd')?'tbody td:nth-child(odd)':'tbody td:nth-child(2n)'))};});
         assert.notEqual(fills.th,fills.row); assert.notEqual(fills.th,fills.narrow);
@@ -122,10 +122,10 @@ async function check(name, action) { await action(); results.push(name); }
           assert.ok(b1.filter(b=>b.scroll).length!==b0.filter(b=>b.scroll).length);
         });
         await p2.setViewportSize({width,height:1000});await p2.waitForTimeout(400);
-        await check(`${width}/${theme}: 1.60 code colours: dark blocks green grey, light blocks very pale mint with near black text and icon, light inline pale mint with green text`,async()=>{
+        await check(`${width}/${theme}: 1.61 code colours: dark blocks green grey, dark inline green sage, light blocks paler mint and light inline very pale mint, both with near black text`,async()=>{
           const c=await p2.evaluate(()=>{const g=e=>getComputedStyle(e);const pre=document.querySelector('div.code-toolbar>pre');const code=pre.querySelector('code');const inl=[...document.querySelectorAll('#markdown_content :not(pre)>code')].find(e=>!e.closest('table,a'));const btn=document.querySelector('div.code-toolbar>.toolbar button');return {pre:[g(pre).backgroundColor,g(pre).color],code:[g(code).backgroundColor,g(code).color],inl:[g(inl).backgroundColor,g(inl).color],btn:g(btn).color}});
-          if(theme==='dark'){assert.deepEqual(c.pre,['rgb(56, 69, 65)','rgb(247, 248, 245)']);assert.deepEqual(c.inl,['rgb(146, 162, 121)','rgb(10, 26, 18)']);assert.equal(c.btn,'rgb(247, 248, 245)');}
-          else{assert.deepEqual(c.pre,['rgb(193, 221, 211)','rgb(6, 18, 12)']);assert.deepEqual(c.inl,['rgb(204, 235, 225)','rgb(25, 114, 87)']);assert.equal(c.btn,'rgb(6, 18, 12)');}
+          if(theme==='dark'){assert.deepEqual(c.pre,['rgb(56, 69, 65)','rgb(247, 248, 245)']);assert.deepEqual(c.inl,['rgb(121, 162, 121)','rgb(8, 23, 26)']);assert.equal(c.btn,'rgb(247, 248, 245)');}
+          else{assert.deepEqual(c.pre,['rgb(215, 236, 230)','rgb(6, 18, 12)']);assert.deepEqual(c.inl,['rgb(193, 221, 211)','rgb(6, 18, 12)']);assert.equal(c.btn,'rgb(6, 18, 12)');}
           assert.equal(c.code[0],'rgba(0, 0, 0, 0)');assert.equal(c.code[1],c.pre[1]);
         });
         if(width>600)await check(`${width}/${theme}: 1.55 DiskUtil commands stay on one line and the cell scrolls, columns unchanged`,async()=>{
@@ -149,7 +149,7 @@ async function check(name, action) { await action(); results.push(name); }
           assert.equal(r.toc,'rgb(230, 244, 239)');
           assert.equal(r.h1,'rgb(188, 74, 97)');assert.equal(r.h1a,r.h1);assert.ok(r.h1cr>=4.5&&r.h1cr<4.7,'h1 contrast '+r.h1cr);
           for(const h of r.hs){assert.equal(h[0],h[1]);assert.equal(h[0],'rgb(82, 99, 95)');assert.notEqual(h[0],r.body)}
-          assert.ok(r.icr>=4.55&&r.icr<4.7,'green on inline mint '+r.icr);assert.ok(r.pcr>=13,'near black on mint block '+r.pcr);
+          assert.ok(r.icr>=13,'near black on inline mint '+r.icr);assert.ok(r.pcr>=15,'near black on mint block '+r.pcr);
           assert.equal(r.thc,'rgb(15, 74, 63)');assert.equal(r.thb,'rgb(197, 222, 211)');assert.ok(Math.abs(r.thr-7.13)<.01,'light header '+r.thr);
         }else{
           assert.equal(r.toc,'rgb(27, 46, 40)');
@@ -170,16 +170,16 @@ async function check(name, action) { await action(); results.push(name); }
         assert.equal(lines[lines.length-1],'');
         assert.equal(lines[8],'    <string>/usr/bin/open</string>');
       });
-      await check(`${width}/${theme}: inline code is sage in dark and aqua in light, dark blocks are green grey with light text, tables have 1rem corners`,async()=>{
+      await check(`${width}/${theme}: inline code is sage in dark and mint in light, dark blocks are green grey with light text, tables have 1rem corners`,async()=>{
         const r=await page.evaluate(()=>{const g=e=>getComputedStyle(e);const ic=[...document.querySelectorAll('#markdown_content code')].find(e=>!e.closest('pre,a')&&e.parentElement.tagName==='P');const pre=document.querySelector('#markdown_content pre');const h=document.querySelector('a#SezioneSistema').closest('h1');const t=document.querySelector('#markdown_content table:not(.index-grid)');const h1o=[...document.querySelectorAll('#markdown_content h1')].find(e=>!e.querySelector('#SezioneSistema,#ScorciatoieApp'));const ap=document.querySelector('a#ScorciatoieApp').closest('h1');return {body:g(document.querySelector('#markdown_content p')).color,hfs:g(h).fontSize+'/'+g(ap).fontSize+'/'+g(ap).color,h1fs:g(h1o).fontSize+'/'+g(h1o).fontSize+'/'+g(h).color,ib:g(ic).backgroundColor,ic:g(ic).color,ibw:g(ic).borderTopWidth,pb:g(pre).backgroundColor,pc:g(pre).color,pbw:g(pre).borderTopWidth,h:g(h).color,rad:g(t).borderTopLeftRadius,tables:document.documentElement.dataset.tables}});
         if(theme==='dark'){
-          assert.equal(r.ib,'rgb(146, 162, 121)');assert.equal(r.pb,'rgb(56, 69, 65)');
-          assert.equal(r.ic,'rgb(10, 26, 18)');assert.equal(r.pc,'rgb(247, 248, 245)');
+          assert.equal(r.ib,'rgb(121, 162, 121)');assert.equal(r.pb,'rgb(56, 69, 65)');
+          assert.equal(r.ic,'rgb(8, 23, 26)');assert.equal(r.pc,'rgb(247, 248, 245)');
           assert.equal(r.ibw,'0px');assert.equal(r.pbw,'0px');
           assert.equal(r.h,r.body);assert.equal(r.h,'rgb(222, 229, 225)');assert.equal(r.hfs,r.h1fs);
         }else{
-          assert.equal(r.ib,'rgb(204, 235, 225)');assert.equal(r.ic,'rgb(25, 114, 87)');
-          assert.equal(r.pb,'rgb(193, 221, 211)');assert.equal(r.pc,'rgb(6, 18, 12)');
+          assert.equal(r.ib,'rgb(193, 221, 211)');assert.equal(r.ic,'rgb(6, 18, 12)');
+          assert.equal(r.pb,'rgb(215, 236, 230)');assert.equal(r.pc,'rgb(6, 18, 12)');
           assert.equal(r.ibw,'0px');assert.equal(r.pbw,'0px');
         }
         if(r.tables!=='cards')assert.equal(r.rad,'16px');
@@ -206,7 +206,7 @@ async function check(name, action) { await action(); results.push(name); }
       await check(`${width}/${theme}: three registered styles`,async()=>assert.equal(await page.getByRole('option').count(),3));
       await check(`${width}/${theme}: SlimVer names without Paper`,async()=>{
         const labels=await page.getByRole('option').allTextContents();
-        assert.deepEqual(labels,['RoccobotOS1.00','RoccobotOS1.42','RoccobotOS1.60']);
+        assert.deepEqual(labels,['RoccobotOS1.00','RoccobotOS1.42','RoccobotOS1.61']);
         assert.equal(await page.getByRole('link',{name:'Aggiungi uno stile'}).count(),0);
       });
       await page.getByRole('option').first().click();
@@ -217,7 +217,7 @@ async function check(name, action) { await action(); results.push(name); }
       });
       await check(`${width}/${theme}: typography and layout preserved`,async()=>assert.deepEqual(await page.locator('h1').first().evaluate(e=>({font:getComputedStyle(e).fontSize,width:e.getBoundingClientRect().width,padding:getComputedStyle(e).paddingBottom})),before));
       await list.press('Escape');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS160.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS161.css'));
       await check(`${width}/${theme}: Escape restores initial style and focus`,async()=>{
         assert.equal(await page.getByRole('dialog').isVisible(),false);
         assert.equal(await trigger.evaluate(e=>document.activeElement===e),true);
@@ -229,7 +229,7 @@ async function check(name, action) { await action(); results.push(name); }
       await check(`${width}/${theme}: keyboard selection commits on Enter`,async()=>assert.equal(await page.getByRole('dialog').isVisible(),false));
       await trigger.click();
       await list.press('End'); await list.press('Home'); await list.press('End');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS160.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS161.css'));
       await check(`${width}/${theme}: rapid selection leaves one active sheet`,async()=>assert.equal(await page.locator('link[data-site-style]').count(),1));
       await page.getByRole('button',{name:'Chiudi il selettore'}).click();
       await trigger.click();
@@ -237,7 +237,7 @@ async function check(name, action) { await action(); results.push(name); }
       await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS100.css'));
       await list.press('Enter');
       await page.reload({waitUntil:'domcontentloaded'});
-      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS160.css'));
+      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS161.css'));
       await check(`${width}/${theme}: no JavaScript errors`,async()=>assert.deepEqual(errors,[]));
       await page.goto(url+'Styles/admin/manage.html',{waitUntil:'domcontentloaded'});
       await check(`${width}/${theme}: management remains closed without configuration`,async()=>{
@@ -255,7 +255,7 @@ async function check(name, action) { await action(); results.push(name); }
     await page.route('**/Styles/RoccobotOS100.css',route=>route.abort());
     await page.getByRole('option').first().click();
     await page.getByText('Lo stile non si carica. La pagina conserva quello precedente.').waitFor();
-    await check('failed stylesheet leaves default 1.60 active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS160.css'));
+    await check('failed stylesheet leaves default 1.61 active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS161.css'));
     await context.close();
     if (process.env.VERIFICATION_REPORT) await fs.writeFile(process.env.VERIFICATION_REPORT, JSON.stringify({ passed: results.length, checks: results }, null, 2));
     console.log(JSON.stringify({passed:results.length,checks:results},null,2));
