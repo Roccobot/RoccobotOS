@@ -1,7 +1,7 @@
 /*
 #NAME: RoccobotOS
-#VERSION: 1.65
-#NOTE: The 1.64 style with the Fn key drawn as a globe inside inline code, aligned on the capital letters.
+#VERSION: 1.66
+#NOTE: The 1.65 style with the Fn globe centred on the vertical centre of its inline code box.
 #COMMENT: Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches.
 */
 
@@ -1212,9 +1212,10 @@ html[data-theme=dark] .mweb_toc_wrap_ct a.toc-link {
   --nudge: -.1042em;
 }
 
-/* The Fn globe inside inline code (from 1.65): 1em tall from its height attribute, so it fits the box without changing it. With middle alignment alone its centre sat .375px (.026em at 14.4px) below the centre of a capital F in the same box; the nudge brings it onto it. Theoretical value, the optical one is the user's. */
+/* The Fn globe inside inline code (from 1.65): 1em tall from its height attribute, so it fits the box without changing it. From 1.66 it sits on the vertical centre of the code box, as the user asked (in 1.65 it was on the centre of a capital and looked low). The box is trimmed to the capitals, so its centre hangs from the baseline by half the cap height plus .011em; the globe is therefore placed from the baseline with a length instead of middle, which depends on the x-height and differs between engines. -.164em puts the centre of the globe within .05px of the centre of the padding box in Chromium and WebKit at 14.4, 12.96 and 9.36px; fonts with a lower cap height (SF Pro, .705em against .729em here) leave it about .17px higher. The arrows next to it are text and do not move. */
 .ic-fn {
-  --nudge: -.026em;
+  vertical-align: -.164em;
+  --nudge: 0;
 }
 
 .ic-mask {

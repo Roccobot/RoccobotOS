@@ -15,10 +15,10 @@
       "comment": "Light and dark colours with the original responsive layout."
     },
     {
-      "file": "RoccobotOS165.css",
+      "file": "RoccobotOS166.css",
       "name": "RoccobotOS",
-      "version": "1.65",
-      "note": "The 1.64 style with the Fn key drawn as a globe inside inline code, aligned on the capital letters.",
+      "version": "1.66",
+      "note": "The 1.65 style with the Fn globe centred on the vertical centre of its inline code box.",
       "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
     }
   ]
