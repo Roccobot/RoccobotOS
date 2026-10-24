@@ -16,7 +16,7 @@ async function check(name, action) { await action(); results.push(name); }
       await page.goto(url,{waitUntil:'domcontentloaded'});
       const trigger=page.locator(width>860?'#tocVersion':'#siteVersion');
       await trigger.waitFor({state:'visible'});
-      await check(`${width}/${theme}: 1.69 is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS169.css'));
+      await check(`${width}/${theme}: 1.70 is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS170.css'));
       await check(`${width}/${theme}: table header stands apart from body and narrow cells`,async()=>{
         const fills=await page.evaluate(()=>{const bg=e=>getComputedStyle(e).backgroundColor;const t=document.querySelector('.markdown-body table.narrow-cols-odd, .markdown-body table.narrow-cols-even');return {th:bg(t.querySelector('th')),row:bg(t.querySelector('tbody tr')),narrow:bg(t.querySelector(t.classList.contains('narrow-cols-odd')?'tbody td:nth-child(odd)':'tbody td:nth-child(2n)'))};});
         assert.notEqual(fills.th,fills.row); assert.notEqual(fills.th,fills.narrow);
@@ -219,7 +219,7 @@ async function check(name, action) { await action(); results.push(name); }
       await check(`${width}/${theme}: three registered styles`,async()=>assert.equal(await page.getByRole('option').count(),3));
       await check(`${width}/${theme}: SlimVer names without Paper`,async()=>{
         const labels=await page.getByRole('option').allTextContents();
-        assert.deepEqual(labels,['RoccobotOS1.00','RoccobotOS1.42','RoccobotOS1.69']);
+        assert.deepEqual(labels,['RoccobotOS1.00','RoccobotOS1.42','RoccobotOS1.70']);
         assert.equal(await page.getByRole('link',{name:'Aggiungi uno stile'}).count(),0);
       });
       await page.getByRole('option').first().click();
@@ -230,7 +230,7 @@ async function check(name, action) { await action(); results.push(name); }
       });
       await check(`${width}/${theme}: typography and layout preserved`,async()=>assert.deepEqual(await page.locator('h1').first().evaluate(e=>({font:getComputedStyle(e).fontSize,width:e.getBoundingClientRect().width,padding:getComputedStyle(e).paddingBottom})),before));
       await list.press('Escape');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS169.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS170.css'));
       await check(`${width}/${theme}: Escape restores initial style and focus`,async()=>{
         assert.equal(await page.getByRole('dialog').isVisible(),false);
         assert.equal(await trigger.evaluate(e=>document.activeElement===e),true);
@@ -242,7 +242,7 @@ async function check(name, action) { await action(); results.push(name); }
       await check(`${width}/${theme}: keyboard selection commits on Enter`,async()=>assert.equal(await page.getByRole('dialog').isVisible(),false));
       await trigger.click();
       await list.press('End'); await list.press('Home'); await list.press('End');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS169.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS170.css'));
       await check(`${width}/${theme}: rapid selection leaves one active sheet`,async()=>assert.equal(await page.locator('link[data-site-style]').count(),1));
       await page.getByRole('button',{name:'Chiudi il selettore'}).click();
       await trigger.click();
@@ -250,7 +250,7 @@ async function check(name, action) { await action(); results.push(name); }
       await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS100.css'));
       await list.press('Enter');
       await page.reload({waitUntil:'domcontentloaded'});
-      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS169.css'));
+      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS170.css'));
       await check(`${width}/${theme}: no JavaScript errors`,async()=>assert.deepEqual(errors,[]));
       await page.goto(url+'Styles/admin/manage.html',{waitUntil:'domcontentloaded'});
       await check(`${width}/${theme}: management remains closed without configuration`,async()=>{
@@ -268,8 +268,25 @@ async function check(name, action) { await action(); results.push(name); }
     await page.route('**/Styles/RoccobotOS100.css',route=>route.abort());
     await page.getByRole('option').first().click();
     await page.getByText('Lo stile non si carica. La pagina conserva quello precedente.').waitFor();
-    await check('failed stylesheet leaves default 1.69 active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS169.css'));
+    await check('failed stylesheet leaves default 1.70 active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS170.css'));
     await context.close();
+    {
+      const context=await browser.newContext({viewport:{width:1200,height:900}});
+      const page=await context.newPage();
+      await page.route('https://**/*',route=>route.abort());
+      await page.goto(url,{waitUntil:'domcontentloaded'});
+      await check('a note back link returns to the reference that was clicked',async()=>{
+        const info=await page.evaluate(()=>({one:document.getElementById('Nota13').parentElement.querySelectorAll('a.nota-ritorno').length,label:document.getElementById('Nota13').parentElement.querySelector('a.nota-ritorno').getAttribute('aria-label'),none:document.getElementById('NotaFTop').parentElement.querySelectorAll('a.nota-ritorno').length,ids:[...document.querySelectorAll('sup a[href="#Nota13"]')].every(a=>a.id)}));
+        assert.deepEqual(info,{one:1,label:'Torna al richiamo',none:0,ids:true});
+        const ref=page.locator('sup a[href="#Nota13"]').nth(2);const id=await ref.getAttribute('id');
+        await ref.scrollIntoViewIfNeeded();await ref.click();await page.waitForFunction(()=>location.hash==='#Nota13');
+        const h=await page.evaluate(()=>history.length);
+        await page.locator('#Nota13').locator('xpath=..').locator('a.nota-ritorno').click();
+        const r=await page.evaluate(id=>{const a=document.getElementById(id),row=a.closest('li'),b=row.getBoundingClientRect();return {focus:document.activeElement===a,seen:b.top>=0&&b.bottom<=innerHeight,flash:row.classList.contains('richiamo-lampo'),hash:location.hash,h:history.length}},id);
+        assert.deepEqual(r,{focus:true,seen:true,flash:true,hash:'#Nota13',h});
+      });
+      await context.close();
+    }
     if (process.env.VERIFICATION_REPORT) await fs.writeFile(process.env.VERIFICATION_REPORT, JSON.stringify({ passed: results.length, checks: results }, null, 2));
     console.log(JSON.stringify({passed:results.length,checks:results},null,2));
   } finally { await browser.close(); }

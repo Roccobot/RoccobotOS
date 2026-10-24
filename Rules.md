@@ -23,7 +23,7 @@
 - ⚠️ **Deroghe dichiarate alle regole di sviluppo** (`Roccobot.md` § '🏗️ Sviluppo software'):
   la **lingua del sito è l'italiano**, perché è un riferimento personale e non un prodotto per un
   pubblico anglofono; il numero di versione è in cima per scelta dell'utente.
-- **Struttura.** `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS169.css`, gli altri dal selettore); quattro sotto-pagine
+- **Struttura.** `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS170.css`, gli altri dal selettore); quattro sotto-pagine
   (`Characters.html`, `Formats.html`, `AdServers.html`, `BlendModes.html`) con `Pages.css` e
   `Pages.js`; la styleguide in `Styleguide.html`.
   - ⚠️ **Nomi dei file in inglese, testi visibili in italiano**: sono due scelte indipendenti
@@ -288,6 +288,14 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
     perché il disegno occupa tutta l'altezza), `code .ic-mission { vertical-align: -.099em; }`
     lo mette al centro (sotto .08 px in Chromium e WebKit) e il riquadro resta alto come quelli
     col solo testo. Il test controlla altezza, centro e riga singola.
+- **Ritorno dalle note al richiamo** (pagina 4.43, stile `1.70`): `RoccobotOS.js` aggiunge alla
+  fine di ogni nota (ancora `id="Nota…"` dentro un paragrafo) con almeno un richiamo un solo `↩`
+  (`a.nota-ritorno`, `aria-label="Torna al richiamo"`, colori dei link della pagina, senza
+  sottolineatura). Il `↩` porta all'ultimo richiamo cliccato di quella nota, altrimenti al primo,
+  gli dà il fuoco e fa lampeggiare la sua riga (`richiamo-lampo`: solo lo sfondo, da `#FFE1B8` in
+  chiaro o `#384541` in scuro, nessuno spostamento). Non aggiunge voci alla cronologia. I richiami
+  senza `id` ricevono `rif-NotaN-k`. Una nota senza richiami (oggi `NotaFTop`, in un titolo come
+  `NotaVar`) non ha `↩`. Le note si scrivono a mano senza `↩`: lo mette lo script.
   - ⚠️ **Il globo e il carattere che lo segue stanno in uno `<span style="white-space:nowrap">`**:
     un SVG in riga apre un punto di a capo che il testo Fn non aveva, e senza lo span le celle
     strette andavano a capo dopo il globo (+23,6 px di riga). Con lo span altezze e posizioni di

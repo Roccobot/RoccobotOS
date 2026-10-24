@@ -292,7 +292,7 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
 - **Deroga dichiarata alle regole di sviluppo**: la lingua del sito è l'italiano (i nomi dei
   file sono in inglese, i testi visibili in italiano); la versione è in cima (`Rules.md`, prima
   sezione).
-- **Struttura**: `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS169.css`, gli altri dal selettore); quattro sotto-pagine
+- **Struttura**: `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS170.css`, gli altri dal selettore); quattro sotto-pagine
   (`Characters.html`, `Formats.html`, `AdServers.html`, `BlendModes.html`) con `Pages.css` e
   `Pages.js`; la styleguide in `Styleguide.html`. I file sono alla radice del repo, anche dove
   un testo vecchio li nomina col prefisso `RoccobotOS/` di quando il sito era una cartella dell'hub.
@@ -366,6 +366,6 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   `E'` nella cella e nel plist sono legittimi e non si correggono; un commit che tocca quelle
   righe è bloccato dal presidio e si prosegue a mano (`Rules.md` § '⌨️ Tabella delle sostituzioni testo').
 - **DNS**: tabelle IPv4 e IPv6 gemelle, stessi servizi nello stesso ordine alfabetico naturale,
-  `-` per un valore assente, note in calce con richiamo. Gli indirizzi superati si aggiornano da
+  `-` per un valore assente, note in calce con richiamo (dalla pagina 4.43 lo script aggiunge a ogni nota richiamata un `↩` che torna al richiamo cliccato: `Rules.md` § '🖼️ Le iconcine del testo: SVG che seguono il colore'). Gli indirizzi superati si aggiornano da
   soli dalle fonti ufficiali, la riga si cancella solo per un servizio cessato, e si verifica via
   DoH: dal container UDP 53 e DoT non sono attendibili (`Rules.md` § '🌐 Tabelle dei servizi DNS').

@@ -10,7 +10,7 @@
 // index.html nascono VUOTI: se questo script non gira il CSS li nasconde con :empty, invece di
 // mostrare una 'v' senza numero.
 !function () {
-  const VERSIONE = "4.42";
+  const VERSIONE = "4.43";
   // Due punti di resa, uno per formato: la pillola nell'angolo dell'indice su desktop,
   // il numero sopra il logo su mobile. A deciderlo è il CSS, qui si scrivono entrambi.
   for (const id of ["siteVersion", "tocVersion"]) {
@@ -472,4 +472,61 @@ document.addEventListener("DOMContentLoaded", () => {
   if (radice) new MutationObserver(ms => {
     if (ms.some(m => [...m.addedNodes].some(n => n.nodeType === 1 && (n.matches("div.code-toolbar") || n.querySelector("div.code-toolbar"))))) pianifica();
   }).observe(radice, { childList: true, subtree: true });
+});
+// ── Ritorno dalle note al richiamo ──
+// Ogni nota (ancora id="Nota…" in un paragrafo) con almeno un richiamo riceve alla fine un solo ↩.
+// Il ↩ porta all'ultimo richiamo cliccato di quella nota, altrimenti al primo, e fa lampeggiare la
+// sua riga. Non aggiunge voci alla cronologia: il clic sul ↩ scorre senza cambiare l'indirizzo.
+document.addEventListener("DOMContentLoaded", () => {
+  const radice = document.getElementById("markdown_content");
+  if (!radice) return;
+  const ultimo = new Map();
+  const riga = el => el.closest("li, tr, p, h1, h2, h3, h4, h5, h6") || el;
+  const vuoto = n => n.nodeType === 3 && !n.textContent.trim();
+  const fine = ancora => {
+    for (let n = ancora.nextSibling; n; n = n.nextSibling) {
+      if (n.nodeType === 1 && n.matches('a[id^="Nota"]')) {
+        let p = n.previousSibling;
+        while (p && vuoto(p)) p = p.previousSibling;
+        return p && p.nodeName === "BR" ? p : n;
+      }
+      if (n.nodeName === "BR") {
+        let s = n.nextSibling;
+        while (s && (vuoto(s) || s.nodeName === "BR")) s = s.nextSibling;
+        if (!s) return n;
+        if (s.nodeType === 1 && s.matches('a[id^="Nota"]')) return n;
+      }
+    }
+    return null;
+  };
+  radice.querySelectorAll('p a[id^="Nota"]').forEach(ancora => {
+    const id = ancora.id;
+    const rif = [...radice.querySelectorAll('sup a[href="#' + id + '"]')];
+    if (!rif.length) return;
+    rif.forEach((a, i) => {
+      if (!a.id) a.id = "rif-" + id + "-" + (i + 1);
+      a.addEventListener("click", () => { ultimo.set(id, a); ritorno.href = "#" + a.id });
+    });
+    const ritorno = document.createElement("a");
+    ritorno.className = "nota-ritorno";
+    ritorno.href = "#" + rif[0].id;
+    ritorno.setAttribute("aria-label", "Torna al richiamo");
+    ritorno.textContent = "↩\uFE0E";
+    ritorno.addEventListener("click", ev => {
+      ev.preventDefault();
+      const a = ultimo.get(id) || rif[0];
+      const r = riga(a);
+      a.scrollIntoView({ block: "center" });
+      a.focus({ preventScroll: true });
+      r.classList.remove("richiamo-lampo");
+      void r.offsetWidth;
+      r.classList.add("richiamo-lampo");
+      setTimeout(() => r.classList.remove("richiamo-lampo"), 1600);
+    });
+    const dopo = fine(ancora);
+    const parent = ancora.parentNode;
+    const spazio = document.createTextNode(" ");
+    if (dopo) { parent.insertBefore(spazio, dopo); parent.insertBefore(ritorno, dopo) }
+    else { parent.appendChild(spazio); parent.appendChild(ritorno) }
+  });
 });

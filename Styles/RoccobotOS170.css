@@ -1,7 +1,7 @@
 /*
 #NAME: RoccobotOS
-#VERSION: 1.69
-#NOTE: The 1.68 style with the Mission Control key inside inline code, .875em tall and centred in the box.
+#VERSION: 1.70
+#NOTE: The 1.69 style with a back link at the end of each note and a short flash on the row it returns to.
 #COMMENT: Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches.
 */
 
@@ -1478,6 +1478,27 @@ html[data-theme=dark] .markdown-body h2,html[data-theme=dark] .markdown-body h2 
 
 html[data-theme=dark] .markdown-body p.avviso {
   --avviso-bordo: #CEB285;
+}
+
+/* The back link that RoccobotOS.js adds at the end of each note with at least one reference (from 1.70): it keeps the colours of the page links in each theme and only drops the underline, so its size and place are the same in both themes. */
+.markdown-body a.nota-ritorno {
+  text-decoration: none;
+}
+
+/* The row of the reference the back link returns to flashes once (from 1.70): only the background changes, from the light inline code peach #FFE1B8 or the dark code block #384541 back to the row's own colour, so nothing moves. */
+@keyframes richiamo-lampo {
+  from {
+    background-color: var(--lampo);
+  }
+}
+
+.markdown-body .richiamo-lampo,.markdown-body tr.richiamo-lampo>td,.markdown-body tr.richiamo-lampo>th {
+  --lampo: #FFE1B8;
+  animation: richiamo-lampo 1.5s ease-out;
+}
+
+html[data-theme=dark] .markdown-body .richiamo-lampo,html[data-theme=dark] .markdown-body tr.richiamo-lampo>td,html[data-theme=dark] .markdown-body tr.richiamo-lampo>th {
+  --lampo: #384541;
 }
 
 .markdown-body h3 {
