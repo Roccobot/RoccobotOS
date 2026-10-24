@@ -1,7 +1,7 @@
 /*
 #NAME: RoccobotOS
-#VERSION: 1.61
-#NOTE: The 1.60 style with inline code in the former block colours and paler mint code blocks in the light theme, and a greener sage inline code in the dark theme.
+#VERSION: 1.62
+#NOTE: The 1.61 style with code blocks and index on the same pale mint, and inline code and table headers on the same mint, in the light theme.
 #COMMENT: Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches.
 */
 
@@ -50,7 +50,7 @@ body,html {
   background-color: #F7F8F5;
 }
 
-/* The active index entry has no rail, only colour and weight. Active entry in deep green: #0F4A3F is 8.96:1 on the light index #E6F4EF, #E6F4EF is 12.64:1 on #1B2E28. */
+/* The active index entry has no rail, only colour and weight. Active entry in deep green: #0F4A3F is 8.96:1 on the light index #E6F4F0, #E6F4EF is 12.64:1 on #1B2E28. */
 .toc-list a.toc-link.is-active-link {
   color: #0F4A3F !important;
   font-weight: 800;
@@ -242,7 +242,7 @@ html[data-theme=dark] .markdown-body pre code {
   color: inherit;
 }
 
-/* Code boxes have the same shape in both themes: no border (the width is 0, so the light border colour #43B59E is kept but not drawn), the text font, 8px corners in line and 16px in blocks, and blocks only as wide as their longest line. The light inline box is a very pale mint #C1DDD3 with near black text #06120C (13.23:1); the box is 1.35:1 on the page #F7F8F5, 1.27:1 on the light index, 1.30:1 on the grey table rows #F1F4F0, 1.41:1 on narrow cells #FAFDFA, 1.01:1 on the table header (there the shape tells them apart) and 1.17:1 on the blocks. The light block is a paler mint #D7ECE6 with the same near black text #06120C (15.49:1); the block is 1.16:1 against the page, 1.09:1 against the index, 1.11:1 against the grey table rows, 1.20:1 against narrow cells and 1.15:1 against the table header. Every size, weight, font and line height is the same in both themes, so switching theme never moves the layout: only colours differ. The leading html raises the specificity over the base rules further down the sheet. */
+/* Code boxes have the same shape in both themes: no border (the width is 0, so the light border colour #43B59E is kept but not drawn), the text font, 8px corners in line and 16px in blocks, and blocks only as wide as their longest line. The light inline box is a mint #C3DDD3, the same as the table header, with near black text #06120C (13.28:1); the box is 1.35:1 on the page #F7F8F5, 1.27:1 on the light index, 1.30:1 on the grey table rows #F1F4F0, 1.40:1 on narrow cells #FAFDFA and 1.27:1 on the blocks. The light block is a very pale mint #E6F4F0, the same as the light index, with the same near black text #06120C (16.88:1); the block is 1.06:1 against the page, 1.02:1 against the grey table rows and 1.10:1 against narrow cells, so the shape and the corners tell it apart. Every size, weight, font and line height is the same in both themes, so switching theme never moves the layout: only colours differ. The leading html raises the specificity over the base rules further down the sheet. */
 html .markdown-body code,html .markdown-body pre,html .markdown-body .highlight pre {
   border-width: 0;
   font-family: inherit;
@@ -772,7 +772,7 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
 .markdown-body table th {
   font-weight: 600;
   color: #0F4A3F;
-  background-color: #C5DED3;
+  background-color: #C3DDD3;
 }
 
 .markdown-body table tr:nth-child(2n) {
@@ -796,7 +796,7 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
   padding: .1rem .35rem;
   margin: 0;
   font-size: 90%;
-  background-color: #C1DDD3;
+  background-color: #C3DDD3;
   color: #06120C;
   border: 1px solid #43B59E;
   border-radius: .25rem;
@@ -831,7 +831,7 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
   overflow: auto;
   font-size: 90%;
   line-height: 1.45;
-  background-color: #D7ECE6;
+  background-color: #E6F4F0;
   color: #06120C;
   border: 1px solid #43B59E;
   border-radius: .5rem;
@@ -912,11 +912,11 @@ pre[class*=language-] {
 }
 
 :not(pre)>code[class*=language-] {
-  background-color: #C1DDD3;
+  background-color: #C3DDD3;
 }
 
 pre[class*=language-] {
-  background-color: #D7ECE6;
+  background-color: #E6F4F0;
 }
 
 :not(pre)>code[class*=language-] {
@@ -997,7 +997,7 @@ div.code-toolbar>.toolbar>.toolbar-item>a:focus,div.code-toolbar>.toolbar>.toolb
   text-decoration: none;
 }
 
-/* The copy button is only an icon, with no box, fill or shadow. The extra class and the state selectors beat the Prism sheet, which loads after this one. The icon follows the code text: #06120C on the light mint block #D7ECE6 (15.49:1) and #F7F8F5 on the dark green grey block #384541 (9.40:1). */
+/* The copy button is only an icon, with no box, fill or shadow. The extra class and the state selectors beat the Prism sheet, which loads after this one. The icon follows the code text: #06120C on the light mint block #E6F4F0 (16.88:1) and #F7F8F5 on the dark green grey block #384541 (9.40:1). */
 div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button,div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:hover,div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:focus {
   position: relative;
   padding: .25rem;
@@ -1066,7 +1066,7 @@ html div.code-toolbar>.toolbar {
 
 }
 
-/* Visual confirmation after a double click copy on code. The outline sits outside the box, in the gap on the page. In light it is #0A1A12: 16.85:1 on the page #F7F8F5, 14.56:1 on the mint block #D7ECE6 and 12.44:1 on the inline box #C1DDD3, so it shows on all of them. In the dark theme the ring stays white: 16.87:1 on the page #191E1D and 10.02:1 on the green grey block #384541; on the inline box #79A279 it is only 2.89:1, but the ring sits in the gap on the page, where it is 16.87:1. */
+/* Visual confirmation after a double click copy on code. The outline sits outside the box, in the gap on the page. In light it is #0A1A12: 16.85:1 on the page #F7F8F5, 15.87:1 on the mint block #E6F4F0 and 12.49:1 on the inline box #C3DDD3, so it shows on all of them. In the dark theme the ring stays white: 16.87:1 on the page #191E1D and 10.02:1 on the green grey block #384541; on the inline box #79A279 it is only 2.89:1, but the ring sits in the gap on the page, where it is 16.87:1. */
 .markdown-body .copiato {
   outline: 2px solid #0A1A12;
   outline-offset: .13158em;
@@ -1100,7 +1100,7 @@ a.toc-link {
   height: 100%;
 }
 
-/* Index links: #14594C is 7.24:1 on the light index #E6F4EF, #9FE3CF is 9.78:1 on #1B2E28. */
+/* Index links: #14594C is 7.24:1 on the light index #E6F4F0, #9FE3CF is 9.78:1 on #1B2E28. */
 .mweb_toc_wrap_ct a.toc-link {
   color: #14594C;
 }
@@ -1176,7 +1176,7 @@ html[data-theme=dark] .mweb_toc_wrap_ct a.toc-link {
 }
 
 .mweb_toc_wrap_ct {
-  background-color: #E6F4EF;
+  background-color: #E6F4F0;
 }
 
 .mweb_ct_wrap {
@@ -1686,7 +1686,7 @@ html:not([data-theme=dark]) .markdown-body table.narrow-cols-odd td:nth-child(od
   color: #196E5E;
 }
 
-/* Header links follow the header text: #0F4A3F on #C5DED3 is 7.13:1 and #E7F5F0 on #1E5A4C is 7.14:1, the same contrast in both themes. */
+/* Header links follow the header text: #0F4A3F on #C3DDD3 is 7.05:1 and #E7F5F0 on #1E5A4C is 7.14:1, nearly the same contrast in both themes. */
 html:not([data-theme=dark]) .markdown-body th a {
   color: #0F4A3F;
 }
