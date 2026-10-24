@@ -1,7 +1,7 @@
 /*
 #NAME: RoccobotOS
-#VERSION: 1.66
-#NOTE: The 1.65 style with the Fn globe centred on the vertical centre of its inline code box.
+#VERSION: 1.67
+#NOTE: The 1.66 style with the Fn globe 1px higher than the centre of its inline code box at 14.4px, as the user asked.
 #COMMENT: Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches.
 */
 
@@ -1212,9 +1212,9 @@ html[data-theme=dark] .mweb_toc_wrap_ct a.toc-link {
   --nudge: -.1042em;
 }
 
-/* The Fn globe inside inline code (from 1.65): 1em tall from its height attribute, so it fits the box without changing it. From 1.66 it sits on the vertical centre of the code box, as the user asked (in 1.65 it was on the centre of a capital and looked low). The box is trimmed to the capitals, so its centre hangs from the baseline by half the cap height plus .011em; the globe is therefore placed from the baseline with a length instead of middle, which depends on the x-height and differs between engines. -.164em puts the centre of the globe within .05px of the centre of the padding box in Chromium and WebKit at 14.4, 12.96 and 9.36px; fonts with a lower cap height (SF Pro, .705em against .729em here) leave it about .17px higher. The arrows next to it are text and do not move. */
+/* The Fn globe inside inline code (from 1.65): 1em tall from its height attribute, so it fits the box without changing it. The box is trimmed to the capitals, so its centre hangs from the baseline; the globe is placed from the baseline with a length instead of middle, which depends on the x-height and differs between engines. In 1.66 -.164em put its centre on the centre of the padding box (within .05px in Chromium and WebKit); from 1.67 it is -.095em, 1px higher at 14.4px (.0694em, proportional in tables), the optical position the user asked for. The arrows next to it are text and do not move. */
 .ic-fn {
-  vertical-align: -.164em;
+  vertical-align: -.095em;
   --nudge: 0;
 }
 
