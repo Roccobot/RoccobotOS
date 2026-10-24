@@ -15,10 +15,10 @@
       "comment": "Light and dark colours with the original responsive layout."
     },
     {
-      "file": "RoccobotOS164.css",
+      "file": "RoccobotOS165.css",
       "name": "RoccobotOS",
-      "version": "1.64",
-      "note": "The 1.63 style with a warmer light theme: ivory page, sage index and code blocks, and peach inline code.",
+      "version": "1.65",
+      "note": "The 1.64 style with the Fn key drawn as a globe inside inline code, aligned on the capital letters.",
       "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
     }
   ]

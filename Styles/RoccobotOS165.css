@@ -1,7 +1,7 @@
 /*
 #NAME: RoccobotOS
-#VERSION: 1.64
-#NOTE: The 1.63 style with a warmer light theme: ivory page, sage index and code blocks, and peach inline code.
+#VERSION: 1.65
+#NOTE: The 1.64 style with the Fn key drawn as a globe inside inline code, aligned on the capital letters.
 #COMMENT: Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches.
 */
 
@@ -1210,6 +1210,11 @@ html[data-theme=dark] .mweb_toc_wrap_ct a.toc-link {
 
 .ic-globe {
   --nudge: -.1042em;
+}
+
+/* The Fn globe inside inline code (from 1.65): 1em tall from its height attribute, so it fits the box without changing it. With middle alignment alone its centre sat .375px (.026em at 14.4px) below the centre of a capital F in the same box; the nudge brings it onto it. Theoretical value, the optical one is the user's. */
+.ic-fn {
+  --nudge: -.026em;
 }
 
 .ic-mask {

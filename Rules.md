@@ -23,7 +23,7 @@
 - ⚠️ **Deroghe dichiarate alle regole di sviluppo** (`Roccobot.md` § '🏗️ Sviluppo software'):
   la **lingua del sito è l'italiano**, perché è un riferimento personale e non un prodotto per un
   pubblico anglofono; il numero di versione è in cima per scelta dell'utente.
-- **Struttura.** `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS164.css`, gli altri dal selettore); quattro sotto-pagine
+- **Struttura.** `index.html` con `RoccobotOS.js` e uno stile della cartella `Styles/` (di serie `Styles/RoccobotOS165.css`, gli altri dal selettore); quattro sotto-pagine
   (`Characters.html`, `Formats.html`, `AdServers.html`, `BlendModes.html`) con `Pages.css` e
   `Pages.js`; la styleguide in `Styleguide.html`.
   - ⚠️ **Nomi dei file in inglese, testi visibili in italiano**: sono due scelte indipendenti
@@ -33,7 +33,7 @@
 
 ### 🎨 La styleguide e i valori visivi
 
-- **Regola anti-jitter (non rovesciare).** Tema chiaro e tema scuro hanno la stessa impaginazione: stessi pesi, stessi caratteri, stesse interlinee (compresa quella delle celle di tabella, 1,639), stessi riquadri del codice, stessi bordi, stessi a capo e stessa altezza di pagina. Cambiano solo i colori, così il cambio tema non sposta nulla. Ogni stile nuovo si verifica misurando ogni elemento nei due temi (a 1440, 900 e 390 px), e `tests/browser.cjs` lo controlla. Le `1.51` e `1.53` la violavano (+443/+563/+392 px e +112 px di pagina in tema chiaro); dalla `1.54` alla `1.64` la rispettano. Anche il testo evidenziato è testo normale, il pulsante Copia manca sui blocchi che scorrono in orizzontale e la barra di scorrimento dei blocchi di codice è nascosta (dalla `1.55`): niente di questo cambia l'impaginazione. Il colore dei blocchi di codice in tema scuro è `#384541` (dalla `1.60`) con testo `#F7F8F5` (9,40:1; 1,68:1 sul fondo pagina), quello del codice in riga (dalla `1.63`) `#64C486` con `#061322` (8,70:1; 7,86:1 sul fondo pagina, 4,67:1 sui blocchi), e gli H2 scuri (dalla `1.63`, con il segno § e il bordo del riquadro ATTENZIONE!) sono sabbia `#CEB285` (8,30:1); in tema chiaro (dalla `1.64`) il fondo pagina è avorio caldo `#F8F7F2`, i blocchi di codice sono salvia chiarissimo `#EAF1E8`, come il fondo dell'indice, con testo e icona `#06120C` (16,59:1; 1,07:1 sul fondo pagina), gli H1 sono lampone `#BC4A61` (4,56:1), il codice in riga è pesca `#FFE1B8` con testo `#000000` (16,71:1; 1,17:1 sul fondo pagina, 1,12:1 sulle righe grigie), l'intestazione delle tabelle resta `#C3DDD3` (testo `#0F4A3F`, 7,05:1) e le tabelle hanno righe pari `#F3F2ED` e colonne strette `#FDFCF7`; la tabella DiskUtil (`table.cmd-scorrevoli`) tiene i comandi su una riga con la cella che scorre.
+- **Regola anti-jitter (non rovesciare).** Tema chiaro e tema scuro hanno la stessa impaginazione: stessi pesi, stessi caratteri, stesse interlinee (compresa quella delle celle di tabella, 1,639), stessi riquadri del codice, stessi bordi, stessi a capo e stessa altezza di pagina. Cambiano solo i colori, così il cambio tema non sposta nulla. Ogni stile nuovo si verifica misurando ogni elemento nei due temi (a 1440, 900 e 390 px), e `tests/browser.cjs` lo controlla. Le `1.51` e `1.53` la violavano (+443/+563/+392 px e +112 px di pagina in tema chiaro); dalla `1.54` alla `1.65` la rispettano. Anche il testo evidenziato è testo normale, il pulsante Copia manca sui blocchi che scorrono in orizzontale e la barra di scorrimento dei blocchi di codice è nascosta (dalla `1.55`): niente di questo cambia l'impaginazione. Il colore dei blocchi di codice in tema scuro è `#384541` (dalla `1.60`) con testo `#F7F8F5` (9,40:1; 1,68:1 sul fondo pagina), quello del codice in riga (dalla `1.63`) `#64C486` con `#061322` (8,70:1; 7,86:1 sul fondo pagina, 4,67:1 sui blocchi), e gli H2 scuri (dalla `1.63`, con il segno § e il bordo del riquadro ATTENZIONE!) sono sabbia `#CEB285` (8,30:1); in tema chiaro (dalla `1.64`) il fondo pagina è avorio caldo `#F8F7F2`, i blocchi di codice sono salvia chiarissimo `#EAF1E8`, come il fondo dell'indice, con testo e icona `#06120C` (16,59:1; 1,07:1 sul fondo pagina), gli H1 sono lampone `#BC4A61` (4,56:1), il codice in riga è pesca `#FFE1B8` con testo `#000000` (16,71:1; 1,17:1 sul fondo pagina, 1,12:1 sulle righe grigie), l'intestazione delle tabelle resta `#C3DDD3` (testo `#0F4A3F`, 7,05:1) e le tabelle hanno righe pari `#F3F2ED` e colonne strette `#FDFCF7`; la tabella DiskUtil (`table.cmd-scorrevoli`) tiene i comandi su una riga con la cella che scorre.
 - ⚠️⚠️ **La STYLEGUIDE è la fonte unica dei valori visivi** (colori, tipografia, superfici,
   componenti): [`Styleguide.html`](Styleguide.html), pubblicata su
   <https://roccobot.github.io/RoccobotOS/Styleguide.html> perché la si possa dare a un altro
@@ -266,6 +266,16 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
   - **La taratura in vigore si legge nel CSS**, che è la fonte: se questo file e il CSS divergono
     vince il CSS. Mission Control è approvato senza spostamento; il logo Apple segue la sola regola
     generale, senza ottica.
+- **Il tasto Fn nelle scorciatoie è il globo** (dalla pagina 4.38, stile `1.65`): dentro ogni
+  `<code>` la scritta Fn è l'SVG del globo della prima tabella, con `height="1em"`, classe
+  `icon-png-svg ic-fn`, `role="img"`, `aria-label="Fn"` e un `<title>Fn</title>`. Il titolo serve
+  alla copia: il doppio clic copia il `textContent`, che così resta `Fn↑`, `Fn F` e simili.
+  - ⚠️ **Il globo e il carattere che lo segue stanno in uno `<span style="white-space:nowrap">`**:
+    un SVG in riga apre un punto di a capo che il testo Fn non aveva, e senza lo span le celle
+    strette andavano a capo dopo il globo (+23,6 px di riga). Con lo span altezze e posizioni di
+    ogni blocco e di ogni riquadro di codice sono identiche a prima nei due temi a 1440, 900 e
+    390 px. Se dopo il globo c'è uno spazio (`Fn F`) o niente (`Fn`) lo span non serve.
+  - Le menzioni in prosa (*Premi il tasto Fn per*) e il nome `Fn.png` restano testo.
 
 ### 🔢 Versione del progetto: VISIBILE in pagina
 

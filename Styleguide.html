@@ -131,7 +131,7 @@
     /* La tabella d'esempio deve essere la tabella VERA, angoli compresi: se qui restasse
        quadrata mentre il sito è stondato, la pagina mentirebbe proprio sul componente che
        sta descrivendo. Perciò anche qui il modello è 'separate' e le celle d'angolo hanno
-       il loro raggio. Il perché della tecnica è spiegato in Styles/RoccobotOS164.css e non si ripete. */
+       il loro raggio. Il perché della tecnica è spiegato in Styles/RoccobotOS165.css e non si ripete. */
     .guscio { overflow-x: auto; margin: 0 0 1rem; }
     table {
       border-collapse: separate; border-spacing: 0; width: 100%; font-size: .9rem;
@@ -399,7 +399,7 @@
     mattone <code>#bc4a61</code>, che con quel codice non c'entrava nulla e per giunta dava
     3,33:1.</p>
 
-  <p>Lo stile predefinito, <code>Styles/RoccobotOS164.css</code>, ha l'intestazione delle tabelle verde,
+  <p>Lo stile predefinito, <code>Styles/RoccobotOS165.css</code>, ha l'intestazione delle tabelle verde,
     tenue in tema chiaro e scura in tema scuro, l'indice su fondo verde con la voce attiva in verde scuro
     e in grassetto, <strong>senza barra laterale</strong> in entrambi i temi, e gli H2 senza filo. Il codice, in riga e a blocchi, ha in entrambi i temi la stessa forma: <strong>senza bordo, nel carattere del testo</strong>, angoli di 8 px in riga e di 16 px nei blocchi, blocchi larghi quanto serve, riquadro in riga di peso 500 con margine verticale in em, icona di copia nello stesso punto, ma solo sui blocchi che non scorrono in orizzontale (dalla 1.55 gli altri non la mostrano e non hanno barra di scorrimento visibile; il doppio clic copia su tutti). In tema
     scuro il codice in riga è, dalla 1.63, un riquadro <strong>verde pieno <code>#64C486</code></strong> con testo <strong>quasi nero</strong> <code>#061322</code>, che su quel fondo
@@ -784,6 +784,10 @@
       chiede a chi guarda.</li>
     <li>L'ingombro non si tocca mai: una sostituzione di icona non deve spostare il testo attorno
       nemmeno di un pixel.</li>
+    <li>Dalla 1.65 il tasto <strong>Fn</strong> dentro il codice in riga è il globo, alto 1em, con
+      <code>--nudge: -.026em</code> (il centro sul centro di una maiuscola dello stesso riquadro),
+      legato al carattere che segue perché non vada a capo da solo; il riquadro resta alto come
+      quelli col solo testo.</li>
   </ul>
 
   <h2>5. Sotto-pagine</h2>
