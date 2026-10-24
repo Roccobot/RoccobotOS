@@ -1,7 +1,7 @@
 /*
 #NAME: RoccobotOS
-#VERSION: 1.62
-#NOTE: The 1.61 style with code blocks and index on the same pale mint, and inline code and table headers on the same mint, in the light theme.
+#VERSION: 1.63
+#NOTE: The 1.62 style with brighter green inline code and warm sand h2 headings in the dark theme.
 #COMMENT: Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches.
 */
 
@@ -226,10 +226,10 @@ html[data-theme=dark] .markdown-body kbd {
   color: #DBADB9;
 }
 
-/* Dark inline code is a flat green sage box #79A279. The text is #08171A, 6.32:1 on it (white would be only 2.89:1); the box is 5.83:1 against the page #191E1D. Dark code blocks (pre, .highlight pre, code-toolbar blocks) are a deep green grey #384541 with the light page colour #F7F8F5 as text, 9.40:1 (the block is 1.68:1 against the page #191E1D, 3.46:1 against inline sage code). Only the colours stay dark-only; the shapes are in the next block for both themes. */
+/* Dark inline code is a flat green box #64C486 (until 1.62 #79A279 with #08171A). The text is #061322, 8.70:1 on it (white would be only 2.15:1); the box is 7.86:1 against the page #191E1D. Dark code blocks (pre, .highlight pre, code-toolbar blocks) are a deep green grey #384541 with the light page colour #F7F8F5 as text, 9.40:1 (the block is 1.68:1 against the page #191E1D, 4.67:1 against the green inline box). Only the colours stay dark-only; the shapes are in the next block for both themes. */
 html[data-theme=dark] .markdown-body code {
-  background-color: #79A279;
-  color: #08171A;
+  background-color: #64C486;
+  color: #061322;
 }
 
 html[data-theme=dark] .markdown-body pre,html[data-theme=dark] .markdown-body .highlight pre {
@@ -1066,7 +1066,7 @@ html div.code-toolbar>.toolbar {
 
 }
 
-/* Visual confirmation after a double click copy on code. The outline sits outside the box, in the gap on the page. In light it is #0A1A12: 16.85:1 on the page #F7F8F5, 15.87:1 on the mint block #E6F4F0 and 12.49:1 on the inline box #C3DDD3, so it shows on all of them. In the dark theme the ring stays white: 16.87:1 on the page #191E1D and 10.02:1 on the green grey block #384541; on the inline box #79A279 it is only 2.89:1, but the ring sits in the gap on the page, where it is 16.87:1. */
+/* Visual confirmation after a double click copy on code. The outline sits outside the box, in the gap on the page. In light it is #0A1A12: 16.85:1 on the page #F7F8F5, 15.87:1 on the mint block #E6F4F0 and 12.49:1 on the inline box #C3DDD3, so it shows on all of them. In the dark theme the ring stays white: 16.87:1 on the page #191E1D and 10.02:1 on the green grey block #384541; on the inline box #64C486 it is only 2.15:1, but the ring sits in the gap on the page, where it is 16.87:1. */
 .markdown-body .copiato {
   outline: 2px solid #0A1A12;
   outline-offset: .13158em;
@@ -1434,7 +1434,7 @@ html[data-theme=dark] .markdown-body em,html[data-theme=dark] .markdown-body str
   color: #DEE5E1;
 }
 
-/* Light h1 is raspberry #BC4A61, 4.59:1 on #F7F8F5, on the anchors too. The section dividers below are a grey with a hint of teal. Dark headings on #191E1D: h1 mint #C0FFE5 is 15.00:1, h2 and the section divider h1 amber #E8B86A are 9.23:1 (the two section dividers use the body text colour #DEE5E1, same size as the other h1), h3 pale lime #EEFAAD is 15.19:1. */
+/* Light h1 is raspberry #BC4A61, 4.59:1 on #F7F8F5, on the anchors too. The section dividers below are a grey with a hint of teal. Dark headings on #191E1D: h1 mint #C0FFE5 is 15.00:1, h2 is warm sand #CEB285, 8.30:1 (until 1.62 amber #E8B86A, 9.23:1) (the two section dividers use the body text colour #DEE5E1, same size as the other h1), h3 pale lime #EEFAAD is 15.19:1. */
 html:not([data-theme=dark]) .markdown-body h1,html:not([data-theme=dark]) .markdown-body h1 a {
   color: #BC4A61;
 }
@@ -1458,16 +1458,16 @@ html[data-theme=dark] .markdown-body h1:has(> a#SezioneSistema),html[data-theme=
 }
 
 html[data-theme=dark] .markdown-body h2,html[data-theme=dark] .markdown-body h2 a {
-  color: #E8B86A;
+  color: #CEB285;
 }
 
-/* The border of the warning box (ATTENZIONE!, p.avviso in index.html) was a fixed red #B71E1E set in the page. It now takes the h2 colour of each theme, with the same literals as the h2 rules above: #236C80 in light (5.58:1 on the page #F7F8F5) and #E8B86A in dark (9.23:1 on #191E1D). The page keeps the red as the fallback of the custom property, so the older styles still show it. Width, padding and radius stay in the markup, so the box is the same size in both themes and in every style. */
+/* The border of the warning box (ATTENZIONE!, p.avviso in index.html) was a fixed red #B71E1E set in the page. It now takes the h2 colour of each theme, with the same literals as the h2 rules above: #236C80 in light (5.58:1 on the page #F7F8F5) and #CEB285 in dark (8.30:1 on #191E1D). The page keeps the red as the fallback of the custom property, so the older styles still show it. Width, padding and radius stay in the markup, so the box is the same size in both themes and in every style. */
 .markdown-body p.avviso {
   --avviso-bordo: #236C80;
 }
 
 html[data-theme=dark] .markdown-body p.avviso {
-  --avviso-bordo: #E8B86A;
+  --avviso-bordo: #CEB285;
 }
 
 .markdown-body h3 {
@@ -1478,9 +1478,9 @@ html[data-theme=dark] .markdown-body h3,html[data-theme=dark] .markdown-body h3 
   color: #EEFAAD;
 }
 
-/* The section mark is amber in h2 and in running text, and follows the h3 colour inside an h3. */
+/* The section mark is warm sand #CEB285, as the dark h2, in h2 and in running text, and follows the h3 colour inside an h3. */
 html[data-theme=dark] .markdown-body h2 sup,html[data-theme=dark] .markdown-body h2 sup a,html[data-theme=dark] .markdown-body sup a[href="#NotaVar"] {
-  color: #E8B86A;
+  color: #CEB285;
 }
 
 .markdown-body h4,.markdown-body h5,.markdown-body h6 {
