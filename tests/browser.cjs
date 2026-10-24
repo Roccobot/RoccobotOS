@@ -16,7 +16,7 @@ async function check(name, action) { await action(); results.push(name); }
       await page.goto(url,{waitUntil:'domcontentloaded'});
       const trigger=page.locator(width>860?'#tocVersion':'#siteVersion');
       await trigger.waitFor({state:'visible'});
-      await check(`${width}/${theme}: 1.67 is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS167.css'));
+      await check(`${width}/${theme}: 1.68 is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS168.css'));
       await check(`${width}/${theme}: table header stands apart from body and narrow cells`,async()=>{
         const fills=await page.evaluate(()=>{const bg=e=>getComputedStyle(e).backgroundColor;const t=document.querySelector('.markdown-body table.narrow-cols-odd, .markdown-body table.narrow-cols-even');return {th:bg(t.querySelector('th')),row:bg(t.querySelector('tbody tr')),narrow:bg(t.querySelector(t.classList.contains('narrow-cols-odd')?'tbody td:nth-child(odd)':'tbody td:nth-child(2n)'))};});
         assert.notEqual(fills.th,fills.row); assert.notEqual(fills.th,fills.narrow);
@@ -48,11 +48,11 @@ async function check(name, action) { await action(); results.push(name); }
         assert.equal(await page.evaluate(()=>window.getSelection().toString()),testo);
         await page.waitForFunction(()=>!document.getElementById('prova-doppio-clic').classList.contains('copiato'));
       });
-      await check(`${width}/${theme}: Fn shortcuts show the globe 1px above the box centre, copy as Fn and keep the box size`,async()=>{
-        const r=await page.evaluate(()=>{const cs=[...document.querySelectorAll('#markdown_content code')];const fn=cs.filter(e=>e.querySelector('svg.ic-fn'));const ref=[...document.querySelectorAll('#markdown_content li code')].find(e=>!e.querySelector('svg')&&!e.closest('a')&&e.textContent==='⌘');const f=[...document.querySelectorAll('#markdown_content li code')].find(e=>e.querySelector('svg.ic-fn')&&e.textContent==='Fn F');const s=f.querySelector('svg');const g=getComputedStyle(s);return {n:fn.length,text:cs.filter(e=>/Fn/.test([...e.childNodes].filter(x=>x.nodeType===3).map(x=>x.textContent).join(''))).length,all:fn.every(e=>e.textContent.startsWith('Fn')&&e.querySelector('svg').getAttribute('aria-label')==='Fn'&&e.querySelector('svg').getAttribute('role')==='img'),hf:f.getBoundingClientRect().height,hr:ref.getBoundingClientRect().height,lf:f.parentElement.getBoundingClientRect().height>0,sh:s.getBoundingClientRect().height,fs:parseFloat(getComputedStyle(f).fontSize),stroke:getComputedStyle(s.querySelector('g')).stroke,color:getComputedStyle(f).color,sTop:s.getBoundingClientRect().top-f.getBoundingClientRect().top,sBot:f.getBoundingClientRect().bottom-s.getBoundingClientRect().bottom,cen:Math.max(...fn.map(e=>{const r=e.getBoundingClientRect(),c=getComputedStyle(e),q=e.querySelector('svg').getBoundingClientRect();return Math.abs((q.top+q.bottom)/2-(r.top+parseFloat(c.borderTopWidth)+r.bottom-parseFloat(c.borderBottomWidth))/2+.0694*parseFloat(c.fontSize))}))}});
+      await check(`${width}/${theme}: Fn shortcuts show the globe centred in the box, copy as Fn and keep the box size`,async()=>{
+        const r=await page.evaluate(()=>{const cs=[...document.querySelectorAll('#markdown_content code')];const fn=cs.filter(e=>e.querySelector('svg.ic-fn'));const ref=[...document.querySelectorAll('#markdown_content li code')].find(e=>!e.querySelector('svg')&&!e.closest('a')&&e.textContent==='⌘');const f=[...document.querySelectorAll('#markdown_content li code')].find(e=>e.querySelector('svg.ic-fn')&&e.textContent==='Fn F');const s=f.querySelector('svg');const g=getComputedStyle(s);return {n:fn.length,text:cs.filter(e=>/Fn/.test([...e.childNodes].filter(x=>x.nodeType===3).map(x=>x.textContent).join(''))).length,all:fn.every(e=>e.textContent.startsWith('Fn')&&e.querySelector('svg').getAttribute('aria-label')==='Fn'&&e.querySelector('svg').getAttribute('role')==='img'),hf:f.getBoundingClientRect().height,hr:ref.getBoundingClientRect().height,lf:f.parentElement.getBoundingClientRect().height>0,sh:s.getBoundingClientRect().height,fs:parseFloat(getComputedStyle(f).fontSize),stroke:getComputedStyle(s.querySelector('g')).stroke,color:getComputedStyle(f).color,sTop:s.getBoundingClientRect().top-f.getBoundingClientRect().top,sBot:f.getBoundingClientRect().bottom-s.getBoundingClientRect().bottom,cen:Math.max(...fn.map(e=>{const r=e.getBoundingClientRect(),c=getComputedStyle(e),q=e.querySelector('svg').getBoundingClientRect();return Math.abs((q.top+q.bottom)/2-(r.top+parseFloat(c.borderTopWidth)+r.bottom-parseFloat(c.borderBottomWidth))/2)}))}});
         assert.equal(r.n,25);assert.equal(r.text,0,'no Fn text left in inline code');assert.ok(r.all,'every globe copies as Fn and is labelled');
         assert.ok(Math.abs(r.hf-r.hr)<.01,'box height '+r.hf+' vs '+r.hr);assert.ok(Math.abs(r.sh-r.fs)<.01,'globe 1em '+r.sh);
-        assert.ok(r.sTop>0&&r.sBot>0,'globe inside the box '+r.sTop+' '+r.sBot);assert.ok(r.cen<.25,'globe off 1px (.0694em) above the box centre by '+r.cen);assert.equal(r.stroke,r.color);
+        assert.ok(r.sTop>0&&r.sBot>0,'globe inside the box '+r.sTop+' '+r.sBot);assert.ok(r.cen<.25,'globe off the box centre by '+r.cen);assert.equal(r.stroke,r.color);
         const t=await page.evaluate(()=>{const f=[...document.querySelectorAll('#markdown_content li code')].find(e=>e.querySelector('svg.ic-fn')&&e.textContent==='Fn F');f.id='prova-fn';window.__copiati=[];Object.defineProperty(navigator,'clipboard',{value:{writeText:t=>{window.__copiati.push(t);return Promise.resolve()}},configurable:true});return f.textContent});
         const c=page.locator('#prova-fn');await c.scrollIntoViewIfNeeded();await c.dblclick();
         await page.waitForFunction(()=>window.__copiati.length>0);assert.deepEqual(await page.evaluate(()=>window.__copiati),['Fn F']);assert.equal(t,'Fn F');
@@ -134,7 +134,7 @@ async function check(name, action) { await action(); results.push(name); }
         await p2.setViewportSize({width,height:1000});await p2.waitForTimeout(400);
         await check(`${width}/${theme}: 1.64 code colours: dark blocks green grey, dark inline bright green, light blocks on the sage index colour with near black text, light inline peach with black text`,async()=>{
           const c=await p2.evaluate(()=>{const g=e=>getComputedStyle(e);const pre=document.querySelector('div.code-toolbar>pre');const code=pre.querySelector('code');const inl=[...document.querySelectorAll('#markdown_content :not(pre)>code')].find(e=>!e.closest('table,a'));const btn=document.querySelector('div.code-toolbar>.toolbar button');return {pre:[g(pre).backgroundColor,g(pre).color],code:[g(code).backgroundColor,g(code).color],inl:[g(inl).backgroundColor,g(inl).color],btn:g(btn).color}});
-          if(theme==='dark'){assert.deepEqual(c.pre,['rgb(56, 69, 65)','rgb(247, 248, 245)']);assert.deepEqual(c.inl,['rgb(100, 196, 134)','rgb(6, 19, 34)']);assert.equal(c.btn,'rgb(247, 248, 245)');}
+          if(theme==='dark'){assert.deepEqual(c.pre,['rgb(56, 69, 65)','rgb(247, 248, 245)']);assert.deepEqual(c.inl,['rgb(108, 188, 136)','rgb(6, 19, 34)']);assert.equal(c.btn,'rgb(247, 248, 245)');}
           else{assert.deepEqual(c.pre,['rgb(234, 241, 232)','rgb(6, 18, 12)']);assert.deepEqual(c.inl,['rgb(255, 225, 184)','rgb(0, 0, 0)']);assert.equal(c.btn,'rgb(6, 18, 12)');}
           assert.equal(c.code[0],'rgba(0, 0, 0, 0)');assert.equal(c.code[1],c.pre[1]);
         });
@@ -184,7 +184,7 @@ async function check(name, action) { await action(); results.push(name); }
       await check(`${width}/${theme}: inline code is green in dark and peach in light, dark blocks are green grey with light text, tables have 1rem corners`,async()=>{
         const r=await page.evaluate(()=>{const g=e=>getComputedStyle(e);const ic=[...document.querySelectorAll('#markdown_content code')].find(e=>!e.closest('pre,a')&&e.parentElement.tagName==='P');const pre=document.querySelector('#markdown_content pre');const h=document.querySelector('a#SezioneSistema').closest('h1');const t=document.querySelector('#markdown_content table:not(.index-grid)');const h1o=[...document.querySelectorAll('#markdown_content h1')].find(e=>!e.querySelector('#SezioneSistema,#ScorciatoieApp'));const ap=document.querySelector('a#ScorciatoieApp').closest('h1');return {body:g(document.querySelector('#markdown_content p')).color,hfs:g(h).fontSize+'/'+g(ap).fontSize+'/'+g(ap).color,h1fs:g(h1o).fontSize+'/'+g(h1o).fontSize+'/'+g(h).color,ib:g(ic).backgroundColor,ic:g(ic).color,ibw:g(ic).borderTopWidth,pb:g(pre).backgroundColor,pc:g(pre).color,pbw:g(pre).borderTopWidth,h:g(h).color,rad:g(t).borderTopLeftRadius,tables:document.documentElement.dataset.tables}});
         if(theme==='dark'){
-          assert.equal(r.ib,'rgb(100, 196, 134)');assert.equal(r.pb,'rgb(56, 69, 65)');
+          assert.equal(r.ib,'rgb(108, 188, 136)');assert.equal(r.pb,'rgb(56, 69, 65)');
           assert.equal(r.ic,'rgb(6, 19, 34)');assert.equal(r.pc,'rgb(247, 248, 245)');
           assert.equal(r.ibw,'0px');assert.equal(r.pbw,'0px');
           assert.equal(r.h,r.body);assert.equal(r.h,'rgb(222, 229, 225)');assert.equal(r.hfs,r.h1fs);
@@ -217,7 +217,7 @@ async function check(name, action) { await action(); results.push(name); }
       await check(`${width}/${theme}: three registered styles`,async()=>assert.equal(await page.getByRole('option').count(),3));
       await check(`${width}/${theme}: SlimVer names without Paper`,async()=>{
         const labels=await page.getByRole('option').allTextContents();
-        assert.deepEqual(labels,['RoccobotOS1.00','RoccobotOS1.42','RoccobotOS1.67']);
+        assert.deepEqual(labels,['RoccobotOS1.00','RoccobotOS1.42','RoccobotOS1.68']);
         assert.equal(await page.getByRole('link',{name:'Aggiungi uno stile'}).count(),0);
       });
       await page.getByRole('option').first().click();
@@ -228,7 +228,7 @@ async function check(name, action) { await action(); results.push(name); }
       });
       await check(`${width}/${theme}: typography and layout preserved`,async()=>assert.deepEqual(await page.locator('h1').first().evaluate(e=>({font:getComputedStyle(e).fontSize,width:e.getBoundingClientRect().width,padding:getComputedStyle(e).paddingBottom})),before));
       await list.press('Escape');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS167.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS168.css'));
       await check(`${width}/${theme}: Escape restores initial style and focus`,async()=>{
         assert.equal(await page.getByRole('dialog').isVisible(),false);
         assert.equal(await trigger.evaluate(e=>document.activeElement===e),true);
@@ -240,7 +240,7 @@ async function check(name, action) { await action(); results.push(name); }
       await check(`${width}/${theme}: keyboard selection commits on Enter`,async()=>assert.equal(await page.getByRole('dialog').isVisible(),false));
       await trigger.click();
       await list.press('End'); await list.press('Home'); await list.press('End');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS167.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS168.css'));
       await check(`${width}/${theme}: rapid selection leaves one active sheet`,async()=>assert.equal(await page.locator('link[data-site-style]').count(),1));
       await page.getByRole('button',{name:'Chiudi il selettore'}).click();
       await trigger.click();
@@ -248,7 +248,7 @@ async function check(name, action) { await action(); results.push(name); }
       await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS100.css'));
       await list.press('Enter');
       await page.reload({waitUntil:'domcontentloaded'});
-      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS167.css'));
+      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS168.css'));
       await check(`${width}/${theme}: no JavaScript errors`,async()=>assert.deepEqual(errors,[]));
       await page.goto(url+'Styles/admin/manage.html',{waitUntil:'domcontentloaded'});
       await check(`${width}/${theme}: management remains closed without configuration`,async()=>{
@@ -266,7 +266,7 @@ async function check(name, action) { await action(); results.push(name); }
     await page.route('**/Styles/RoccobotOS100.css',route=>route.abort());
     await page.getByRole('option').first().click();
     await page.getByText('Lo stile non si carica. La pagina conserva quello precedente.').waitFor();
-    await check('failed stylesheet leaves default 1.67 active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS167.css'));
+    await check('failed stylesheet leaves default 1.68 active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS168.css'));
     await context.close();
     if (process.env.VERIFICATION_REPORT) await fs.writeFile(process.env.VERIFICATION_REPORT, JSON.stringify({ passed: results.length, checks: results }, null, 2));
     console.log(JSON.stringify({passed:results.length,checks:results},null,2));

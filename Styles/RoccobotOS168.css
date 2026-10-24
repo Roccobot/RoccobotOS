@@ -1,7 +1,7 @@
 /*
 #NAME: RoccobotOS
-#VERSION: 1.67
-#NOTE: The 1.66 style with the Fn globe 1px higher than the centre of its inline code box at 14.4px, as the user asked.
+#VERSION: 1.68
+#NOTE: The 1.67 style with the Fn globe back on the centre of its inline code box and a slightly desaturated dark inline code box #6CBC88.
 #COMMENT: Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches.
 */
 
@@ -226,9 +226,9 @@ html[data-theme=dark] .markdown-body kbd {
   color: #DBADB9;
 }
 
-/* Dark inline code is a flat green box #64C486 (until 1.62 #79A279 with #08171A). The text is #061322, 8.70:1 on it (white would be only 2.15:1); the box is 7.86:1 against the page #191E1D. Dark code blocks (pre, .highlight pre, code-toolbar blocks) are a deep green grey #384541 with the light page colour #F7F8F5 as text, 9.40:1 (the block is 1.68:1 against the page #191E1D, 4.67:1 against the green inline box). Only the colours stay dark-only; the shapes are in the next block for both themes. */
+/* Dark inline code is a flat green box #6CBC88 (from 1.68: #64C486 with its HSL saturation lowered by 17% relative, same hue and lightness; #64C486 from 1.63 to 1.67, until 1.62 #79A279 with #08171A). The text is #061322, 8.17:1 on it (white would be only 2.29:1); the box is 7.38:1 against the page #191E1D. Dark code blocks (pre, .highlight pre, code-toolbar blocks) are a deep green grey #384541 with the light page colour #F7F8F5 as text, 9.40:1 (the block is 1.68:1 against the page #191E1D, 4.38:1 against the green inline box). Only the colours stay dark-only; the shapes are in the next block for both themes. */
 html[data-theme=dark] .markdown-body code {
-  background-color: #64C486;
+  background-color: #6CBC88;
   color: #061322;
 }
 
@@ -1064,7 +1064,7 @@ html div.code-toolbar>.toolbar {
 
 }
 
-/* Visual confirmation after a double click copy on code. The outline sits outside the box, in the gap on the page. In light it is #0A1A12: 16.74:1 on the page #F8F7F2, 15.60:1 on the sage block #EAF1E8 and 14.29:1 on the peach inline box #FFE1B8, so it shows on all of them. In the dark theme the ring stays white: 16.87:1 on the page #191E1D and 10.02:1 on the green grey block #384541; on the inline box #64C486 it is only 2.15:1, but the ring sits in the gap on the page, where it is 16.87:1. */
+/* Visual confirmation after a double click copy on code. The outline sits outside the box, in the gap on the page. In light it is #0A1A12: 16.74:1 on the page #F8F7F2, 15.60:1 on the sage block #EAF1E8 and 14.29:1 on the peach inline box #FFE1B8, so it shows on all of them. In the dark theme the ring stays white: 16.87:1 on the page #191E1D and 10.02:1 on the green grey block #384541; on the inline box #6CBC88 it is only 2.29:1, but the ring sits in the gap on the page, where it is 16.87:1. */
 .markdown-body .copiato {
   outline: 2px solid #0A1A12;
   outline-offset: .13158em;
@@ -1212,9 +1212,9 @@ html[data-theme=dark] .mweb_toc_wrap_ct a.toc-link {
   --nudge: -.1042em;
 }
 
-/* The Fn globe inside inline code (from 1.65): 1em tall from its height attribute, so it fits the box without changing it. The box is trimmed to the capitals, so its centre hangs from the baseline; the globe is placed from the baseline with a length instead of middle, which depends on the x-height and differs between engines. In 1.66 -.164em put its centre on the centre of the padding box (within .05px in Chromium and WebKit); from 1.67 it is -.095em, 1px higher at 14.4px (.0694em, proportional in tables), the optical position the user asked for. The arrows next to it are text and do not move. */
+/* The Fn globe inside inline code (from 1.65): 1em tall from its height attribute, so it fits the box without changing it. The box is trimmed to the capitals, so its centre hangs from the baseline; the globe is placed from the baseline with a length instead of middle, which depends on the x-height and differs between engines. In 1.66 -.164em put its centre on the centre of the padding box (within .05px in Chromium and WebKit); in 1.67 -.095em put it 1px higher at 14.4px, which the user rejected; from 1.68 it is -.161em, back on the centre (.003em above it). The arrows next to it are text and do not move. */
 .ic-fn {
-  vertical-align: -.095em;
+  vertical-align: -.161em;
   --nudge: 0;
 }
 
