@@ -33,14 +33,16 @@
 
 ### 🎨 La styleguide e i valori visivi
 
-- **Regola anti-jitter (non rovesciare).** Tema chiaro e tema scuro hanno la stessa impaginazione: stessi pesi, stessi caratteri, stesse interlinee (compresa quella delle celle di tabella, 1,639), stessi riquadri del codice, stessi bordi, stessi a capo e stessa altezza di pagina. Cambiano solo i colori, così il cambio tema non sposta nulla. Ogni stile nuovo si verifica misurando ogni elemento nei due temi (a 1440, 900 e 390 px), e `tests/browser.cjs` lo controlla. Le `1.51` e `1.53` la violavano (+443/+563/+392 px e +112 px di pagina in tema chiaro); dalla `1.54` alla `1.68` la rispettano. Anche il testo evidenziato è testo normale, il pulsante Copia manca sui blocchi che scorrono in orizzontale e la barra di scorrimento dei blocchi di codice è nascosta (dalla `1.55`): niente di questo cambia l'impaginazione. Il colore dei blocchi di codice in tema scuro è `#384541` (dalla `1.60`) con testo `#F7F8F5` (9,40:1; 1,68:1 sul fondo pagina), quello del codice in riga (dalla `1.68`) `#6CBC88`, il `#64C486` della `1.63` desaturato del 17%, con `#061322` (8,17:1; 7,38:1 sul fondo pagina, 4,38:1 sui blocchi), e gli H2 scuri (dalla `1.63`, con il segno § e il bordo del riquadro ATTENZIONE!) sono sabbia `#CEB285` (8,30:1); in tema chiaro (dalla `1.64`) il fondo pagina è avorio caldo `#F8F7F2`, i blocchi di codice sono salvia chiarissimo `#EAF1E8`, come il fondo dell'indice, con testo e icona `#06120C` (16,59:1; 1,07:1 sul fondo pagina), gli H1 sono lampone `#BC4A61` (4,56:1), il codice in riga è pesca `#FFE1B8` con testo `#000000` (16,71:1; 1,17:1 sul fondo pagina, 1,12:1 sulle righe grigie), l'intestazione delle tabelle resta `#C3DDD3` (testo `#0F4A3F`, 7,05:1) e le tabelle hanno righe pari `#F3F2ED` e colonne strette `#FDFCF7`; la tabella DiskUtil (`table.cmd-scorrevoli`) tiene i comandi su una riga con la cella che scorre.
+- **Regola anti-jitter (non rovesciare).** Tema chiaro e tema scuro hanno la stessa impaginazione: stessi pesi, stessi caratteri, stesse interlinee (compresa quella delle celle di tabella, 1,639), stessi riquadri del codice, stessi bordi, stessi a capo e stessa altezza di pagina. Cambiano solo i colori, così il cambio tema non sposta nulla. Ogni stile nuovo si verifica misurando ogni elemento nei due temi (a 1440, 900 e 390 px), e `tests/browser.cjs` lo controlla. Le `1.51` e `1.53` la violavano (+443/+563/+392 px e +112 px di pagina in tema chiaro): è la misura da cui la regola è nata. Anche il testo evidenziato è testo normale, il pulsante Copia manca sui blocchi che scorrono in orizzontale e la barra di scorrimento dei blocchi di codice è nascosta: niente di questo cambia l'impaginazione. La tabella DiskUtil (`table.cmd-scorrevoli`) tiene i comandi su una riga con la cella che scorre.
+  - **I colori in vigore**, letti nello stile predefinito `Styles/RoccobotOS171.css`, che è la fonte: se questa riga e il CSS divergono, vince il CSS. In tema scuro i blocchi di codice sono `#384541` con testo `#F7F8F5` (9,40:1; 1,68:1 sul fondo pagina), il codice in riga è `#6CBC88` con `#061322` (8,17:1; 7,38:1 sul fondo pagina, 4,38:1 sui blocchi), e gli H2, il segno § e il bordo del riquadro ATTENZIONE! sono sabbia `#CEB285` (8,30:1). In tema chiaro il fondo pagina è avorio caldo `#F8F7F2`, i blocchi di codice sono salvia chiarissimo `#EAF1E8`, come il fondo dell'indice, con testo e icona `#06120C` (16,59:1; 1,07:1 sul fondo pagina), gli H1 sono lampone `#BC4A61` (4,56:1), il codice in riga è pesca `#FFE1B8` con testo `#000000` (16,71:1; 1,17:1 sul fondo pagina, 1,12:1 sulle righe grigie), l'intestazione delle tabelle è `#C3DDD3` (testo `#0F4A3F`, 7,05:1) e le tabelle hanno righe pari `#F3F2ED` e colonne strette `#FDFCF7`. I valori delle versioni passate sono in `docs/Removed.md` § '🎨 I colori passati degli stili'.
 - ⚠️⚠️ **La STYLEGUIDE è la fonte unica dei valori visivi** (colori, tipografia, superfici,
   componenti): [`Styleguide.html`](Styleguide.html), pubblicata su
   <https://roccobot.github.io/RoccobotOS/Styleguide.html> perché la si possa dare a un altro
   agente. I numeri sono là e non si riscrivono qui.
   - **Ogni token è un campione disegnato sui due fondi veri del sito, affiancati**: il difetto
     storico del progetto è scegliere un colore guardando un tema solo, e questa forma lo rende
-    impossibile. Il vecchio `Styleguide.md` non esiste più.
+    impossibile. Il vecchio `Styleguide.md` non esiste più (dettagli in `docs/Removed.md`
+    § '📄 Il vecchio `Styleguide.md`').
   - ⚠️ **I valori nei campioni sono scritti a mano, di proposito**: una pagina che deve far
     vedere un colore non lo prende da una fonte che può cambiare senza che se ne accorga. Quindi
     un token si cambia nel CSS del sito e in `Styleguide.html` **nello stesso commit**. La
@@ -89,8 +91,9 @@
   - **8 px è il raggio del progetto**, anche per il riquadro dell'indice laterale. Sul cassetto a
     schermo intero degli smartphone resta 0, di proposito: il pannello è incollato ai tre lati, e
     un angolo tondo mostrerebbe la pagina sotto.
-- ⚠️ **Il LOGO in testata è SVG inline**, e `RoccobotOS.svg` non esiste più: un `<img>` non si
-  ricolora, e in tema scuro cambia colore la sola parte grigia della scritta, il marchio verde no.
+- ⚠️ **Il LOGO in testata è SVG inline**, e `RoccobotOS.svg` non esiste più (dettagli in
+  `docs/Removed.md` § '🍏 Il logo `RoccobotOS.svg`'): un `<img>` non si ricolora, e in tema scuro
+  cambia colore la sola parte grigia della scritta, il marchio verde no.
   Le due parti hanno le classi `.logo-word` e `.logo-mark`, i colori sono in ogni stile di `Styles/`. Gli `id`
   dell'export si sono tolti, perché inline avrebbero potuto collidere con quelli della pagina.
 
@@ -125,7 +128,8 @@
     per volta dà falsi positivi: le regole `[data-theme=dark][data-tables=cards]` risultano morte.
   - **Non si toccano** `.site-version:empty` e `.toc-version:empty`: non agganciano niente
     **apposta**, perché sono la rete per quando il JS non gira.
-- **Le ancore invisibili dell'export (`<a class="anchor">`) sono tolte** e non si ricreano.
+- **Le ancore invisibili dell'export (`<a class="anchor">`) sono tolte** e non si ricreano
+  (dettagli in `docs/Removed.md` § '⚓ Le ancore invisibili dell'export').
   ⚠️ Restano le **ancore fatte a mano** (`<a id="ScorciatoieApp"></a>` e simili, comprese
   `CloudStorage` e `NotaFTop`, che oggi nessuno punta): sono segnaposto voluti, e i link
   dell'indice ci passano.
@@ -177,7 +181,7 @@
   errore là non si recupera rigenerando: prima di toccarla vale l'allineamento al remoto.
 - ⚠️ **Nessuna lista di lavori pendenti in un file**: `Da fare.txt` è stato eliminato
   dall'utente e non si ricrea. Un lavoro pendente si porta all'utente o nel brief, perché un file
-  che nessuno rilegge invecchia.
+  che nessuno rilegge invecchia (dettagli in `docs/Removed.md` § '📝 `Da fare.txt`').
 
 ### 🖼️ Le iconcine del testo: SVG che seguono il colore
 
@@ -209,7 +213,8 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
   qualunque glifo non universale, anche in una sostituzione nuova della tabella.
 - **Non tutte le immagini del testo sono icone**: `extrachar.png` è una schermata, e resta PNG.
 - ⚠️ **L'icona dell'area notifiche è eliminata e non si ricrea**: la voce 'Non disturbare' dice
-  'clic sull'orologio di sistema', che nomina la cosa invece di disegnarla (scelta dell'utente).
+  'clic sull'orologio di sistema', che nomina la cosa invece di disegnarla (scelta dell'utente;
+  dettagli in `docs/Removed.md` § '🔔 L'icona dell'area notifiche').
 - ⚠️ **`icona1.png`... `icona7.png` non esistono più**: non si cercano e non si ricreano
   (dettagli in `docs/Removed.md` § '🖼️ Le icone PNG del testo'). Le icone del testo si nominano
   per quello che sono, non per numero.
