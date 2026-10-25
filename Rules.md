@@ -165,8 +165,7 @@
     prova temporanea che carica gli script **a scelta** col querystring e stampa i **codepoint**
     del testo letto dal DOM; la pagina si cancella a caso chiuso.
   - ⚠️ **Se servisse la matematica**: lo script torna con `tex: { processEscapes: false }`, o il
-    difetto torna identico. E si controlla che resti l'avvio di Prism (`Prism.highlightAll`), che
-    conviveva con la configurazione di MathJax nella stessa riga.
+    difetto torna identico (dettagli in `docs/Removed.md` § '🧮 MathJax').
 - ⚠️⚠️ **Il cache-busting (`?v=N`) NON esiste più, e non si reintroduce** (decisione dell'utente,
   su una misura). Pages serve tutto con `cache-control: max-age=600` più ETag, HTML compreso,
   quindi una copia in cache vive al massimo 10 minuti. Il `?v=N` comprava solo la coerenza dentro
@@ -211,8 +210,9 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
 - **Non tutte le immagini del testo sono icone**: `extrachar.png` è una schermata, e resta PNG.
 - ⚠️ **L'icona dell'area notifiche è eliminata e non si ricrea**: la voce 'Non disturbare' dice
   'clic sull'orologio di sistema', che nomina la cosa invece di disegnarla (scelta dell'utente).
-- ⚠️ **`icona1.png`... `icona7.png` non esistono più**: non si cercano e non si ricreano (sono
-  nella storia git). Le icone del testo si nominano per quello che sono, non per numero.
+- ⚠️ **`icona1.png`... `icona7.png` non esistono più**: non si cercano e non si ricreano
+  (dettagli in `docs/Removed.md` § '🖼️ Le icone PNG del testo'). Le icone del testo si nominano
+  per quello che sono, non per numero.
 - **La ricarica del browser è sul modello di Chrome**: tracciato di Material Symbols, arco aperto
   con la punta triangolare, un po' più grande e più sottile delle altre, come ha chiesto l'utente.
   Il tracciato buono è **uno solo e continuo**; scartati un arco con la punta a squadra in un
