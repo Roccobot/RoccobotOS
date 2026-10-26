@@ -13,7 +13,7 @@
 - **Che cosa sono**: i valori di colore che la regola anti-jitter di `Rules.md` (§ '🎨 La
   styleguide e i valori visivi') citava con la versione dello stile in cui erano entrati. Nella
   regola restano i valori in vigore; qui la cronologia di quelli sostituiti. La cronologia
-  completa, versione per versione, è anche in `Styles/README.md` e nei commenti dello stile
+  completa, versione per versione, è anche in `styles/README.md` e nei commenti dello stile
   predefinito.
 - **Sostituiti fra il 2026-10-23 e il 2026-10-24**, dalla `1.55` alla `1.68` dello stile:
   - **`1.55`**: il testo evidenziato diventa testo normale, il pulsante Copia sparisce dai

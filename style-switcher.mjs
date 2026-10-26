@@ -4,7 +4,7 @@ const triggers = [...document.querySelectorAll('[data-style-picker]')];
 if (activeLink && triggers.length) initialize();
 
 async function initialize() {
-  const rootURL = new URL('./Styles/', import.meta.url);
+  const rootURL = new URL('./styles/', import.meta.url);
   const host = document.createElement('roccobot-style-picker');
   const shadow = host.attachShadow({ mode: 'open' });
   const css = document.createElement('link');

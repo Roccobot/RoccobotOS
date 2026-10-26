@@ -16,7 +16,7 @@ async function check(name, action) { await action(); results.push(name); }
       await page.goto(url,{waitUntil:'domcontentloaded'});
       const trigger=page.locator(width>860?'#tocVersion':'#siteVersion');
       await trigger.waitFor({state:'visible'});
-      await check(`${width}/${theme}: 1.71 is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS171.css'));
+      await check(`${width}/${theme}: 1.71 is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'styles/RoccobotOS171.css'));
       await check(`${width}/${theme}: table header stands apart from body and narrow cells`,async()=>{
         const fills=await page.evaluate(()=>{const bg=e=>getComputedStyle(e).backgroundColor;const t=document.querySelector('.markdown-body table.narrow-cols-odd, .markdown-body table.narrow-cols-even');return {th:bg(t.querySelector('th')),row:bg(t.querySelector('tbody tr')),narrow:bg(t.querySelector(t.classList.contains('narrow-cols-odd')?'tbody td:nth-child(odd)':'tbody td:nth-child(2n)'))};});
         assert.notEqual(fills.th,fills.row); assert.notEqual(fills.th,fills.narrow);
@@ -254,9 +254,9 @@ async function check(name, action) { await action(); results.push(name); }
       await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS100.css'));
       await list.press('Enter');
       await page.reload({waitUntil:'domcontentloaded'});
-      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS171.css'));
+      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'styles/RoccobotOS171.css'));
       await check(`${width}/${theme}: no JavaScript errors`,async()=>assert.deepEqual(errors,[]));
-      await page.goto(url+'Styles/admin/manage.html',{waitUntil:'domcontentloaded'});
+      await page.goto(url+'styles/admin/manage.html',{waitUntil:'domcontentloaded'});
       await check(`${width}/${theme}: management remains closed without configuration`,async()=>{
         await page.getByText('Il caricamento con GitHub deve ancora essere attivato.').waitFor();
         assert.equal(await page.locator('#upload').isVisible(),false);
@@ -269,10 +269,10 @@ async function check(name, action) { await action(); results.push(name); }
     await page.goto(url,{waitUntil:'domcontentloaded'});
     await page.locator('#tocVersion').click();
     await page.getByRole('option').last().waitFor();
-    await page.route('**/Styles/RoccobotOS100.css',route=>route.abort());
+    await page.route('**/styles/RoccobotOS100.css',route=>route.abort());
     await page.getByRole('option').first().click();
     await page.getByText('Lo stile non si carica. La pagina conserva quello precedente.').waitFor();
-    await check('failed stylesheet leaves default 1.71 active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'Styles/RoccobotOS171.css'));
+    await check('failed stylesheet leaves default 1.71 active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'styles/RoccobotOS171.css'));
     await context.close();
     {
       const context=await browser.newContext({viewport:{width:1200,height:900}});

@@ -16,7 +16,7 @@
    variabili: la media query e i due data-theme ridefiniscono solo quelle, e le regole vere
    stanno scritte una volta sola.
 
-   I valori sono quelli del tema scuro di Styles/RoccobotOS100.css, così le cinque pagine si
+   I valori sono quelli del tema scuro di styles/RoccobotOS100.css, così le cinque pagine si
    somigliano: fondo #121212, testo #eaeaea, righe alterne #181818, intestazioni #262626,
    bordi #3a3a3a, verde dei link #43b59e (7,4:1 sul fondo scuro). */
 
@@ -118,7 +118,7 @@ table tr th, th {
 table tr td, td { border-color: var(--pg-bordo-cella) }
 
 /* Angoli stondati di 8 px, come sulla pagina principale (richiesta dell'utente, 2026-08-02).
-   Il perché del modello separato e delle quattro celle d'angolo è spiegato in Styles/RoccobotOS171.css, e non
+   Il perché del modello separato e delle quattro celle d'angolo è spiegato in styles/RoccobotOS171.css, e non
    si ripete: qui cambiano solo i colori, che passano per le variabili.
    ⚠️ Qui le tabelle NON sono 'display:block', quindi la via dell'overflow che ritaglia non
    esisterebbe nemmeno: è la ragione per cui la tecnica scelta è quella delle celle. */
@@ -141,7 +141,7 @@ table tbody tr:last-child td:first-child { border-bottom-left-radius: .4375rem }
 table tbody tr:last-child td:last-child { border-bottom-right-radius: .4375rem }
 
 /* Colonne strette in grigio nelle tabelle a colonne ripetute: regola generale del progetto,
-   spiegata per esteso in Styles/RoccobotOS171.css. Qui serve alle due tabelle dei caratteri, dove la
+   spiegata per esteso in styles/RoccobotOS171.css. Qui serve alle due tabelle dei caratteri, dove la
    colonna stretta è la SECONDA di ogni coppia (nome esteso, poi il glifo). */
 table.narrow-cols-odd td:nth-child(odd),
 table.narrow-cols-even td:nth-child(2n) { background-color: var(--pg-cella-stretta) }
@@ -212,7 +212,7 @@ body {
   padding-top: 4rem;
 }
 
-/* Stessa ragione del FAB principale (vedi Styles/RoccobotOS171.css, -webkit-tap-highlight-color): su
+/* Stessa ragione del FAB principale (vedi styles/RoccobotOS171.css, -webkit-tap-highlight-color): su
    Android il tocco disegna un rettangolo azzurro sul riquadro, che su un pulsante tondo si
    vede come un quadrato. */
 .pg-back {
