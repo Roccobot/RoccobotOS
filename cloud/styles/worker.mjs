@@ -238,8 +238,8 @@ async function upload(request, env, config) {
     const base = commit.tree?.sha;
     if (!base) throw new Failure(502, 'Il ramo principale non è leggibile.');
     const rootEntries = await tree(base, current.token);
-    const directory = rootEntries.find(entry => entry.path === 'Styles');
-    if (directory && directory.type !== 'tree') throw new Failure(409, 'Styles esiste già e non è una cartella.');
+    const directory = rootEntries.find(entry => entry.path === 'styles');
+    if (directory && directory.type !== 'tree') throw new Failure(409, 'styles esiste già e non è una cartella.');
     const entries = directory ? await tree(directory.sha, current.token) : [];
     if (entries.some(entry => entry.path.toLowerCase() === style.filename.toLowerCase())) throw new Failure(409, 'Esiste già un file con questo nome. Scegli un altro nome.');
     const styles = [...await catalogue(entries, current.token), metadata];
@@ -247,13 +247,13 @@ async function upload(request, env, config) {
     const cssBlob = await github(`${REPOSITORY}/git/blobs`, current.token, 'POST', { content: style.content, encoding: 'utf-8' });
     const indexBlob = await github(`${REPOSITORY}/git/blobs`, current.token, 'POST', { content: JSON.stringify({ styles }, null, 2) + '\n', encoding: 'utf-8' });
     const newTree = await github(`${REPOSITORY}/git/trees`, current.token, 'POST', { base_tree: base, tree: [
-      { path: `Styles/${style.filename}`, mode: '100644', type: 'blob', sha: cssBlob.sha },
-      { path: 'Styles/index.json', mode: '100644', type: 'blob', sha: indexBlob.sha },
+      { path: `styles/${style.filename}`, mode: '100644', type: 'blob', sha: cssBlob.sha },
+      { path: 'styles/index.json', mode: '100644', type: 'blob', sha: indexBlob.sha },
     ] });
     const newCommit = await github(`${REPOSITORY}/git/commits`, current.token, 'POST', { message: `Aggiunge lo stile ${style.name}\n\nAgent: Codex`, tree: newTree.sha, parents: [parent] });
     try {
       await github(`${REPOSITORY}/git/refs/heads/main`, current.token, 'PATCH', { sha: newCommit.sha, force: false });
-      return json({ style: { filename: style.filename, ...metadata }, commit: newCommit.sha, url: `https://github.com/Roccobot/RoccobotOS/blob/main/Styles/${style.filename}` }, 201);
+      return json({ style: { filename: style.filename, ...metadata }, commit: newCommit.sha, url: `https://github.com/Roccobot/RoccobotOS/blob/main/styles/${style.filename}` }, 201);
     } catch (error) {
       if (!(error instanceof Failure) || error.status !== 409) throw error;
       if (attempt === 2) throw new Failure(409, 'Il repository è cambiato durante il salvataggio. Riprova.');

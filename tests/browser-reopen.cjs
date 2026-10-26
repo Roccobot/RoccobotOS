@@ -7,7 +7,7 @@ const assert=require('node:assert/strict');
  await page.route('https://**/*',r=>r.abort());
  let release;const gate=new Promise(r=>release=r);
  let requests=0;
- await page.route('**/Styles/index.json',async r=>{requests++;await gate;await r.continue()});
+ await page.route('**/styles/index.json',async r=>{requests++;await gate;await r.continue()});
  await page.goto('http://127.0.0.1:18770/',{waitUntil:'domcontentloaded'});
  await page.locator('#tocVersion').click();
  await page.getByRole('button',{name:'Chiudi il selettore'}).click();

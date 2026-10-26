@@ -118,7 +118,7 @@ function repositoryMock({ conflict = false, existing = false, account = 10722164
     if (path === '/user') return json({ id: account, login: account === 10722164 ? 'Roccobot' : 'attacker' });
     if (path.endsWith('/git/ref/heads/main')) return json({ object: { sha: `head${generation}` } });
     if (/\/git\/commits\/head/.test(path)) return json({ tree: { sha: `root${generation}` } });
-    if (/\/git\/trees\/root/.test(path)) return json({ tree: [{ path: 'Styles', type: 'tree', sha: `styles${generation}` }] });
+    if (/\/git\/trees\/root/.test(path)) return json({ tree: [{ path: 'styles', type: 'tree', sha: `styles${generation}` }] });
     if (/\/git\/trees\/styles/.test(path)) return json({ tree: [
       ...(existing ? [{ path: 'New.css', type: 'blob', sha: 'existing' }] : []),
       ...(generation ? [{ path: 'Concurrent.css', type: 'blob', sha: 'concurrent' }] : []),
@@ -151,7 +151,7 @@ test('upload atomically commits CSS and catalogue with a non-forced ref update',
   assert.equal(response.status, 201);
   assert.equal(mock.trees.length, 1);
   assert.equal(mock.trees[0].base_tree, 'root0');
-  assert.deepEqual(mock.trees[0].tree.map(entry => entry.path), ['Styles/New.css', 'Styles/index.json']);
+  assert.deepEqual(mock.trees[0].tree.map(entry => entry.path), ['styles/New.css', 'styles/index.json']);
   assert.deepEqual(mock.commits[0].parents, ['head0']);
   assert.deepEqual(mock.updates, [{ sha: 'newcommit0', force: false }]);
   const catalog = JSON.parse(mock.blobs.get(mock.trees[0].tree[1].sha));
