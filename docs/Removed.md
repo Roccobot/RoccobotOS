@@ -8,6 +8,22 @@
 > `rules/Roccobot.md` di `Roccobot/tools`, § '🗄️ Le cose tolte vivono in Removed.md').
 > Le voci vanno dalla più recente alla più vecchia.
 
+## 🗂️ Gli stili originali e la rinomina in Classic
+
+- **Che cosa è successo**: il 2026-10-26, su richiesta dell'utente, `RoccobotOS171.css` è diventato
+  `RoccobotOS_Classic.css`, con nome `Roccobot OS Classic` e versione `0.5` (contenuto identico, cambia
+  la sola intestazione), e sono stati tolti `RoccobotOS142.css` (la `1.42`) e `RoccobotOS100.css`
+  (la `1.00`, l'aspetto originale, che era fisso in testa al catalogo). Sito alla `4.46`.
+- **Che cosa è cambiato di conseguenza**: il selettore ha una voce sola, finché non si aggiunge uno
+  stile; `PINNED_STYLE` in `styles-core.mjs` ora è `RoccobotOS_Classic.css`, quindi in testa al
+  catalogo resta lo stile predefinito; le prove del selettore in `tests/browser.cjs` usano un
+  catalogo finto con due stili di prova, perché con un solo stile non c'è niente da scegliere; la
+  skill `/blend` dell'hub non conosce più gli alias `RoccobotOS142` e `RoccobotOS171`.
+- **Si recuperano dall'ultimo commit che li ha tutti e tre** (il repo non ha tag):
+  `git show b0903c1:styles/RoccobotOS100.css`, `git show b0903c1:styles/RoccobotOS142.css` e
+  `git show b0903c1:styles/RoccobotOS171.css`. Le copie di riserva della `1.40` e della `1.43`
+  in `styles/backup/` restano dove erano.
+
 ## 🎨 I colori passati degli stili
 
 - **Che cosa sono**: i valori di colore che la regola anti-jitter di `Rules.md` (§ '🎨 La

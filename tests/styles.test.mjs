@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readMetadata, validateUpload } from '../styles-core.mjs';
+import { readdir, readFile } from 'node:fs/promises';
+import { compareStyles, readMetadata, validateUpload } from '../styles-core.mjs';
 
 const valid = '/*\n#NAME: RoccobotOS Paper\n#VERSION: 1.40\n#NOTE: A paper palette.\n#COMMENT: Light and dark colours.\n*/\nbody { color: #303735; }';
 
@@ -23,4 +24,22 @@ test('rejects image-set resources whose URLs are written as strings', () => {
   for (const image of ['image-set("https://example.org/pixel.png" 1x)', '-webkit-image-set("https://example.org/pixel.png" 1x)', 'image("https://example.org/pixel.png")']) {
     assert.throws(() => validateUpload('Paper.css', valid + `body { background: ${image}; }`));
   }
+});
+
+test('accepts the Roccobot OS Classic file name and version 0.5', () => {
+  const classic = '/*\n#NAME: Roccobot OS Classic\n#VERSION: 0.5\n#NOTE: Default style.\n#COMMENT: Light and dark colours.\n*/\nbody { color: #303735; }';
+  assert.equal(validateUpload('RoccobotOS_Classic.css', classic).version, '0.5');
+});
+
+test('the catalogue keeps Roccobot OS Classic first, then orders by name', () => {
+  const styles = [{ file: 'Zzz.css', name: 'Zzz' }, { file: 'Aaa.css', name: 'Aaa' }, { file: 'RoccobotOS_Classic.css', name: 'Roccobot OS Classic' }];
+  assert.deepEqual(styles.sort(compareStyles).map(style => style.file), ['RoccobotOS_Classic.css', 'Aaa.css', 'Zzz.css']);
+});
+
+test('styles/index.json lists exactly the CSS files of styles/, with their own metadata', async () => {
+  const folder = new URL('../styles/', import.meta.url);
+  const files = (await readdir(folder)).filter(name => name.endsWith('.css')).sort();
+  const catalogue = JSON.parse(await readFile(new URL('index.json', folder), 'utf8')).styles;
+  assert.deepEqual(catalogue.map(style => style.file).sort(), files);
+  for (const style of catalogue) assert.deepEqual({ ...style }, { file: style.file, ...readMetadata(await readFile(new URL(style.file, folder), 'utf8')) });
 });
