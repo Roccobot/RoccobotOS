@@ -1,23 +1,9 @@
 {
   "styles": [
     {
-      "file": "RoccobotOS100.css",
-      "name": "RoccobotOS",
-      "version": "1.00",
-      "note": "The original RoccobotOS web palette.",
-      "comment": "Light and dark colours with the original responsive layout."
-    },
-    {
-      "file": "RoccobotOS142.css",
-      "name": "RoccobotOS",
-      "version": "1.42",
-      "note": "The updated RoccobotOS web palette, with green code and soft green table headers.",
-      "comment": "Light and dark colours with the original responsive layout."
-    },
-    {
-      "file": "RoccobotOS171.css",
-      "name": "RoccobotOS",
-      "version": "1.71",
+      "file": "RoccobotOS_Classic.css",
+      "name": "Roccobot OS Classic",
+      "version": "0.5",
       "note": "The 1.70 style with tables half as rounded, and on phones a centred Tasti funzione cell, no table scrollbars and an index table that fits.",
       "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
     }

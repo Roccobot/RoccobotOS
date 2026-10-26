@@ -23,7 +23,7 @@
 - ⚠️ **Deroghe dichiarate alle regole di sviluppo** (`Roccobot.md` § '🏗️ Sviluppo software'):
   la **lingua del sito è l'italiano**, perché è un riferimento personale e non un prodotto per un
   pubblico anglofono; il numero di versione è in cima per scelta dell'utente.
-- **Struttura.** `index.html` con `RoccobotOS.js` e uno stile della cartella `styles/` (di serie `styles/RoccobotOS171.css`, gli altri dal selettore); quattro sotto-pagine
+- **Struttura.** `index.html` con `RoccobotOS.js` e uno stile della cartella `styles/` (di serie `styles/RoccobotOS_Classic.css`, 'Roccobot OS Classic' versione 0.5, oggi l'unico del catalogo); quattro sotto-pagine
   (`Characters.html`, `Formats.html`, `AdServers.html`, `BlendModes.html`) con `Pages.css` e
   `Pages.js`; la styleguide in `Styleguide.html`.
   - ⚠️ **Nomi dei file in inglese, testi visibili in italiano**: sono due scelte indipendenti
@@ -34,7 +34,7 @@
 ### 🎨 La styleguide e i valori visivi
 
 - **Regola anti-jitter (non rovesciare).** Tema chiaro e tema scuro hanno la stessa impaginazione: stessi pesi, stessi caratteri, stesse interlinee (compresa quella delle celle di tabella, 1,639), stessi riquadri del codice, stessi bordi, stessi a capo e stessa altezza di pagina. Cambiano solo i colori, così il cambio tema non sposta nulla. Ogni stile nuovo si verifica misurando ogni elemento nei due temi (a 1440, 900 e 390 px), e `tests/browser.cjs` lo controlla. Le `1.51` e `1.53` la violavano (+443/+563/+392 px e +112 px di pagina in tema chiaro): è la misura da cui la regola è nata. Anche il testo evidenziato è testo normale, il pulsante Copia manca sui blocchi che scorrono in orizzontale e la barra di scorrimento dei blocchi di codice è nascosta: niente di questo cambia l'impaginazione. La tabella DiskUtil (`table.cmd-scorrevoli`) tiene i comandi su una riga con la cella che scorre.
-  - **I colori in vigore**, letti nello stile predefinito `styles/RoccobotOS171.css`, che è la fonte: se questa riga e il CSS divergono, vince il CSS. In tema scuro i blocchi di codice sono `#384541` con testo `#F7F8F5` (9,40:1; 1,68:1 sul fondo pagina), il codice in riga è `#6CBC88` con `#061322` (8,17:1; 7,38:1 sul fondo pagina, 4,38:1 sui blocchi), e gli H2, il segno § e il bordo del riquadro ATTENZIONE! sono sabbia `#CEB285` (8,30:1). In tema chiaro il fondo pagina è avorio caldo `#F8F7F2`, i blocchi di codice sono salvia chiarissimo `#EAF1E8`, come il fondo dell'indice, con testo e icona `#06120C` (16,59:1; 1,07:1 sul fondo pagina), gli H1 sono lampone `#BC4A61` (4,56:1), il codice in riga è pesca `#FFE1B8` con testo `#000000` (16,71:1; 1,17:1 sul fondo pagina, 1,12:1 sulle righe grigie), l'intestazione delle tabelle è `#C3DDD3` (testo `#0F4A3F`, 7,05:1) e le tabelle hanno righe pari `#F3F2ED` e colonne strette `#FDFCF7`. I valori delle versioni passate sono in `docs/Removed.md` § '🎨 I colori passati degli stili'.
+  - **I colori in vigore**, letti nello stile predefinito `styles/RoccobotOS_Classic.css`, che è la fonte: se questa riga e il CSS divergono, vince il CSS. In tema scuro i blocchi di codice sono `#384541` con testo `#F7F8F5` (9,40:1; 1,68:1 sul fondo pagina), il codice in riga è `#6CBC88` con `#061322` (8,17:1; 7,38:1 sul fondo pagina, 4,38:1 sui blocchi), e gli H2, il segno § e il bordo del riquadro ATTENZIONE! sono sabbia `#CEB285` (8,30:1). In tema chiaro il fondo pagina è avorio caldo `#F8F7F2`, i blocchi di codice sono salvia chiarissimo `#EAF1E8`, come il fondo dell'indice, con testo e icona `#06120C` (16,59:1; 1,07:1 sul fondo pagina), gli H1 sono lampone `#BC4A61` (4,56:1), il codice in riga è pesca `#FFE1B8` con testo `#000000` (16,71:1; 1,17:1 sul fondo pagina, 1,12:1 sulle righe grigie), l'intestazione delle tabelle è `#C3DDD3` (testo `#0F4A3F`, 7,05:1) e le tabelle hanno righe pari `#F3F2ED` e colonne strette `#FDFCF7`. I valori delle versioni passate sono in `docs/Removed.md` § '🎨 I colori passati degli stili'.
 - ⚠️⚠️ **La STYLEGUIDE è la fonte unica dei valori visivi** (colori, tipografia, superfici,
   componenti): [`Styleguide.html`](Styleguide.html), pubblicata su
   <https://roccobot.github.io/RoccobotOS/Styleguide.html> perché la si possa dare a un altro
@@ -301,7 +301,7 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
   chiaro o `#384541` in scuro, nessuno spostamento). Non aggiunge voci alla cronologia. I richiami
   senza `id` ricevono `rif-NotaN-k`. Una nota senza richiami (oggi `NotaFTop`, in un titolo come
   `NotaVar`) non ha `↩`. Le note si scrivono a mano senza `↩`: lo mette lo script.
-- **Tabelle dalla `1.71`** (pagina 4.44): angoli `.5rem` (prima `1rem`), uguali nei due temi. Sotto
+- **Tabelle dalla `1.71`, oggi `Roccobot OS Classic 0.5`** (pagina 4.44): angoli `.5rem` (prima `1rem`), uguali nei due temi. Sotto
   i 600 px nessuna barra di scorrimento orizzontale nelle tabelle (scorrono col tocco), la cella
   `cell-extra-line` tiene il margine sotto di una riga e resta al centro, e l'indice
   (`table.index-grid`) va a capo con margini `.5rem .375rem` ed entra intero a 390 px. Il test
