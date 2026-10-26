@@ -22,7 +22,9 @@
 - **Si recuperano dall'ultimo commit che li ha tutti e tre** (il repo non ha tag):
   `git show b0903c1:styles/RoccobotOS100.css`, `git show b0903c1:styles/RoccobotOS142.css` e
   `git show b0903c1:styles/RoccobotOS171.css`. Le copie di riserva della `1.40` e della `1.43`
-  in `styles/backup/` restano dove erano.
+  sono nell'hub, in `roccobot.github.io/styles/backup/`: quelle di `styles/backup/` di questo
+  repo sono state tolte il 2026-10-26 (regola dell'utente `Famiglia`: le copie di riserva degli stili
+  si fanno solo nell'hub), e si recuperano anche da `b0903c1`.
 
 ## 🎨 I colori passati degli stili
 
