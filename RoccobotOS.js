@@ -10,7 +10,7 @@
 // index.html nascono VUOTI: se questo script non gira il CSS li nasconde con :empty, invece di
 // mostrare una 'v' senza numero.
 !function () {
-  const VERSIONE = "4.48";
+  const VERSIONE = "4.49";
   // Due punti di resa, uno per formato: la pillola nell'angolo dell'indice su desktop,
   // il numero sopra il logo su mobile. A deciderlo è il CSS, qui si scrivono entrambi.
   for (const id of ["siteVersion", "tocVersion"]) {
@@ -459,10 +459,24 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       const box = el.parentElement;
       if (el.tagName === "PRE" && box.matches("div.code-toolbar")) box.classList.toggle("scorre", scorre);
+      if (el.tagName === "TABLE") aggiornaIndizio(el, scorre);
     });
+  }
+  // Una tabella che scorre di lato ha la barra nascosta, quindi non dice da sola che c'è altro:
+  // data-scorre (dx, sx o entrambi) dice da che lato resta del contenuto, e il CSS sfuma quel
+  // bordo (dentro la media query dei 600 px). Un solo pixel di margine, per gli arrotondamenti.
+  function aggiornaIndizio(tab, scorre) {
+    const resto = tab.scrollWidth - tab.clientWidth - Math.abs(tab.scrollLeft);
+    const sx = scorre && Math.abs(tab.scrollLeft) > 1;
+    const dx = scorre && resto > 1;
+    const v = sx && dx ? "entrambi" : dx ? "dx" : sx ? "sx" : "";
+    if (v) { if (tab.getAttribute("data-scorre") !== v) tab.setAttribute("data-scorre", v); }
+    else if (tab.hasAttribute("data-scorre")) tab.removeAttribute("data-scorre");
   }
   let raf = 0;
   const pianifica = () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; sync() }) };
+  // Lo scroll non risale ai genitori, ma si cattura: serve a spegnere la sfumatura arrivando in fondo.
+  document.addEventListener("scroll", ev => { if (ev.target.tagName === "TABLE") pianifica() }, true);
   sync();
   window.addEventListener("load", pianifica);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(pianifica);

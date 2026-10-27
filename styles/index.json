@@ -4,7 +4,7 @@
       "file": "RoccobotMD.css",
       "name": "Roccobot MD",
       "version": "0.9",
-      "note": "The 1.70 style with tables half as rounded, and on phones a centred Tasti funzione cell, no table scrollbars and an index table that fits.",
+      "note": "The 1.70 style with tables half as rounded; on phones cells wrap at the page text size, a table that scrolls fades its edge, the Tasti funzione cell is centred and the index fits.",
       "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
     }
   ]
