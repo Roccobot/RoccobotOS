@@ -221,6 +221,26 @@ async function stubCatalogue(page) {
         const r=await page.evaluate(()=>{const t=document.querySelector('#markdown_content table.index-grid');const td=[...document.querySelectorAll('td.cell-extra-line')].find(e=>e.textContent.includes('tasti Mac'));const b=td.getBoundingClientRect();const cs=[...td.querySelectorAll('code')].map(c=>c.getBoundingClientRect());return {fit:t.scrollWidth<=t.clientWidth,right:t.getBoundingClientRect().right<=innerWidth,bars:[...document.querySelectorAll('#markdown_content table')].every(e=>getComputedStyle(e).scrollbarWidth==='none'),off:Math.abs((Math.min(...cs.map(c=>c.top))-b.top)-(b.bottom-Math.max(...cs.map(c=>c.bottom))))}});
         assert.ok(r.fit&&r.right,'index table fits');assert.ok(r.bars,'no table scrollbar');assert.ok(r.off<2.5,'Tasti funzione cell off centre by '+r.off);
       });
+      if(width===390)await check(`${width}/${theme}: 4.49 phone tables wrap at the page text size, keep inline code on one line, and a table that still scrolls fades the edge that hides content`,async()=>{
+        const r=await page.evaluate(async()=>{
+          const g=e=>getComputedStyle(e),wait=()=>new Promise(r=>setTimeout(r,120));
+          const ts=[...document.querySelectorAll('#markdown_content table:not(.index-grid)')];
+          const cells=ts.flatMap(t=>[...t.querySelectorAll('td,th')]);
+          const sc=ts.filter(t=>t.scrollWidth>t.clientWidth+1);
+          const t=sc.find(x=>x.scrollWidth-x.clientWidth>60);
+          const start=t.getAttribute('data-scorre');
+          t.scrollLeft=30;t.dispatchEvent(new Event('scroll'));await wait();
+          const mid=t.getAttribute('data-scorre'),maskMid=g(t).maskImage||g(t).webkitMaskImage;
+          t.scrollLeft=1e5;t.dispatchEvent(new Event('scroll'));await wait();
+          const end=t.getAttribute('data-scorre');t.scrollLeft=0;t.dispatchEvent(new Event('scroll'));
+          return {small:cells.filter(c=>parseFloat(g(c).fontSize)<14).length,nowrap:cells.filter(c=>g(c).whiteSpace==='nowrap').length,
+            split:[...document.querySelectorAll('#markdown_content table code')].filter(c=>c.getClientRects().length>1).length,
+            scrolling:sc.length,total:ts.length,start,mid,end,maskMid,orphan:ts.filter(x=>x.scrollWidth<=x.clientWidth+1&&x.hasAttribute('data-scorre')).length};
+        });
+        assert.equal(r.small,0,'cells with text under 14px');assert.equal(r.nowrap,0,'cells that never wrap');assert.equal(r.split,0,'inline code split over two lines');
+        assert.ok(r.scrolling>0&&r.scrolling<=r.total/3,'tables that scroll: '+r.scrolling+' of '+r.total);
+        assert.equal(r.start,'dx');assert.equal(r.mid,'entrambi');assert.equal(r.end,'sx');assert.notEqual(r.maskMid,'none','mask on while there is more on both sides');assert.equal(r.orphan,0,'fade on a table that does not scroll');
+      });
       await check(`${width}/${theme}: code boxes have the same shape in both themes (the Prism toolbar is rebuilt by hand because the CDN is blocked)`,async()=>{
         const r=await page.evaluate(()=>{const g=e=>getComputedStyle(e);const ic=[...document.querySelectorAll('#markdown_content code')].find(e=>!e.closest('pre,a,table')&&e.parentElement.tagName==='P');const pre=[...document.querySelectorAll('#markdown_content pre')].find(e=>e.textContent.includes('NOMEAPP</string>'));let wrap=pre.parentElement;if(!wrap.classList.contains('code-toolbar')){wrap=document.createElement('div');wrap.className='code-toolbar';pre.replaceWith(wrap);wrap.appendChild(pre);const t0=document.createElement('div');t0.className='toolbar';t0.innerHTML='<div class="toolbar-item"><button type="button" class="copy-to-clipboard-button"><span>Copy</span></button></div>';wrap.appendChild(t0);}const tb=wrap.querySelector('.toolbar');const btn=wrap.querySelector('button.copy-to-clipboard-button');const bb=g(btn);const rem=parseFloat(g(document.documentElement).fontSize);return {icb:[g(ic).borderTopWidth,g(ic).borderRadius,g(ic).fontFamily===g(ic.parentElement).fontFamily,g(ic).fontWeight],ibc:g(ic).borderTopColor,pb:[g(pre).borderTopWidth,g(pre).borderRadius,g(pre).fontFamily===g(wrap).fontFamily],pbc:g(pre).borderTopColor,wrapFit:g(wrap).width===Math.round(wrap.getBoundingClientRect().width*100)/100+'px'||Math.abs(wrap.getBoundingClientRect().width-pre.getBoundingClientRect().width)<1,narrower:wrap.getBoundingClientRect().width<=wrap.parentElement.getBoundingClientRect().width+.5,pr:parseFloat(g(pre).paddingRight)/rem,top:parseFloat(g(tb).top)/rem,right:parseFloat(g(tb).right)/rem,btn:{bg:bb.backgroundColor,shadow:bb.boxShadow,radius:bb.borderTopLeftRadius,color:bb.color,bw:bb.borderTopWidth},code:g(pre.querySelector('code')).fontFamily===g(pre).fontFamily&&!/mono/i.test(g(pre).fontFamily)}});
         assert.deepEqual(r.icb,['0px','8px',true,'500']);

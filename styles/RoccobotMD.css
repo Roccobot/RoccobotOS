@@ -1,7 +1,7 @@
 /*
 #NAME: Roccobot MD
 #VERSION: 0.9
-#NOTE: The 1.70 style with tables half as rounded, and on phones a centred Tasti funzione cell, no table scrollbars and an index table that fits.
+#NOTE: The 1.70 style with tables half as rounded; on phones cells wrap at the page text size, a table that scrolls fades its edge, the Tasti funzione cell is centred and the index fits.
 #COMMENT: Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches.
 */
 
@@ -393,15 +393,35 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
     overflow-x: auto;
   }
 
+  /* Cells wrap and keep the text size of the page (.9rem, as above 600px): a phone table is read at the same size as a desktop one, and only a table whose narrowest column is still wider than the window scrolls. */
   html[data-tables=standard] .markdown-body table td,html[data-tables=standard] .markdown-body table th {
+    padding: .25rem .375rem;
+  }
+
+  /* An inline code span (a shortcut, a command) stays on one line in a table: broken in two it reads as two boxes, and a command is no longer one. A table that holds one scrolls, with the fade. */
+  html[data-tables=standard] .markdown-body table code {
     white-space: nowrap;
-    padding: .125rem .25rem;
-    font-size: .65rem;
   }
 
   /* From 1.71 a table that overflows on a phone scrolls by touch with no visible bar, like the code blocks. */
   html[data-tables=standard] .markdown-body table {
     scrollbar-width: none;
+  }
+
+  /* RoccobotOS.js sets data-scorre on a table that has more to show sideways (dx, sx or both): the edge that hides content fades out. The mask is alpha only, so it is the same in both themes and moves nothing. */
+  html[data-tables=standard] .markdown-body table[data-scorre=dx] {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 2rem), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 2rem), transparent);
+  }
+
+  html[data-tables=standard] .markdown-body table[data-scorre=sx] {
+    -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 2rem), transparent);
+    mask-image: linear-gradient(to left, #000 calc(100% - 2rem), transparent);
+  }
+
+  html[data-tables=standard] .markdown-body table[data-scorre=entrambi] {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 2rem, #000 calc(100% - 2rem), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 2rem, #000 calc(100% - 2rem), transparent);
   }
 
   html[data-tables=standard] .markdown-body table::-webkit-scrollbar {
@@ -410,12 +430,14 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
 
   /* A cell-extra-line cell opens with a br, an empty line that the extra bottom padding balances above 600px. The phone padding above dropped that balance and the content sat at the bottom; from 1.71 one line of the cell (1lh) is added back, so it is centred (within 1.6px in Chromium and WebKit). */
   html[data-tables=standard] .markdown-body table td.cell-extra-line {
-    padding-bottom: calc(.125rem + 1lh);
+    padding-bottom: calc(.25rem + 1lh);
   }
 
   /* From 1.71 the index table fits a 390px screen: the links are .5rem by .375rem instead of .75rem by .9rem and may wrap. */
   html[data-tables=standard] .markdown-body table.index-grid td {
     white-space: normal;
+    padding: .125rem .25rem;
+    font-size: .65rem;
   }
 
   html[data-tables=standard] .markdown-body table.index-grid td a {
