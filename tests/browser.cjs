@@ -5,7 +5,7 @@ const url = 'http://127.0.0.1:18770/';
 const results = [];
 async function check(name, action) { await action(); results.push(name); }
 // With a single registered style the picker has nothing to choose, so the selector checks run on a
-// catalogue with two throwaway styles in front of the real Roccobot OS Classic.
+// catalogue with two throwaway styles in front of the real Roccobot MD.
 const stubStyles = {
   'Prova_A.css': { name: 'Prova A', version: '1.00', css: 'body{background-color:rgb(1,2,3)!important}h1{border-bottom:1px solid rgb(4,5,6)}' },
   'Prova_B.css': { name: 'Prova B', version: '1.42', css: 'body{background-color:rgb(7,8,9)!important}' }
@@ -17,9 +17,9 @@ async function stubCatalogue(page) {
     await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ styles: [...stubs, ...real.styles] }) });
   });
   for (const [file, s] of Object.entries(stubStyles)) {
-    // A style replaces the whole sheet, so each throwaway one is the real Classic sheet plus its own rules.
+    // A style replaces the whole sheet, so each throwaway one is the real default sheet plus its own rules.
     await page.route('**/styles/' + file, async route => {
-      const classic = await (await route.fetch({ url: new URL('RoccobotOS_Classic.css', route.request().url()).href })).text();
+      const classic = await (await route.fetch({ url: new URL('RoccobotMD.css', route.request().url()).href })).text();
       await route.fulfill({ contentType: 'text/css', body: `${classic}\n${s.css}` });
     });
   }
@@ -36,7 +36,7 @@ async function stubCatalogue(page) {
       await page.goto(url,{waitUntil:'domcontentloaded'});
       const trigger=page.locator(width>860?'#tocVersion':'#siteVersion');
       await trigger.waitFor({state:'visible'});
-      await check(`${width}/${theme}: Roccobot OS Classic is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'styles/RoccobotOS_Classic.css'));
+      await check(`${width}/${theme}: Roccobot MD is the default`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'styles/RoccobotMD.css'));
       await check(`${width}/${theme}: table header stands apart from body and narrow cells`,async()=>{
         const fills=await page.evaluate(()=>{const bg=e=>getComputedStyle(e).backgroundColor;const t=document.querySelector('.markdown-body table.narrow-cols-odd, .markdown-body table.narrow-cols-even');return {th:bg(t.querySelector('th')),row:bg(t.querySelector('tbody tr')),narrow:bg(t.querySelector(t.classList.contains('narrow-cols-odd')?'tbody td:nth-child(odd)':'tbody td:nth-child(2n)'))};});
         assert.notEqual(fills.th,fills.row); assert.notEqual(fills.th,fills.narrow);
@@ -217,7 +217,7 @@ async function stubCatalogue(page) {
         }
         if(r.tables!=='cards')assert.equal(r.rad,'8px');
       });
-      if(width===390)await check(`${width}/${theme}: Classic 0.5 on a phone the index table fits, tables show no scrollbar and the Tasti funzione cell is centred`,async()=>{
+      if(width===390)await check(`${width}/${theme}: MD 0.9 on a phone the index table fits, tables show no scrollbar and the Tasti funzione cell is centred`,async()=>{
         const r=await page.evaluate(()=>{const t=document.querySelector('#markdown_content table.index-grid');const td=[...document.querySelectorAll('td.cell-extra-line')].find(e=>e.textContent.includes('tasti Mac'));const b=td.getBoundingClientRect();const cs=[...td.querySelectorAll('code')].map(c=>c.getBoundingClientRect());return {fit:t.scrollWidth<=t.clientWidth,right:t.getBoundingClientRect().right<=innerWidth,bars:[...document.querySelectorAll('#markdown_content table')].every(e=>getComputedStyle(e).scrollbarWidth==='none'),off:Math.abs((Math.min(...cs.map(c=>c.top))-b.top)-(b.bottom-Math.max(...cs.map(c=>c.bottom))))}});
         assert.ok(r.fit&&r.right,'index table fits');assert.ok(r.bars,'no table scrollbar');assert.ok(r.off<2.5,'Tasti funzione cell off centre by '+r.off);
       });
@@ -238,7 +238,7 @@ async function stubCatalogue(page) {
       await check(`${width}/${theme}: both formats expose one version`,async()=>assert.equal(await page.locator('[data-style-picker]:visible').count(),1));
       await trigger.click();
       await page.getByRole('option').first().waitFor();
-      await check(`${width}/${theme}: the real catalogue has one style, Roccobot OS Classic 0.5`,async()=>assert.deepEqual(await page.getByRole('option').allTextContents(),['Roccobot OS Classic0.5']));
+      await check(`${width}/${theme}: the real catalogue has one style, Roccobot MD 0.9`,async()=>assert.deepEqual(await page.getByRole('option').allTextContents(),['Roccobot MD0.9']));
       await page.getByRole('button',{name:'Chiudi il selettore'}).click();
       await stubCatalogue(page);
       await page.reload({waitUntil:'domcontentloaded'});
@@ -250,7 +250,7 @@ async function stubCatalogue(page) {
       await check(`${width}/${theme}: three styles in the stubbed catalogue`,async()=>assert.equal(await page.getByRole('option').count(),3));
       await check(`${width}/${theme}: SlimVer names without Paper`,async()=>{
         const labels=await page.getByRole('option').allTextContents();
-        assert.deepEqual(labels,['Prova A1.00','Prova B1.42','Roccobot OS Classic0.5']);
+        assert.deepEqual(labels,['Prova A1.00','Prova B1.42','Roccobot MD0.9']);
         assert.equal(await page.getByRole('link',{name:'Aggiungi uno stile'}).count(),0);
       });
       await page.getByRole('option').first().click();
@@ -261,7 +261,7 @@ async function stubCatalogue(page) {
       });
       await check(`${width}/${theme}: typography and layout preserved`,async()=>assert.deepEqual(await page.locator('h1').first().evaluate(e=>({font:getComputedStyle(e).fontSize,width:e.getBoundingClientRect().width,padding:getComputedStyle(e).paddingBottom})),before));
       await list.press('Escape');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS_Classic.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotMD.css'));
       await check(`${width}/${theme}: Escape restores initial style and focus`,async()=>{
         assert.equal(await page.getByRole('dialog').isVisible(),false);
         assert.equal(await trigger.evaluate(e=>document.activeElement===e),true);
@@ -273,7 +273,7 @@ async function stubCatalogue(page) {
       await check(`${width}/${theme}: keyboard selection commits on Enter`,async()=>assert.equal(await page.getByRole('dialog').isVisible(),false));
       await trigger.click();
       await list.press('End'); await list.press('Home'); await list.press('End');
-      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotOS_Classic.css'));
+      await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/RoccobotMD.css'));
       await check(`${width}/${theme}: rapid selection leaves one active sheet`,async()=>assert.equal(await page.locator('link[data-site-style]').count(),1));
       await page.getByRole('button',{name:'Chiudi il selettore'}).click();
       await trigger.click();
@@ -281,7 +281,7 @@ async function stubCatalogue(page) {
       await page.waitForFunction(()=>document.querySelector('link[data-site-style]').href.endsWith('/Prova_A.css'));
       await list.press('Enter');
       await page.reload({waitUntil:'domcontentloaded'});
-      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'styles/RoccobotOS_Classic.css'));
+      await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'styles/RoccobotMD.css'));
       await check(`${width}/${theme}: no JavaScript errors`,async()=>assert.deepEqual(errors,[]));
       await page.goto(url+'styles/admin/manage.html',{waitUntil:'domcontentloaded'});
       await check(`${width}/${theme}: management remains closed without configuration`,async()=>{
@@ -300,7 +300,7 @@ async function stubCatalogue(page) {
     await page.route('**/styles/Prova_A.css',route=>route.abort());
     await page.getByRole('option').first().click();
     await page.getByText('Lo stile non si carica. La pagina conserva quello precedente.').waitFor();
-    await check('failed stylesheet leaves the default Classic active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'styles/RoccobotOS_Classic.css'));
+    await check('failed stylesheet leaves the default Roccobot MD active',async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'styles/RoccobotMD.css'));
     await context.close();
     {
       const context=await browser.newContext({viewport:{width:1200,height:900}});
