@@ -1,9 +1,9 @@
 {
   "styles": [
     {
-      "file": "RoccobotOS_Classic.css",
-      "name": "Roccobot OS Classic",
-      "version": "0.5",
+      "file": "RoccobotMD.css",
+      "name": "Roccobot MD",
+      "version": "0.9",
       "note": "The 1.70 style with tables half as rounded, and on phones a centred Tasti funzione cell, no table scrollbars and an index table that fits.",
       "comment": "Light and dark colours with the original responsive layout, no rule under h2 titles, a double click that copies code and stacked inline code that no longer touches."
     }

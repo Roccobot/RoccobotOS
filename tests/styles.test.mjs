@@ -26,14 +26,14 @@ test('rejects image-set resources whose URLs are written as strings', () => {
   }
 });
 
-test('accepts the Roccobot OS Classic file name and version 0.5', () => {
-  const classic = '/*\n#NAME: Roccobot OS Classic\n#VERSION: 0.5\n#NOTE: Default style.\n#COMMENT: Light and dark colours.\n*/\nbody { color: #303735; }';
-  assert.equal(validateUpload('RoccobotOS_Classic.css', classic).version, '0.5');
+test('accepts the Roccobot MD file name and version 0.9', () => {
+  const classic = '/*\n#NAME: Roccobot MD\n#VERSION: 0.9\n#NOTE: Default style.\n#COMMENT: Light and dark colours.\n*/\nbody { color: #303735; }';
+  assert.equal(validateUpload('RoccobotMD.css', classic).version, '0.9');
 });
 
-test('the catalogue keeps Roccobot OS Classic first, then orders by name', () => {
-  const styles = [{ file: 'Zzz.css', name: 'Zzz' }, { file: 'Aaa.css', name: 'Aaa' }, { file: 'RoccobotOS_Classic.css', name: 'Roccobot OS Classic' }];
-  assert.deepEqual(styles.sort(compareStyles).map(style => style.file), ['RoccobotOS_Classic.css', 'Aaa.css', 'Zzz.css']);
+test('the catalogue keeps Roccobot MD first, then orders by name', () => {
+  const styles = [{ file: 'Zzz.css', name: 'Zzz' }, { file: 'Aaa.css', name: 'Aaa' }, { file: 'RoccobotMD.css', name: 'Roccobot MD' }];
+  assert.deepEqual(styles.sort(compareStyles).map(style => style.file), ['RoccobotMD.css', 'Aaa.css', 'Zzz.css']);
 });
 
 test('styles/index.json lists exactly the CSS files of styles/, with their own metadata', async () => {

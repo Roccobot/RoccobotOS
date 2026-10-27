@@ -12,8 +12,8 @@ export function readMetadata(source) {
   return result;
 }
 
-/* Order the catalogue: the default Roccobot OS Classic style first, then by name and file. */
-const PINNED_STYLE = 'RoccobotOS_Classic.css';
+/* Order the catalogue: the default Roccobot MD style first, then by name and file. */
+const PINNED_STYLE = 'RoccobotMD.css';
 export function compareStyles(a, b) {
   return (b.file === PINNED_STYLE) - (a.file === PINNED_STYLE) || a.name.localeCompare(b.name, 'it') || a.file.localeCompare(b.file);
 }
