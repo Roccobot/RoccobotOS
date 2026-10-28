@@ -424,6 +424,38 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
     mask-image: linear-gradient(to right, transparent, #000 2rem, #000 calc(100% - 2rem), transparent);
   }
 
+  /* A table with two pairs of columns side by side (table.coppie: Tasti / Effetto twice) is read as one pair per line on a phone: the second pair goes under the first, so the Effetto column gets the whole width instead of a quarter of it. Each row becomes a two column grid; the repeated header is hidden. */
+  html[data-tables=standard] .markdown-body table.coppie thead,
+  html[data-tables=standard] .markdown-body table.coppie tbody {
+    display: block;
+  }
+
+  html[data-tables=standard] .markdown-body table.coppie tr {
+    display: grid;
+    grid-template-columns: 4.75rem 1fr;
+  }
+
+  html[data-tables=standard] .markdown-body table.coppie thead th:nth-child(n+3) {
+    display: none;
+  }
+
+  html[data-tables=standard] .markdown-body table.coppie td:nth-child(-n+2) {
+    border-bottom-style: dashed;
+  }
+
+  html[data-tables=standard] .markdown-body table.coppie td:nth-child(n+3) {
+    border-top-width: 0;
+  }
+
+  /* The cell-extra-line trick (a leading br and a line of extra padding) only centres a cell in a row made by its neighbours; in a pair of its own it would leave an empty line above and below the keys. */
+  html[data-tables=standard] .markdown-body table.coppie td.cell-extra-line {
+    padding-bottom: .25rem;
+  }
+
+  html[data-tables=standard] .markdown-body table.coppie td.cell-extra-line > br:first-child {
+    display: none;
+  }
+
   html[data-tables=standard] .markdown-body table::-webkit-scrollbar {
     display: none;
   }
