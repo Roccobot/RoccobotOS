@@ -290,93 +290,57 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
 
 ## 🧭 Il nucleo di `roccobotos`
 
-- **Che cos'è**: il sito di riferimento personale dell'utente (scorciatoie da tastiera, formati
-  file, caratteri, servizi DNS), pubblicato dal Pages del repo `Roccobot/RoccobotOS` su
-  <https://roccobot.github.io/RoccobotOS>. Conta come **progetto e non come documentazione**, e
-  non si chiama 'guida' (`Rules.md`, prima sezione, `## 🖥️ Progetto '/RoccobotOS': un sito, non
-  documentazione`).
-- **Deroga dichiarata alle regole di sviluppo**: la lingua del sito è l'italiano (i nomi dei
-  file sono in inglese, i testi visibili in italiano); la versione è in cima (`Rules.md`, prima
-  sezione).
-- **Struttura**: `index.html` con `RoccobotOS.js` e uno stile della cartella `styles/` (di serie `styles/RoccobotMD.css`, gli altri dal selettore); quattro sotto-pagine
-  (`Characters.html`, `Formats.html`, `AdServers.html`, `BlendModes.html`) con `Pages.css` e
-  `Pages.js`; la styleguide in `Styleguide.html`. I file sono alla radice del repo, anche dove
-  un testo vecchio li nomina col prefisso `RoccobotOS/` di quando il sito era una cartella dell'hub.
-- **Regola anti-jitter (non rovesciare).** Tema chiaro e tema scuro hanno la stessa
-  impaginazione (pesi, caratteri, interlinee, riquadri del codice, bordi, a capo, altezza di
-  pagina): cambiano solo i colori, così il cambio tema non sposta nulla. Ogni stile nuovo si
-  misura nei due temi a 1440, 900 e 390 px, e `tests/browser.cjs` lo controlla. I colori in
-  vigore si leggono nello stile predefinito di `styles/`, quelli passati in `docs/Removed.md`
+- **Che cos'è**: il sito di riferimento personale dell'utente (scorciatoie, formati file,
+  caratteri, servizi DNS), su <https://roccobot.github.io/RoccobotOS>. È un **progetto e non
+  documentazione**, e non si chiama 'guida'; la lingua del sito è l'italiano per deroga
+  dichiarata, coi nomi dei file in inglese (`Rules.md`, prima sezione).
+- **Struttura**: `index.html` con `RoccobotOS.js` e uno stile di `styles/` (di serie
+  `styles/RoccobotMD.css`); le sotto-pagine con `Pages.css` e `Pages.js`; la styleguide in
+  `Styleguide.html`. I file sono alla radice del repo, anche dove un testo vecchio li nomina col
+  prefisso `RoccobotOS/`.
+- **Regola anti-jitter (non rovesciare)**: i due temi hanno la stessa impaginazione e cambiano
+  solo i colori; ogni stile nuovo si misura nei due temi a 1440, 900 e 390 px, e
+  `tests/browser.cjs` lo controlla (`Rules.md` § '🎨 La styleguide e i valori visivi').
+- **`index.html` è la fonte e si modifica direttamente**: non si rigenera da markdown (`Rules.md`
+  § '🚩 Flag, sotto-pagine e decisioni da non rovesciare').
+- **La styleguide è la fonte unica dei valori visivi**: un token si cambia nel CSS del sito e in
+  `Styleguide.html` nello stesso commit, e un contrasto si dichiara sul fondo reale del componente
   (`Rules.md` § '🎨 La styleguide e i valori visivi').
-- **`index.html` è la fonte e si modifica direttamente**: non si rigenera più da markdown, quindi
-  un errore là non si recupera rigenerando (`Rules.md` § '🚩 Flag, sotto-pagine e decisioni da non rovesciare').
-- **La styleguide è la fonte unica dei valori visivi**: i campioni sono scritti a mano, quindi un
-  token si cambia nel CSS del sito e in `Styleguide.html` nello stesso commit; il foglio inline
-  della styleguide vince su `Pages.css`, e un contrasto si dichiara sul fondo reale del
-  componente (`Rules.md` § '🎨 La styleguide e i valori visivi').
-- **Ramo principale `main`; versione SlimVer con la fonte unica nella costante `VERSIONE` di
-  `RoccobotOS.js`**, che il badge legge a runtime. Il numero non si scrive nei file di regole né
-  nel commento in testa al `.js`; si bumpa a ogni commit che tocca il prodotto, e un commit che
-  tocca solo le regole non bumpa (`Rules.md` § '🔢 Versione del progetto: VISIBILE in pagina').
-- **Due rese della versione**, mai insieme: la pillola `sticky` nell'indice su desktop e il
-  numero sopra il logo su mobile, con la soglia a 860 px; gli elementi nascono vuoti e il CSS
-  `:empty` li nasconde se il JS non gira. Opacità `.3` e `.25` e testo `#9b9b9b` sono sotto la
-  soglia di contrasto **per scelta dell'utente**: non si alzano perché un audit li segnala
-  (`Rules.md` § '🔢 Versione del progetto: VISIBILE in pagina').
+- **Ramo principale `main`; versione SlimVer, fonte unica la costante `VERSIONE` di
+  `RoccobotOS.js`**, che il badge legge a runtime; si bumpa a ogni commit sul prodotto, non per le
+  sole regole. Le due rese della versione (desktop e mobile, soglia 860 px) e le loro opacità basse
+  sono **scelte dell'utente**, da non alzare per un audit (`Rules.md` § '🔢 Versione del progetto:
+  VISIBILE in pagina').
 - **Verifica di pubblicazione**:
   `curl -s https://roccobot.github.io/RoccobotOS/RoccobotOS.js | grep -o 'VERSIONE = "[^"]*"'`;
-  il commento in testa al file non contiene il numero, quindi `head -c 30` non mostra niente
-  (`Rules.md` § '🔢 Versione del progetto: VISIBILE in pagina'). Pages serve tutto con `max-age=600`: una versione nuova può comparire
-  con dieci minuti di ritardo.
-- **Decisioni dell'utente che non si rovesciano senza di lui**: il cache-busting `?v=N` non si
-  reintroduce; MathJax non si rimette, e se servisse la matematica va con
-  `processEscapes: false`; nessuna lista di lavori pendenti in un file; niente `localStorage`
-  per il tema; il codice inline a pillola è scartato; lo switch delle tabelle e il tasto del
-  tema restano dietro i flag spenti `FLAG_SWITCH_TABELLE` e `FLAG_TASTO_TEMA`, col loro codice
-  al suo posto (`Rules.md` § '🚩 Flag, sotto-pagine e decisioni da non rovesciare').
-- **Un feature flag si spegne con `[hidden]{display:none!important}` fuori da ogni media
-  query**, perché ogni comando dichiara il suo `display`; e si verifica sul `display`
-  calcolato, mai sull'attributo. Il difetto è arrivato in produzione
-  (`Rules.md` § '🚩 Flag, sotto-pagine e decisioni da non rovesciare').
-- **Censimento del CSS**: una dichiarazione superata non risulta morta, e si trova confrontando
-  il colore calcolato con quello dichiarato; le regole del tema markdown vendorizzato restano,
-  perché coprono costrutti che la pagina può usare; `.site-version:empty` e `.toc-version:empty`
-  non agganciano niente apposta. La misura si rifà con Prism in locale e negli otto stati
-  combinati (`Rules.md` § '🧹 Il CSS: che cosa si pota e che cosa no').
-- **Tabelle a bordi tondi**: modello `separate`, raggio 8 px sulla tabella e 7 sulle celle
-  d'angolo; la cella accanto a un `rowspan` ha la classe `not-last-col`. Un `rowspan` si
-  verifica su tutti e quattro i lati delle celle che tocca, bordi e raggi insieme (`Rules.md`
-  § '🎨 La styleguide e i valori visivi').
-- **Comandi fissi**: una sola regola di visibilità per i due formati (compaiono scorrendo e
-  spariscono dopo 3 secondi), e si nasconde il comando che non porta da nessuna parte; le
-  funzioni che aprono e chiudono l'indice chiamano `aggiornaComandi()`; `--hide-shift` è
-  negativo per i comandi di sinistra. Chi tocca un tasto fisso misura che nessuna coppia si
-  sovrapponga nei due formati (`Rules.md` § '🎛️ Comandi e controlli fissi').
-- **Tasto `T`**: cambia tema, con le due guardie (nessun modificatore premuto, focus fuori dai
-  campi di testo), come su 'I Grandi di Arda' (`Rules.md` § '🎛️ Comandi e controlli fissi').
-- **Iconcine del testo**: SVG inline con `currentColor` e lo stesso ingombro dell'`<img>` che
-  hanno sostituito; allineamento verticale al centro di una maiuscola, con `translateY` e un
-  `--nudge` ottico che dà l'utente in pixel a DPR 2, da convertire in em sul corpo del contesto
-  (16 px nel testo, 14,4 nelle tabelle). La taratura si legge nel CSS (`Rules.md` § '🖼️ Le iconcine del testo: SVG che seguono il colore').
-- **Fn nelle scorciatoie**: dentro `<code>` è il globo SVG (`ic-fn`, `aria-label` e `<title>` Fn, così la copia col doppio clic dà ancora `Fn`; dalla `1.68` al centro verticale del riquadro, `vertical-align: -.161em`; dalla `1.69` anche il tasto Mission Control dopo `⌘`, alto .875em con `vertical-align: -.099em`), legato al carattere che segue da uno `<span style="white-space:nowrap">`, senza il quale le celle strette vanno a capo (`Rules.md` § '🖼️ Le iconcine del testo: SVG che seguono il colore').
-- **Un'icona di 16 px si giudica sui pixel veri**, e quando la sua forma viene respinta due
-  volte si chiede l'asset all'utente. Un SVG da Illustrator si bonifica e si confronta col
-  grezzo a rendering, controllando che le due immagini si siano caricate (`Rules.md` § '🖼️ Le iconcine del testo: SVG che seguono il colore').
-- **Le due frecce di Telegram restano PNG**: la nuova è quella col tondo azzurro e nel testo
-  viene prima della legacy (`Rules.md` § '🖼️ Le iconcine del testo: SVG che seguono il colore').
-- **Un glifo che esiste su una sola piattaforma non si usa in pagina**: il logo Apple
-  `U+F8FF` è un'icona SVG, e torna carattere solo nel plist (`Rules.md` § '🖼️ Le iconcine del testo: SVG che seguono il colore').
-- **Le misure di allineamento si fanno sull'inchiostro, non sui box**, e una sovrapposizione si
-  verifica contando i pixel dell'area, non intersecando i rettangoli (`Rules.md` § '🔢 Versione del progetto: VISIBILE in pagina').
-- **Sostituzioni testo**: la tabella è il dump della configurazione macOS dell'utente e si
-  aggiorna dai suoi screenshot; i caratteri vietati si scrivono come entità HTML; le
-  abbreviazioni cominciano con due barre rovesciate; l'ordine è per gruppi e alfabetico, e il
-  gruppo dei segni ha il suo. `OS Files/Text Replacements.plist` si rigenera dalla tabella, nel
-  formato dell'esportazione (array di dizionari `shortcut` e `phrase`) (`Rules.md` § '⌨️ Tabella delle sostituzioni testo').
-- **Eccezione dichiarata**: l'accento acuto isolato nelle tabelle dei caratteri e la sequenza
-  `E'` nella cella e nel plist sono legittimi e non si correggono; un commit che tocca quelle
-  righe è bloccato dal presidio e si prosegue a mano (`Rules.md` § '⌨️ Tabella delle sostituzioni testo').
-- **DNS**: tabelle IPv4 e IPv6 gemelle, stessi servizi nello stesso ordine alfabetico naturale,
-  `-` per un valore assente, note in calce con richiamo (dalla pagina 4.43 lo script aggiunge a ogni nota richiamata un `↩` che torna al richiamo cliccato; dalla 1.71 tabelle con angoli `.5rem` e, sul telefono, senza barre di scorrimento e con l'indice intero: `Rules.md` § '🖼️ Le iconcine del testo: SVG che seguono il colore'). Gli indirizzi superati si aggiornano da
-  soli dalle fonti ufficiali, la riga si cancella solo per un servizio cessato, e si verifica via
-  DoH: dal container UDP 53 e DoT non sono attendibili (`Rules.md` § '🌐 Tabelle dei servizi DNS').
+  Pages serve con `max-age=600`, quindi una versione nuova può arrivare con dieci minuti di
+  ritardo (`Rules.md` § '🔢 Versione del progetto: VISIBILE in pagina').
+- **Decisioni dell'utente da non rovesciare**: niente cache-busting `?v=N`, niente MathJax, niente
+  lista di lavori in un file, niente `localStorage` per il tema, niente codice inline a pillola;
+  lo switch delle tabelle e il tasto del tema restano dietro i loro flag spenti (`Rules.md`
+  § '🚩 Flag, sotto-pagine e decisioni da non rovesciare').
+- **Un feature flag si spegne con `[hidden]{display:none!important}` fuori da ogni media query**,
+  e si verifica sul `display` calcolato (`Rules.md` § '🚩 Flag, sotto-pagine e decisioni da non
+  rovesciare').
+- **Censimento del CSS**: una dichiarazione superata si trova confrontando il colore calcolato con
+  quello dichiarato, e le regole del tema markdown vendorizzato restano (`Rules.md` § '🧹 Il CSS:
+  che cosa si pota e che cosa no').
+- **Tabelle a bordi tondi**: un `rowspan` si verifica su tutti e quattro i lati delle celle che
+  tocca (`Rules.md` § '🎨 La styleguide e i valori visivi').
+- **Comandi fissi**: una sola regola di visibilità per i due formati, e chi tocca un tasto fisso
+  misura che nessuna coppia si sovrapponga; il tasto `T` cambia tema con le due guardie
+  (`Rules.md` § '🎛️ Comandi e controlli fissi').
+- **Iconcine del testo**: SVG inline con `currentColor`, al centro di una maiuscola con un `--nudge`
+  ottico; il globo di Fn e il tasto Mission Control sono legati al carattere che segue; un'icona di
+  16 px si giudica sui pixel veri, e alla seconda forma respinta si chiede l'asset all'utente; le
+  frecce di Telegram restano PNG, e il logo Apple è un'icona, non `U+F8FF` (`Rules.md` § '🖼️ Le
+  iconcine del testo: SVG che seguono il colore').
+- **Le misure di allineamento si fanno sull'inchiostro, non sui box** (`Rules.md` § '🔢 Versione
+  del progetto: VISIBILE in pagina').
+- **Sostituzioni testo**: la tabella è il dump della configurazione macOS dell'utente, e
+  `OS Files/Text Replacements.plist` si rigenera da lei. L'accento acuto isolato e la sequenza `E'`
+  in quelle righe sono legittimi: il presidio blocca, e si prosegue a mano (`Rules.md` § '⌨️
+  Tabella delle sostituzioni testo').
+- **DNS**: tabelle IPv4 e IPv6 gemelle, in ordine alfabetico naturale; gli indirizzi superati si
+  aggiornano dalle fonti ufficiali, e si verificano via DoH (`Rules.md` § '🌐 Tabelle dei servizi
+  DNS').
