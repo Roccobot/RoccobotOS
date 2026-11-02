@@ -8,6 +8,20 @@
 > `rules/Roccobot.md` di `Roccobot/tools`, § '🗄️ Le cose tolte vivono in Removed.md').
 > Le voci vanno dalla più recente alla più vecchia.
 
+## 🎨 La `Styleguide.html`
+
+- **Che cosa faceva**: era la pagina coi valori visivi del sito (tavolozza, caratteri, superfici,
+  componenti), ogni token come campione sui due fondi veri, chiaro e scuro, con una copia dei
+  valori scritta a mano e un foglio inline che vinceva su `Pages.css`. Era pubblicata su
+  `roccobot.github.io/RoccobotOS/Styleguide.html`, e quell'indirizzo non risponde più.
+- **Tolta nella `4.52`** (2026-11-02), su ordine dell'utente, dopo il controllo di che cosa
+  servisse ancora: i principi generali (il colore per ruolo, il colore che non basta da solo, come
+  si aggiunge un colore, il contrasto sul fondo vero, i comandi fissi, le icone nel testo) sono
+  entrati nel design system dell'hub, <https://roccobot.github.io/design/>; il resto riguardava solo
+  questo sito, i cui valori vivono nel CSS.
+- **Si recupera dal commit `2ee6948`**, l'ultimo di `main` prima della rimozione (il repo non ha
+  tag): `git show 2ee6948:Styleguide.html`, 935 righe alla radice del sito.
+
 ## ☁️ Il caricamento degli stili con GitHub
 
 - **Che cosa faceva, sulla carta**: una pagina di gestione (`manage.html`, nella cartella
@@ -49,8 +63,8 @@
 
 ## 🎨 I colori passati degli stili
 
-- **Che cosa sono**: i valori di colore che la regola anti-jitter di `Rules.md` (§ '🎨 La
-  styleguide e i valori visivi') citava con la versione dello stile in cui erano entrati. Nella
+- **Che cosa sono**: i valori di colore che la regola anti-jitter di `Rules.md` (§ '🎨 I valori
+  visivi') citava con la versione dello stile in cui erano entrati. Nella
   regola restano i valori in vigore; qui la cronologia di quelli sostituiti. La cronologia
   completa, versione per versione, è anche in `styles/README.md` e nei commenti dello stile
   predefinito.
@@ -109,7 +123,7 @@
 
 - **Che cosa faceva**: era il logo della testata, caricato da `index.html` con un
   `<img src="RoccobotOS.svg">`. Un `<img>` non si ricolora, quindi in tema scuro non seguiva il
-  tema: il perché resta in `Rules.md` § '🎨 La styleguide e i valori visivi'.
+  tema: il perché resta in `Rules.md` § '🎨 I valori visivi'.
 - **Tolto nella `3.10`** (2026-08-01), quando il logo è diventato SVG inline ricolorabile.
 - **Si recupera dal commit `d523f40^`**, cioè il genitore del commit di `main` della `3.10` (il
   repo non ha tag). Dove viveva: `RoccobotOS.svg` alla radice del sito, 23 righe, e l'`<img>` in

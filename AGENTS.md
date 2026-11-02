@@ -294,17 +294,17 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   documentazione**, e non si chiama 'guida'; la lingua del sito è l'italiano per deroga
   dichiarata, coi nomi dei file in inglese (`Rules.md`, prima sezione).
 - **Struttura**: `index.html` con `RoccobotOS.js` e uno stile di `styles/` (di serie
-  `styles/RoccobotMD.css`); le sotto-pagine con `Pages.css` e `Pages.js`; la styleguide in
-  `Styleguide.html`. I file sono alla radice del repo, anche dove un testo vecchio li nomina col
-  prefisso `RoccobotOS/`.
+  `styles/RoccobotMD.css`); le sotto-pagine con `Pages.css` e `Pages.js`. I file sono alla radice
+  del repo, anche dove un testo vecchio li nomina col prefisso `RoccobotOS/`.
 - **Regola anti-jitter (non rovesciare)**: i due temi hanno la stessa impaginazione e cambiano
   solo i colori; ogni stile nuovo si misura nei due temi a 1440, 900 e 390 px, e
-  `tests/browser.cjs` lo controlla (`Rules.md` § '🎨 La styleguide e i valori visivi').
+  `tests/browser.cjs` lo controlla (`Rules.md` § '🎨 I valori visivi').
 - **`index.html` è la fonte e si modifica direttamente**: non si rigenera da markdown (`Rules.md`
   § '🚩 Flag, sotto-pagine e decisioni da non rovesciare').
-- **La styleguide è la fonte unica dei valori visivi**: un token si cambia nel CSS del sito e in
-  `Styleguide.html` nello stesso commit, e un contrasto si dichiara sul fondo reale del componente
-  (`Rules.md` § '🎨 La styleguide e i valori visivi').
+- **I valori visivi hanno una fonte sola, il CSS del sito** (`styles/` e `Pages.css`); un colore
+  si sceglie sui due fondi veri e un contrasto si dichiara sul fondo reale del componente. La
+  vecchia `Styleguide.html` è tolta dalla `4.52`, e i principi del marchio vivono nel design system
+  dell'hub (`Rules.md` § '🎨 I valori visivi').
 - **Ramo principale `main`; versione SlimVer, fonte unica la costante `VERSIONE` di
   `RoccobotOS.js`**, che il badge legge a runtime; si bumpa a ogni commit sul prodotto, non per le
   sole regole. Le due rese della versione (desktop e mobile, soglia 860 px) e le loro opacità basse
@@ -325,7 +325,7 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   quello dichiarato, e le regole del tema markdown vendorizzato restano (`Rules.md` § '🧹 Il CSS:
   che cosa si pota e che cosa no').
 - **Tabelle a bordi tondi**: un `rowspan` si verifica su tutti e quattro i lati delle celle che
-  tocca (`Rules.md` § '🎨 La styleguide e i valori visivi').
+  tocca (`Rules.md` § '🎨 I valori visivi').
 - **Comandi fissi**: una sola regola di visibilità per i due formati, e chi tocca un tasto fisso
   misura che nessuna coppia si sovrapponga; il tasto `T` cambia tema con le due guardie
   (`Rules.md` § '🎛️ Comandi e controlli fissi').
