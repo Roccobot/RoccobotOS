@@ -308,11 +308,6 @@ async function stubCatalogue(page) {
       await page.reload({waitUntil:'domcontentloaded'});
       await check(`${width}/${theme}: reload discards the temporary choice`,async()=>assert.equal(await page.locator('link[data-site-style]').getAttribute('href'),'styles/RoccobotMD.css'));
       await check(`${width}/${theme}: no JavaScript errors`,async()=>assert.deepEqual(errors,[]));
-      await page.goto(url+'styles/admin/manage.html',{waitUntil:'domcontentloaded'});
-      await check(`${width}/${theme}: management remains closed without configuration`,async()=>{
-        await page.getByText('Il caricamento con GitHub deve ancora essere attivato.').waitFor();
-        assert.equal(await page.locator('#upload').isVisible(),false);
-      });
       await context.close();
     }
     const context=await browser.newContext({viewport:{width:1200,height:900}});

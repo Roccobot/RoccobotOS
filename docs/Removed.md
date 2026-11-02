@@ -8,6 +8,24 @@
 > `rules/Roccobot.md` di `Roccobot/tools`, § '🗄️ Le cose tolte vivono in Removed.md').
 > Le voci vanno dalla più recente alla più vecchia.
 
+## ☁️ Il caricamento degli stili con GitHub
+
+- **Che cosa faceva, sulla carta**: una pagina di gestione (`manage.html`, nella cartella
+  `admin` di `styles`) per
+  aggiungere uno stile dopo l'accesso con GitHub, e il Worker di Cloudflare che avrebbe ricevuto il
+  CSS, lo avrebbe controllato e lo avrebbe scritto nel repo con un commit (`cloud/styles/`), con la
+  sua prova e lo script che preparava le risorse della pagina (`scripts/package-styles-admin.mjs`).
+  Non è mai stato attivato: mancavano l'app GitHub, i segreti e la pubblicazione, quindi la pagina
+  diceva soltanto che l'accesso era da attivare.
+- **Tolto nella `4.51`** (2026-11-02), su richiesta dell'utente (*se non serve, elimina*), con la
+  funzione `validateUpload` di `styles-core.mjs`, che serviva solo a quel caricamento, e le sue
+  prove. Gli stili si aggiungono a mano nella cartella `styles/`, e il catalogo si rigenera con
+  `node scripts/styles-catalog.mjs`.
+- **Si recupera dal commit `cfd83b7`**, l'ultimo di `main` prima della rimozione (il repo non ha
+  tag): `git show cfd83b7:cloud/styles/worker.mjs`, e allo stesso modo il `README.md` di quella
+  cartella, i file della cartella `admin` di `styles`, `scripts/package-styles-admin.mjs`, `tests/browser-manager.cjs` e
+  la versione completa di `styles-core.mjs`.
+
 ## 🗂️ Gli stili originali e le rinomine dello stile predefinito
 
 - **Che cosa è successo**: il 2026-10-26, su richiesta dell'utente, `RoccobotOS171.css` è diventato
