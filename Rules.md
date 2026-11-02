@@ -25,34 +25,25 @@
   pubblico anglofono; il numero di versione è in cima per scelta dell'utente.
 - **Struttura.** `index.html` con `RoccobotOS.js` e uno stile della cartella `styles/` (di serie `styles/RoccobotMD.css`, 'Roccobot MD' versione 0.9, oggi l'unico del catalogo); quattro sotto-pagine
   (`Characters.html`, `Formats.html`, `AdServers.html`, `BlendModes.html`) con `Pages.css` e
-  `Pages.js`; la styleguide in `Styleguide.html`.
+  `Pages.js`.
   - ⚠️ **Nomi dei file in inglese, testi visibili in italiano**: sono due scelte indipendenti
     (`Roccobot.md` § '🏷️ Nomi in inglese, contenuto nella lingua che c'è già'). I vecchi
     indirizzi `Caratteri`, `Formati` e `Metodi di fusione` non rispondono più, quindi non si
     linkano.
 
-### 🎨 La styleguide e i valori visivi
+### 🎨 I valori visivi
 
 - **Regola anti-jitter (non rovesciare).** Tema chiaro e tema scuro hanno la stessa impaginazione: stessi pesi, stessi caratteri, stesse interlinee (compresa quella delle celle di tabella, 1,639), stessi riquadri del codice, stessi bordi, stessi a capo e stessa altezza di pagina. Cambiano solo i colori, così il cambio tema non sposta nulla. Ogni stile nuovo si verifica misurando ogni elemento nei due temi (a 1440, 900 e 390 px), e `tests/browser.cjs` lo controlla. Le `1.51` e `1.53` la violavano (+443/+563/+392 px e +112 px di pagina in tema chiaro): è la misura da cui la regola è nata. Anche il testo evidenziato è testo normale, il pulsante Copia manca sui blocchi che scorrono in orizzontale e la barra di scorrimento dei blocchi di codice è nascosta: niente di questo cambia l'impaginazione. La tabella DiskUtil (`table.cmd-scorrevoli`) tiene i comandi su una riga con la cella che scorre.
   - **I colori in vigore**, letti nello stile predefinito `styles/RoccobotMD.css`, che è la fonte: se questa riga e il CSS divergono, vince il CSS. In tema scuro i blocchi di codice sono `#384541` con testo `#F7F8F5` (9,40:1; 1,68:1 sul fondo pagina), il codice in riga è `#6CBC88` con `#061322` (8,17:1; 7,38:1 sul fondo pagina, 4,38:1 sui blocchi), e gli H2, il segno § e il bordo del riquadro ATTENZIONE! sono sabbia `#CEB285` (8,30:1). In tema chiaro il fondo pagina è avorio caldo `#F8F7F2`, i blocchi di codice sono salvia chiarissimo `#EAF1E8`, come il fondo dell'indice, con testo e icona `#06120C` (16,59:1; 1,07:1 sul fondo pagina), gli H1 sono lampone `#BC4A61` (4,56:1), il codice in riga è pesca `#FFE1B8` con testo `#000000` (16,71:1; 1,17:1 sul fondo pagina, 1,12:1 sulle righe grigie), l'intestazione delle tabelle è `#C3DDD3` (testo `#0F4A3F`, 7,05:1) e le tabelle hanno righe pari `#F3F2ED` e colonne strette `#FDFCF7`. I valori delle versioni passate sono in `docs/Removed.md` § '🎨 I colori passati degli stili'.
-- ⚠️⚠️ **La styleguide è destinata a sparire, e si toglie solo su ordine dell'utente o su
-  richiesta di una sessione** (sua decisione del 2026-11-02, dopo che il design system del marchio
-  ha avuto una fonte unica, la pagina 'Roccobot Design System': `Roccobot.md` § '🎨 Grafica' →
-  '🎨 Claude Design, dove vive il design system'). Fino a quel momento vale la voce qui sotto, e
-  nessuna sessione la toglie per pulizia.
-- ⚠️⚠️ **La STYLEGUIDE è la fonte unica dei valori visivi** (colori, tipografia, superfici,
-  componenti): [`Styleguide.html`](Styleguide.html), pubblicata su
-  <https://roccobot.github.io/RoccobotOS/Styleguide.html> perché la si possa dare a un altro
-  agente. I numeri sono là e non si riscrivono qui.
-  - **Ogni token è un campione disegnato sui due fondi veri del sito, affiancati**: il difetto
-    storico del progetto è scegliere un colore guardando un tema solo, e questa forma lo rende
-    impossibile. Il vecchio `Styleguide.md` non esiste più (dettagli in `docs/Removed.md`
-    § '📄 Il vecchio `Styleguide.md`').
-  - ⚠️ **I valori nei campioni sono scritti a mano, di proposito**: una pagina che deve far
-    vedere un colore non lo prende da una fonte che può cambiare senza che se ne accorga. Quindi
-    un token si cambia nel CSS del sito e in `Styleguide.html` **nello stesso commit**. La
-    styleguide ha anche un **foglio inline che vince su `Pages.css`**: la sua tabella d'esempio
-    si aggiorna insieme al sito, o mostra il componente diverso da com'è.
+- ⚠️⚠️ **I valori visivi del sito hanno una fonte sola, il suo CSS**: gli stili di `styles/` per la
+  pagina principale e `Pages.css` per le sotto-pagine. `Styleguide.html`, che ne teneva una copia
+  scritta a mano, è tolta nella `4.52` (2026-11-02), su ordine dell'utente (*dopo il tuo controllo
+  sarà eliminata*): i suoi principi generali sono entrati nel design system del marchio, la pagina
+  'Roccobot Design System' dell'hub (<https://roccobot.github.io/design/>), e il resto riguardava
+  solo questo sito. Il recupero è in `docs/Removed.md` § '🎨 La `Styleguide.html`'.
+  - **Un colore si sceglie guardandolo sui due fondi veri del sito**, chiaro e scuro affiancati: il
+    difetto storico del progetto è scegliere un colore guardando un tema solo. È la regola che la
+    styleguide metteva in pagina, e resta.
   - ⚠️ **Un contrasto si dichiara sul fondo REALE del componente**, non su quello della pagina:
     il codice inline `#bc4a61` vale 4,60:1 sul suo grigio `#f7f8f8`, non 4,89:1 sul fondo
     `#feffff`. Un numero sbagliato ma sopra la soglia AA non lo segnala nessuno.
