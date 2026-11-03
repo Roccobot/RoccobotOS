@@ -12,8 +12,8 @@
 
 - **Che cosa faceva**: era la pagina coi valori visivi del sito (tavolozza, caratteri, superfici,
   componenti), ogni token come campione sui due fondi veri, chiaro e scuro, con una copia dei
-  valori scritta a mano e un foglio inline che vinceva su `Pages.css`. Era pubblicata su
-  `roccobot.github.io/RoccobotOS/Styleguide.html`, e quell'indirizzo non risponde più.
+  valori scritta a mano e un foglio inline che vinceva su `Pages.css`. Era pubblicata come
+  `Styleguide.html` nella cartella del sito, e quell'indirizzo non risponde più.
 - **Tolta nella `4.52`** (2026-11-02), su ordine dell'utente, dopo il controllo di che cosa
   servisse ancora: i principi generali (il colore per ruolo, il colore che non basta da solo, come
   si aggiunge un colore, il contrasto sul fondo vero, i comandi fissi, le icone nel testo) sono
