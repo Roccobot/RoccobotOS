@@ -1,3 +1,4 @@
 cloud/styles/public/
 .dev.vars
 .wrangler/
+.DS_Store
