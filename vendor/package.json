@@ -1,9 +1,8 @@
 {
   "name": "roccobotos-vendor",
   "private": true,
-  "description": "The third-party code the site carries, at the versions in use: prismjs is copied as files in vendor/prism (from the npm package, with its LICENSE), tocbot is a copy inline in index.html. docs/Dependencies.json reads the versions from here.",
+  "description": "The third-party code the site carries, at the versions in use: tocbot is a copy inline in index.html (its dist/tocbot.min.js). docs/Dependencies.json reads the versions from here.",
   "dependencies": {
-    "prismjs": "1.30.0",
-    "tocbot": "4.27.14"
+    "tocbot": "4.36.8"
   }
 }

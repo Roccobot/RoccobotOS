@@ -8,6 +8,21 @@
 > `rules/Roccobot.md` di `Roccobot/tools`, § '🗄️ Le cose tolte vivono in Removed.md').
 > Le voci vanno dalla più recente alla più vecchia.
 
+## ✨ Prism
+
+- **Che cosa faceva**: il nucleo di Prism 1.30.0 coi plugin Toolbar e Copy to Clipboard, file del
+  repo in `vendor/prism` dalla `4.54` (prima arrivavano da jsDelivr), metteva su ogni blocco di
+  codice la barra col pulsante `Copia`. Non colorava niente, perché nessun blocco usa un linguaggio
+  che Prism conosca, e riscriveva ogni blocco con `innerHTML`.
+- **Tolto nella `4.55`** (2026-11-13), su scelta dell'utente (`Prism-02`): la barra e il pulsante li
+  costruisce `RoccobotOS.js`, con la stessa struttura e le stesse classi, quindi lo stile non è
+  cambiato.
+- **Si recupera dal commit `d78a89e`**, l'ultimo di `main` prima della rimozione (il repo non ha
+  tag): `git show d78a89e:vendor/prism/components/prism-core.min.js`, e allo stesso modo i due
+  plugin in `vendor/prism/plugins`, il `LICENSE` e i quattro tag in testa a `index.html` (tre
+  `<script>` con `defer` e il foglio della barra), più la riga che avviava Prism e dava il titolo
+  `Copia` ai pulsanti.
+
 ## 🎨 La `Styleguide.html`
 
 - **Che cosa faceva**: era la pagina coi valori visivi del sito (tavolozza, caratteri, superfici,
@@ -141,8 +156,9 @@
   repo non ha tag). Dove viveva:
   - in `index.html`, in testa, due `<script>` con la configurazione `window.MathJax` e il
     caricamento di `mathjax@3/es5/tex-chtml-full.js` da jsDelivr;
-  - ⚠️ **l'avvio di Prism (`Prism.highlightAll`) conviveva con la configurazione di MathJax nella
-    stessa riga**: chi rimette MathJax controlla che resti;
+  - l'avvio di Prism (`Prism.highlightAll`) conviveva con la configurazione di MathJax nella
+    stessa riga; dalla `4.55` Prism non c'è più (voce qui sopra), quindi in quella riga non resta
+    niente da conservare;
   - `BackslashTest.html`, la pagina di prova che ha isolato il difetto, tolta nello stesso commit.
 - Il comando che mostra la pagina di allora: `git show 0127581^:index.html`.
 

@@ -115,9 +115,10 @@
   regole del **tema markdown vendorizzato** (`blockquote`, `dl`, `figure`, `details`, `kbd`, liste
   di spunta, note a piè di pagina, `h5`, `h6`, liste annidate): coprono costrutti che la pagina può
   usare domani, e senza di loro la prima citazione uscirebbe senza stile.
-  - ⚠️ **Come si rifà la misura**: la cartella servita su HTTP locale, che dalla `4.54` basta, perché
-    Prism è un file del repo (`vendor/prism`; senza Prism `div.code-toolbar` e
-    `pre[class*=language-]` sembrano morte); i selettori estratti dal CSSOM e provati in **otto
+  - ⚠️ **Come si rifà la misura**: la cartella servita su HTTP locale, che basta perché tutto
+    quello che la pagina carica è un file del repo, e a script eseguito: `div.code-toolbar` e
+    `pre[class*=language-]` li scrive `RoccobotOS.js` (dalla `4.55`; fino alla `4.54` Prism), e
+    senza lo script sembrano morte; i selettori estratti dal CSSOM e provati in **otto
     stati combinati** (desktop e mobile, per chiaro e scuro, più schede e indice aperto), accesi
     **col clic** e non scrivendo l'attributo, o `td[data-label]` non esiste. Le schede si accendono
     solo col flag `FLAG_SWITCH_TABELLE` rimesso a `true` per la durata della misura. Un attributo
@@ -191,21 +192,39 @@
   che nessuno rilegge invecchia (dettagli in `docs/Removed.md` § '📝 `Da fare.txt`').
 - ⚠️⚠️ **Il codice di terzi è un file del repo, e la pagina non chiede niente ad altri server**
   (scelta `Prism-01` dell'utente, 2026-11-13, giro `Vaglio`, rilievi RoccobotOS-01, -03 e -04).
-  Prism 1.30.0 (il nucleo e i plugin Toolbar e Copy to Clipboard, con la licenza) vive in
-  `vendor/prism`, preso così com'è dal pacchetto npm `prismjs`, e si carica con `defer`, così non
-  ferma il primo disegno; tocbot è la copia in linea in `index.html`.
+  Oggi è il solo tocbot, la copia in linea in `index.html`: il `tocbot.min.js` della cartella
+  `dist` del suo pacchetto npm così com'è,
+  salvo l'unico `innerHTML` (in `destroy()`, che svuota la lista) scritto `replaceChildren()`.
+  - ⚠️⚠️ **Prism è tolto dalla `4.55`, e il tasto `Copia` dei blocchi è codice nostro** (scelta
+    `Prism-02` dell'utente, 2026-11-13). Prism serviva solo a quel tasto: nessun blocco usa un
+    linguaggio che colori, e il suo nucleo riscriveva ogni blocco con `innerHTML`, vietato in modo
+    non derogabile. `RoccobotOS.js` costruisce la barra con la struttura e le classi di Prism
+    (`div.code-toolbar`, `div.toolbar`, `div.toolbar-item`, `button.copy-to-clipboard-button` con
+    lo `span` dell'etichetta, `data-copy-state`, la classe `language-` passata al `pre`), perché lo
+    stile e le prove le conoscono: forma, colori e posizione di tutti i blocchi sono identici a quelli
+    della `4.54` nei due temi a 390, 900 e 1440 px. Il tasto copia lo stesso testo del doppio clic,
+    cioè senza l'a capo finale (Prism lo copiava, e un comando incollato nel Terminale partiva da
+    solo); se la copia fallisce l'etichetta compare in chiaro e il codice resta selezionato. Un
+    blocco aggiunto dopo il caricamento riceve la sua barra da un osservatore dei nodi nuovi. Le
+    etichette per i lettori di schermo sono in italiano (`Copia`, `Codice copiato`, `Premi ⌘C per
+    copiare`; con Prism erano in inglese). Recupero in `docs/Removed.md` § '✨ Prism'.
   - **Le versioni sono scritte in un posto solo**, `vendor/package.json`, e il registro è
-    `docs/Dependencies.json` (`Roccobot.md` § '🔗 Le dipendenze si seguono'). La versione di tocbot
-    è dedotta e da verificare: il codice è quello della 4.27.0-4.27.14, identico in quelle versioni.
+    `docs/Dependencies.json` (`Roccobot.md` § '🔗 Le dipendenze si seguono'); dalla `4.55` lo legge
+    ogni lunedì `.github/workflows/dependencies.yml`, che richiama il flusso riusabile dell'hub e
+    apre la issue 'Dipendenze da leggere' quando c'è una versione nuova.
+  - **tocbot è la 4.36.8 dalla `4.55`** (prima la 4.27.14). Le note di versione dalla 4.27 alla
+    4.36.8 non dichiarano cambi che rompano; quelli che si vedono sulla pagina: l'aggiornamento
+    della voce attiva aspetta 50 ms di quiete (`debounce`, prima `throttle`), e a fine scorrimento
+    il riquadro dell'indice porta in vista la voce attiva, che prima dopo un salto lungo restava
+    fuori. ⚠️ tocbot assegna `window.onhashchange` e `window.onscrollend`: uno script del sito che
+    li usasse verrebbe sovrascritto, quindi si usa `addEventListener`.
   - **Tolto lo script `jsdelivr-auto-fallback`** e non si rimette: era un residuo dell'esportazione,
     sondava cinque server a ogni visita (uno fuori da jsDelivr, che rimandava a un dominio
     sconosciuto), scriveva nella memoria del browser e, se jsDelivr non rispondeva, faceva caricare
     Prism da quel server senza nessun controllo.
-  - **Tolto l'autoloader di Prism**: nessun blocco usa un linguaggio che Prism colori, e a ogni
-    visita chiedeva `prism-plain_text.min.js`, che non esiste. Per lo stesso motivo il nucleo basta:
-    il `prism.min.js` di jsDelivr conteneva anche quattro linguaggi che la pagina non usa.
   - La prova controlla che la pagina non chieda niente fuori dal sito, che nessuna richiesta
-    risponda con un errore e che la memoria del browser resti vuota.
+    risponda con un errore, che la memoria del browser resti vuota e che nessuno script della
+    pagina scriva markup (`innerHTML`, `outerHTML`, `insertAdjacentHTML`, `document.write`).
 - **Un richiamo o una scorciatoia non vanno a capo da soli** (dalla `4.54`, rilievo
   RoccobotOS-09): in `index.html` c'è `&nbsp;` prima di ogni `<sup>` di richiamo, fra i tasti
   di una scorciatoia nelle voci di elenco (`</code>&nbsp;<code>`) e fra l'etichetta e la sua
@@ -332,8 +351,8 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
   `NotaVar`) non ha `↩`. Le note si scrivono a mano senza `↩`: lo mette lo script.
 - ⚠️⚠️ **Sotto i 600 px le celle vanno a capo con il corpo del testo** (pagina 4.49, richiesta dell'utente: *l'importante è ottenere un testo più grande*). Prima le celle erano a una riga con corpo `.65rem` (10,4 px) e 21 tabelle su 31 scorrevano di lato a 376 px, con la barra nascosta e il testo che sembrava ritagliato; ora il corpo è `.9rem` come sopra i 600 px e ne scorrono 6. Il codice in riga resta su una riga (un comando spezzato in tre non è più un comando), quindi le tabelle che ne contengono di lunghi scorrono. Una tabella che scorre ancora sfuma il bordo che nasconde altro contenuto: `RoccobotOS.js` scrive `data-scorre` (`dx`, `sx`, `entrambi`) dentro `sync()` e il CSS applica una maschera solo di trasparenza, uguale nei due temi e senza spostare niente. L'indice (`table.index-grid`) tiene il corpo `.65rem`, o a 390 px non entra. La pagina a 376 px è più alta di circa il 29%.
   - ⚠️⚠️ **La tabella Tasti / Effetto, a due coppie di colonne, sotto i 600 px mette la seconda coppia sotto la prima** (pagina 4.50, scelta `Coppie-01` dell'utente): ha la classe `coppie`, ogni riga diventa una griglia di due colonne (`4.75rem` e il resto), l'intestazione ripetuta si nasconde e la colonna Effetto passa da un quarto a tre quarti della larghezza. Le celle `cell-extra-line` perdono il `<br>` iniziale e la riga di riempimento, che servivano a centrarle accanto alle vicine. A 376 px la tabella è più corta di circa il 10% (1267 px contro 1413). Sopra i 600 px non cambia. ⚠️ Non vale per `Simbolo / Tasto` (la tabella prima, con un `rowspan`, già intera a 376 px) né per le sostituzioni (tre coppie, restano com'erano).
-  - ⚠️ **Misurato in Chromium; il banco del repo gira in WebKit**, e nel container la soglia del globo Fn (.25 px) non regge neanche su `main` (.46 px): le 132 prove del banco passano in Chromium con quella soglia allentata, uguali a `main`. ⚠️ **Rifatto in WebKit il 2026-11-02, e la soglia non regge nemmeno là, in nessuna versione dalla 4.41 alla 4.51**: lo scarto è .58 px dalla 4.41 alla 4.48 e .35 px dalla 4.49 in poi, ed è identico prima e dopo la 4.51. La causa è il carattere: nel container `-apple-system` e `Helvetica` diventano Liberation Sans, mentre il valore del globo è tarato su SF Pro, quindi questa misura dice qualcosa solo col font reale (`Roccobot.md` § '🧪 Test e verifiche'). Da quel giorno (scelta `Globo-01` dell'utente) le due misure di centratura, il globo Fn e il tasto Mission Control, girano solo quando la prova gira su un Mac, dove c'è SF Pro; altrove la prova le salta e lo dice nel resoconto (`notMeasured`), e `MEASURE_ICON_CENTRE=1` le forza. Il resto del banco passa in WebKit e in Chromium anche nel container. Dalla `4.54` il motore lo sceglie la variabile `TEST_BROWSER` (`webkit` di serie, `chromium` o `firefox`; `tests/engine.cjs`), così il banco gira anche dove WebKit non è installato, e il resoconto dice con quale motore è girato. Dalla stessa versione il banco misura la pagina principale anche a 900 px, e `tests/pages.cjs` aggiunge le quattro sotto-pagine (anti-jitter nei due temi a 390, 900 e 1440 px, nessuno scorrimento di lato della pagina, ogni tabella nel suo `div.pg-scroll`), due controlli dei contenuti tenuti in due posti (la tabella delle sostituzioni contro `OS Files/Text Replacements.plist`, le due tabelle DNS gemelle), l'immagine della tastiera, e il tasto indice sul telefono (area di tocco e fuoco). Prism è un file del repo, quindi gira anche nel banco, che controlla che la pagina non chieda niente ad altri server.
-- **Tabelle dalla `1.71`, oggi `Roccobot MD 0.9`** (pagina 4.44): angoli `.5rem` (prima `1rem`), uguali nei due temi. Sotto
+  - ⚠️ **Misurato in Chromium; il banco del repo gira in WebKit**, e nel container la soglia del globo Fn (.25 px) non regge neanche su `main` (.46 px): le 132 prove del banco passano in Chromium con quella soglia allentata, uguali a `main`. ⚠️ **Rifatto in WebKit il 2026-11-02, e la soglia non regge nemmeno là, in nessuna versione dalla 4.41 alla 4.51**: lo scarto è .58 px dalla 4.41 alla 4.48 e .35 px dalla 4.49 in poi, ed è identico prima e dopo la 4.51. La causa è il carattere: nel container `-apple-system` e `Helvetica` diventano Liberation Sans, mentre il valore del globo è tarato su SF Pro, quindi questa misura dice qualcosa solo col font reale (`Roccobot.md` § '🧪 Test e verifiche'). Da quel giorno (scelta `Globo-01` dell'utente) le due misure di centratura, il globo Fn e il tasto Mission Control, girano solo quando la prova gira su un Mac, dove c'è SF Pro; altrove la prova le salta e lo dice nel resoconto (`notMeasured`), e `MEASURE_ICON_CENTRE=1` le forza. Il resto del banco passa in WebKit e in Chromium anche nel container. Dalla `4.54` il motore lo sceglie la variabile `TEST_BROWSER` (`webkit` di serie, `chromium` o `firefox`; `tests/engine.cjs`), così il banco gira anche dove WebKit non è installato, e il resoconto dice con quale motore è girato. Dalla stessa versione il banco misura la pagina principale anche a 900 px, e `tests/pages.cjs` aggiunge le quattro sotto-pagine (anti-jitter nei due temi a 390, 900 e 1440 px, nessuno scorrimento di lato della pagina, ogni tabella nel suo `div.pg-scroll`), due controlli dei contenuti tenuti in due posti (la tabella delle sostituzioni contro `OS Files/Text Replacements.plist`, le due tabelle DNS gemelle), l'immagine della tastiera, e il tasto indice sul telefono (area di tocco e fuoco). Tutto quello che la pagina carica è un file del repo, quindi gira anche nel banco, che controlla che la pagina non chieda niente ad altri server.
+- **Tabelle dalla `1.71`, oggi `Roccobot MD 0.91`** (pagina 4.44): angoli `.5rem` (prima `1rem`), uguali nei due temi. Sotto
   i 600 px nessuna barra di scorrimento orizzontale nelle tabelle (scorrono col tocco), la cella
   `cell-extra-line` tiene il margine sotto di una riga e resta al centro, e l'indice
   (`table.index-grid`) va a capo con margini `.5rem .375rem` ed entra intero a 390 px. Il test

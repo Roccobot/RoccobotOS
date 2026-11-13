@@ -10,7 +10,7 @@
 // index.html nascono VUOTI: se questo script non gira il CSS li nasconde con :empty, invece di
 // mostrare una 'v' senza numero.
 !function () {
-  const VERSIONE = "4.54";
+  const VERSIONE = "4.55";
   // Due punti di resa, uno per formato: la pillola nell'angolo dell'indice su desktop,
   // il numero sopra il logo su mobile. A deciderlo è il CSS, qui si scrivono entrambi.
   for (const id of ["siteVersion", "tocVersion"]) {
@@ -334,13 +334,19 @@
     aggiornaComandi();
   });
 }(),
-// ── Doppio clic sul codice: copia il testo ──
-// Vale per il codice in riga e per i blocchi <pre>, in entrambi i temi. Un solo ascoltatore delegato sul documento: i blocchi li
-// crea Prism dopo il caricamento, quindi agganciarsi a ogni elemento non basterebbe.
+// ── Copia del codice: doppio clic e pulsante Copia ──
+// Il doppio clic vale per il codice in riga e per i blocchi <pre>, in entrambi i temi. Un solo
+// ascoltatore delegato sul documento: i blocchi si avvolgono nella loro barra dopo il
+// caricamento, quindi agganciarsi a ogni elemento non basterebbe.
 // Il doppio clic seleziona tutto il codice (non la sola parola, come farebbe di suo) e ne
 // copia il testo: per i blocchi è il testo del solo <code>, senza il pulsante Copia, che sta
 // nella barra fuori dal <pre>. Se la copia fallisce la selezione resta, e Ctrl+C basta.
 // A copia riuscita compare anche l'avviso "Codice copiato" (vedi avvisoCopia qui sotto).
+// Il pulsante Copia sui blocchi è scritto qui dalla 4.55 (scelta Prism-02 dell'utente): fino
+// alla 4.54 lo metteva Prism coi plugin Toolbar e Copy to Clipboard, che non coloravano niente
+// (nessun blocco usa un linguaggio che Prism conosca) e riscrivevano ogni blocco con innerHTML.
+// La barra ha la struttura che costruiva Prism, perché lo stile e le prove la conoscono già:
+// div.code-toolbar > pre + div.toolbar > div.toolbar-item > button.copy-to-clipboard-button > span.
 !function () {
   const ESITO_MS = 1200;
   const timer = new WeakMap();
@@ -404,8 +410,13 @@
     };
   })();
 
+  // Il testo che si copia, uguale per il doppio clic e per il pulsante: il codice in riga resta
+  // com'è (uno spazio può essere il contenuto stesso), ai blocchi si leva il solo a capo finale,
+  // o un comando incollato nel Terminale partirebbe da solo.
+  const testoDi = code => code.textContent.replace(/\n$/, "");
+
   // Conferma visiva: contorno breve sul riquadro (nessuna animazione, quindi niente da
-  // spegnere con prefers-reduced-motion) e, per i blocchi, la spunta sul pulsante di Prism.
+  // spegnere con prefers-reduced-motion) e, per i blocchi, la spunta sul pulsante Copia.
   const segnala = riquadro => {
     riquadro.classList.add("copiato");
     const tasto = riquadro.closest(".code-toolbar")?.querySelector(".copy-to-clipboard-button");
@@ -421,13 +432,65 @@
     const el = ev.target.closest?.("code");
     if (!el || el.closest("a")) return;
     const riquadro = el.closest("pre") || el;
-    // Il codice in riga resta com'è (uno spazio può essere il contenuto stesso), ai blocchi si
-    // leva il solo a capo finale.
-    const testo = el.textContent.replace(/\n$/, "");
     const seleziona = () => window.getSelection().selectAllChildren(el);
     seleziona();
     // La copia di riserva passa da un campo di testo e perde la selezione: si rifà dopo.
-    copiaTesto(testo).then(ok => { seleziona(); if (ok) { segnala(riquadro); avvisoCopia() } });
+    copiaTesto(testoDi(el)).then(ok => { seleziona(); if (ok) { segnala(riquadro); avvisoCopia() } });
+  });
+
+  // ── Il pulsante Copia sui blocchi ──
+  // Ogni <pre> che contiene direttamente un <code> entra in un div.code-toolbar, con la barra
+  // accanto. Il tasto mostra lo stato in data-copy-state, che il CSS legge per l'icona: copy (i
+  // due fogli), copy-success (la spunta) e copy-error (l'etichetta in chiaro al posto dell'icona,
+  // col codice selezionato). Dopo STATO_MS torna a copy, come faceva il plugin di Prism.
+  // L'etichetta dentro lo <span> resta in pagina per i lettori di schermo (lo stile la nasconde
+  // alla vista). Tutto il testo entra con textContent, mai con innerHTML (regola non derogabile).
+  const STATO_MS = 5000;
+  const ETICHETTE = { "copy": "Copia", "copy-success": "Codice copiato", "copy-error": "Premi ⌘C per copiare" };
+  const avvolgi = code => {
+    const pre = code.parentElement;
+    if (!pre || pre.tagName !== "PRE" || !pre.parentElement || pre.parentElement.classList.contains("code-toolbar")) return;
+    // La classe del linguaggio passa anche al <pre>, come faceva Prism: lo stile dei blocchi la
+    // aggancia con pre[class*=language-].
+    const lingua = [...code.classList].find(c => /^lang(uage)?-/.test(c));
+    if (lingua) pre.classList.add(lingua.replace(/^lang-/, "language-"));
+    const scatola = document.createElement("div");
+    scatola.className = "code-toolbar";
+    pre.before(scatola);
+    scatola.appendChild(pre);
+    const barra = document.createElement("div");
+    barra.className = "toolbar";
+    const voce = document.createElement("div");
+    voce.className = "toolbar-item";
+    const tasto = document.createElement("button");
+    tasto.type = "button";
+    tasto.className = "copy-to-clipboard-button";
+    tasto.title = "Copia";
+    const etichetta = document.createElement("span");
+    tasto.appendChild(etichetta);
+    voce.appendChild(tasto);
+    barra.appendChild(voce);
+    scatola.appendChild(barra);
+    let ritorno = 0;
+    const stato = s => { etichetta.textContent = ETICHETTE[s]; tasto.setAttribute("data-copy-state", s) };
+    stato("copy");
+    tasto.addEventListener("click", () => {
+      copiaTesto(testoDi(code)).then(ok => {
+        stato(ok ? "copy-success" : "copy-error");
+        if (!ok) window.getSelection().selectAllChildren(code);
+        clearTimeout(ritorno);
+        ritorno = setTimeout(() => stato("copy"), STATO_MS);
+      });
+    });
+  };
+  // Un nodo aggiunto dopo il caricamento può essere il blocco, il suo <code> o un contenitore
+  // che ne porta altri: si cercano tutti. Avvolgere un blocco aggiunge a sua volta un nodo, il
+  // div.code-toolbar, ma il suo <pre> è già avvolto e avvolgi() lo salta.
+  const codiciIn = n => n.nodeType !== 1 ? [] : n.matches("pre > code") ? [n] : [...n.querySelectorAll("pre > code")];
+  document.addEventListener("DOMContentLoaded", () => {
+    codiciIn(document.body).forEach(avvolgi);
+    new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => codiciIn(n).forEach(avvolgi))))
+      .observe(document.body, { childList: true, subtree: true });
   });
 }(),
 document.addEventListener("DOMContentLoaded",()=>{const t=document.getElementById("markdown_content");if(!t)return;const e=t.querySelectorAll("h1,h2,h3,h4,h5,h6");const n=new Set;t.querySelectorAll("[id]").forEach(t=>{t.id&&n.add(t.id)}),e.forEach(t=>{if(t.id&&!/^mweb_tt_id_\d+$/.test(t.id))return void n.add(t.id);let e=function(t){if(!t)return"Section";const e=(""+t).trim();let n=e.replace(/[^A-Za-z0-9\u00C0-\u017F]+/g," ");if(n=n.replace(/\s+/g," ").trim(),!n)return"Section";const o=n.split(/\s+/),s=o.every(t=>t===t.toUpperCase());let r=e.replace(/[^\w\u00C0-\u017F]+/g,"_").replace(/^_+|_+$/g,"").replace(/_+/g,"_");if(r||(r=o.join("_")),s){let t=r.toUpperCase();return t=t.replace(/^[^A-Za-z]+/,""),t||(t="Section"),t}let a=o.map(t=>t.charAt(0).toUpperCase()+t.slice(1)).join("");return a=a.replace(/^[^A-Za-z]+/,""),a||(a="Section"),a}(t.getAttribute("data-heading-label")||t.textContent||t.innerText||""),o=e,s=2;for(;n.has(o);)o=e+"_"+s,s+=1;t.id=o,n.add(o)}),"undefined"!=typeof tocbot&&tocbot.init({tocSelector:"#mweb_toc_list_iid",contentSelector:"#markdown_content",headingSelector:"h1, h2, h3, h4, h5, h6",orderedList:!1,collapseDepth:6,scrollEndCallback:function(){const t=document.querySelector("#mweb_toc_list_iid li.is-active-li"),e=document.querySelector("#mweb_toc_list_iid>ul>li:first-child");if(e&&e.classList.contains("is-active-li")){const t=document.getElementById("mweb_toc_list_iid");return void(t&&(t.scrollTop=0))}t&&("function"==typeof t.scrollIntoViewIfNeeded?t.scrollIntoViewIfNeeded():t.scrollIntoView(!0))}})}),// ── Caricamento pigro delle immagini ──
@@ -450,9 +513,9 @@ document.addEventListener("DOMContentLoaded", () => {
 // .scorre (il CSS nasconde la barra). Il doppio clic e l'avviso "Codice copiato" restano su tutti i
 // blocchi. Il pulsante è fuori dal flusso e il padding destro del blocco non cambia, quindi
 // nasconderlo non sposta nulla e la misura non può ribaltarsi da sola.
-// La misura si rifà al caricamento, al ridimensionamento, a font caricati e quando Prism costruisce
-// un blocco (il contenitore .code-toolbar nasce dopo, e un blocco avvolto può diventare più stretto
-// della pagina e quindi scorrere): per questo c'è l'osservatore sui nuovi nodi.
+// La misura si rifà al caricamento, al ridimensionamento, a font caricati e quando un blocco entra
+// nella sua barra (il contenitore .code-toolbar nasce dopo, e un blocco avvolto può diventare più
+// stretto della pagina e quindi scorrere): per questo c'è l'osservatore sui nuovi nodi.
 document.addEventListener("DOMContentLoaded", () => {
   const CANDIDATI = ".markdown-body table, .markdown-body pre, .markdown-body div > pre, .markdown-body table.cmd-scorrevoli td > div.cmd";
   function sync() {

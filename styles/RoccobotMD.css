@@ -282,7 +282,7 @@ html .markdown-body div.code-toolbar>pre {
   display: none;
 }
 
-/* The copy button is not shown on a block that scrolls sideways (RoccobotOS.js adds the class .scorre after measuring scrollWidth against clientWidth, and again on resize, font load and when Prism builds a block). It is absolutely placed, and the right padding of the block stays 2.6rem, so hiding it moves nothing and the measure cannot flip back. The double click copy and its notice work on every block. */
+/* The copy button is not shown on a block that scrolls sideways (RoccobotOS.js adds the class .scorre after measuring scrollWidth against clientWidth, and again on resize, font load and when a block gets its bar). It is absolutely placed, and the right padding of the block stays 2.6rem, so hiding it moves nothing and the measure cannot flip back. The double click copy and its notice work on every block. */
 html div.code-toolbar.scorre>.toolbar {
   display: none;
 }
@@ -698,7 +698,7 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
   margin-left: 0;
 }
 
-/* One monospace family for all code, Prism included. The dark theme overrides it with the text font. */
+/* One monospace family for all code. The dark theme overrides it with the text font. */
 .markdown-body code,.markdown-body pre {
   font-family: "SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
@@ -1085,7 +1085,7 @@ div.code-toolbar>.toolbar>.toolbar-item>a:focus,div.code-toolbar>.toolbar>.toolb
   text-decoration: none;
 }
 
-/* The copy button is only an icon, with no box, fill or shadow. The extra class and the state selectors beat the Prism sheet, which loads after this one. The icon follows the code text: #06120C on the light sage block #EAF1E8 (16.59:1) and #F7F8F5 on the dark green grey block #384541 (9.40:1). */
+/* The copy button is only an icon, with no box, fill or shadow. The bar and the button are built by RoccobotOS.js, with the classes of the Prism toolbar the site used until 4.55 (pre[class*=language-] comes from there too). The icon follows the code text: #06120C on the light sage block #EAF1E8 (16.59:1) and #F7F8F5 on the dark green grey block #384541 (9.40:1). */
 div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button,div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:hover,div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:focus {
   position: relative;
   padding: .25rem;
@@ -1099,7 +1099,7 @@ html[data-theme=dark] div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-cli
   color: #F7F8F5;
 }
 
-/* The Prism label stays in the page for screen readers and comes back as text if the copy fails. */
+/* The label of the button stays in the page for screen readers and comes back as text if the copy fails. */
 button.copy-to-clipboard-button>span {
   position: absolute;
   width: 1px;
