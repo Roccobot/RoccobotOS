@@ -1,4 +1,4 @@
-const { webkit } = require('playwright');
+const { engineName, launch } = require('./engine.cjs');
 const fs = require('node:fs/promises');
 const assert = require('node:assert/strict');
 const url = 'http://127.0.0.1:18770/';
@@ -35,7 +35,7 @@ async function stubCatalogue(page) {
   }
 }
 (async () => {
-  const browser = await webkit.launch({...(process.env.PLAYWRIGHT_WEBKIT_EXECUTABLE ? { executablePath: process.env.PLAYWRIGHT_WEBKIT_EXECUTABLE } : {}),headless:true});
+  const browser = await launch();
   try {
     const lay={};
     for(const width of [390,1440]) for(const theme of ['light','dark']) {
@@ -117,8 +117,20 @@ async function stubCatalogue(page) {
       {
         const p2=await context.newPage();
         await p2.route('https://**/*',route=>route.abort());
+        // Everything the page needs is a file of the site (Prism included, vendor/prism): a request to
+        // another host, or one the server cannot answer, is a defect (RoccobotOS-01 and -04).
+        const outside=[],failed=[];
+        p2.on('request',r=>{if(!r.url().startsWith(url)&&!r.url().startsWith('data:'))outside.push(r.url())});
+        p2.on('response',r=>{if(r.status()>=400)failed.push(r.status()+' '+r.url())});
         await p2.goto(url,{waitUntil:'load'});
         await p2.waitForTimeout(400);
+        await check(`${width}/${theme}: Prism runs from vendor/prism, wraps every code block with the Copia button, and the page asks nothing of other hosts`,async()=>{
+          await p2.waitForFunction(()=>{const n=document.querySelectorAll('#markdown_content pre').length;return n>30&&document.querySelectorAll('#markdown_content div.code-toolbar>pre').length===n});
+          const r=await p2.evaluate(()=>{const b=[...document.querySelectorAll('#markdown_content div.code-toolbar>.toolbar .copy-to-clipboard-button')];return {pre:document.querySelectorAll('#markdown_content pre').length,buttons:b.length,titled:b.every(x=>x.title==='Copia'),nested:document.querySelectorAll('div.code-toolbar div.code-toolbar').length,store:(()=>{try{return localStorage.length}catch(e){return -1}})()}});
+          assert.equal(r.buttons,r.pre);assert.equal(r.titled,true);assert.equal(r.nested,0);
+          assert.equal(r.store,0,'the page writes nothing in the browser storage');
+          assert.deepEqual(outside,[]);assert.deepEqual(failed,[]);
+        });
         const aw=await p2.evaluate(()=>{const a=document.querySelector('p.avviso');const m=a.querySelector('mark');const h=document.querySelector('.markdown-body h2');const c=e=>getComputedStyle(e);const r=a.getBoundingClientRect();return {markBg:c(m).backgroundColor,markFg:c(m).color,pFg:c(a).color,markPad:c(m).padding,weight:c(m.querySelector('strong')).fontWeight,strongFg:c(m.querySelector('strong')).color,border:c(a).borderTopColor,bw:c(a).borderTopWidth,rad:c(a).borderTopLeftRadius,pad:c(a).paddingTop,h2:c(h).color,box:[+r.width.toFixed(2),+r.height.toFixed(2)],marks:document.querySelectorAll('mark').length}});
         await check(`${width}/${theme}: 1.55 marked text has no highlight and reads as the paragraph text`,async()=>{
           assert.equal(aw.markBg,'rgba(0, 0, 0, 0)');assert.equal(aw.markFg,aw.pFg);assert.equal(aw.strongFg,aw.pFg);
@@ -130,9 +142,6 @@ async function stubCatalogue(page) {
           (lay['avviso'+width]=lay['avviso'+width]||{})[theme]=aw.box;
           if(lay['avviso'+width].light&&lay['avviso'+width].dark)assert.deepEqual(lay['avviso'+width].light,lay['avviso'+width].dark);
         });
-        // Prism builds div.code-toolbar after load and the CDN is blocked here: build the same wrapper by hand.
-        await p2.evaluate(()=>{for(const pre of document.querySelectorAll('#markdown_content pre')){const wrap=document.createElement('div');wrap.className='code-toolbar';pre.replaceWith(wrap);wrap.appendChild(pre);const t=document.createElement('div');t.className='toolbar';t.style.cssText='position:absolute;top:.3em;right:.2em';t.innerHTML='<div class="toolbar-item"><button type="button" class="copy-to-clipboard-button"><span>Copia</span></button></div>';wrap.appendChild(t)}});
-        await p2.waitForTimeout(500);
         const blocks=()=>p2.evaluate(()=>[...document.querySelectorAll('div.code-toolbar')].map(d=>{const pre=d.querySelector(':scope>pre');const tb=getComputedStyle(d.querySelector('.toolbar'));return {scroll:pre.scrollWidth>pre.clientWidth+1,cls:d.classList.contains('scorre'),btn:tb.display!=='none',tab:pre.getAttribute('tabindex'),sbw:pre.offsetHeight-pre.clientHeight,sbWidth:getComputedStyle(pre).scrollbarWidth,h:pre.offsetHeight}}));
         const b0=await blocks();
         await check(`${width}/${theme}: 1.55 copy button is hidden on blocks that scroll sideways and kept on the others`,async()=>{
@@ -155,7 +164,9 @@ async function stubCatalogue(page) {
           await p2.waitForFunction(()=>getComputedStyle(document.querySelector('.avviso-codice')).visibility==='visible'&&document.querySelector('.avviso-codice').textContent==='Codice copiato');
         });
         await check(`${width}/${theme}: 1.55 copy button follows a block built later and a change of width`,async()=>{
-          const n=await p2.evaluate(()=>{const src=document.querySelector('div.code-toolbar.scorre>pre');const pre=document.createElement('pre');pre.innerHTML='<code>'+'x'.repeat(600)+'</code>';const wrap=document.createElement('div');wrap.className='code-toolbar';wrap.appendChild(pre);const t=document.createElement('div');t.className='toolbar';t.style.cssText='position:absolute;top:.3em;right:.2em';t.innerHTML='<div class="toolbar-item"><button type="button" class="copy-to-clipboard-button"><span>Copia</span></button></div>';wrap.appendChild(t);src.parentElement.after(wrap);wrap.id='nuovo-blocco';return 1});
+          // A block added after load, built by Prism itself as it builds the others.
+          await p2.evaluate(()=>{const src=document.querySelector('div.code-toolbar.scorre>pre');const pre=document.createElement('pre');const code=document.createElement('code');code.className='language-plain_text';code.textContent='x'.repeat(600);pre.appendChild(code);src.parentElement.after(pre);Prism.highlightElement(code);pre.parentElement.id='nuovo-blocco'});
+          assert.equal(await p2.evaluate(()=>document.getElementById('nuovo-blocco').classList.contains('code-toolbar')),true);
           await p2.waitForFunction(()=>document.getElementById('nuovo-blocco').classList.contains('scorre'));
           assert.equal(await p2.evaluate(()=>getComputedStyle(document.querySelector('#nuovo-blocco .toolbar')).display),'none');
           await p2.setViewportSize({width:width===390?1440:390,height:1000});
@@ -257,9 +268,9 @@ async function stubCatalogue(page) {
         if(width<=600){assert.equal(r.disp,'grid');assert.ok(r.sameLeft&&r.below,'second pair under the first');assert.equal(r.heads,2,'one header pair');assert.ok(r.wide>r.tw*.55,'Effetto column gets most of the width: '+r.wide+' of '+r.tw);assert.equal(r.scrolls,false);assert.ok(r.extra.every(e=>e.br==='none'&&e.pb<6),'no empty line above and below a key cell')}
         else{assert.equal(r.disp,'table-row');assert.equal(r.heads,4)}
       });
-      await check(`${width}/${theme}: code boxes have the same shape in both themes (the Prism toolbar is rebuilt by hand because the CDN is blocked)`,async()=>{
-        const r=await page.evaluate(()=>{const g=e=>getComputedStyle(e);const ic=[...document.querySelectorAll('#markdown_content code')].find(e=>!e.closest('pre,a,table')&&e.parentElement.tagName==='P');const pre=[...document.querySelectorAll('#markdown_content pre')].find(e=>e.textContent.includes('NOMEAPP</string>'));let wrap=pre.parentElement;if(!wrap.classList.contains('code-toolbar')){wrap=document.createElement('div');wrap.className='code-toolbar';pre.replaceWith(wrap);wrap.appendChild(pre);const t0=document.createElement('div');t0.className='toolbar';t0.innerHTML='<div class="toolbar-item"><button type="button" class="copy-to-clipboard-button"><span>Copy</span></button></div>';wrap.appendChild(t0);}const tb=wrap.querySelector('.toolbar');const btn=wrap.querySelector('button.copy-to-clipboard-button');const bb=g(btn);const rem=parseFloat(g(document.documentElement).fontSize);return {icb:[g(ic).borderTopWidth,g(ic).borderRadius,g(ic).fontFamily===g(ic.parentElement).fontFamily,g(ic).fontWeight],ibc:g(ic).borderTopColor,pb:[g(pre).borderTopWidth,g(pre).borderRadius,g(pre).fontFamily===g(wrap).fontFamily],pbc:g(pre).borderTopColor,wrapFit:g(wrap).width===Math.round(wrap.getBoundingClientRect().width*100)/100+'px'||Math.abs(wrap.getBoundingClientRect().width-pre.getBoundingClientRect().width)<1,narrower:wrap.getBoundingClientRect().width<=wrap.parentElement.getBoundingClientRect().width+.5,pr:parseFloat(g(pre).paddingRight)/rem,top:parseFloat(g(tb).top)/rem,right:parseFloat(g(tb).right)/rem,btn:{bg:bb.backgroundColor,shadow:bb.boxShadow,radius:bb.borderTopLeftRadius,color:bb.color,bw:bb.borderTopWidth},code:g(pre.querySelector('code')).fontFamily===g(pre).fontFamily&&!/mono/i.test(g(pre).fontFamily)}});
-        assert.deepEqual(r.icb,['0px','8px',true,'500']);
+      await check(`${width}/${theme}: code boxes have the same shape in both themes, with the toolbar Prism builds`,async()=>{
+        const r=await page.evaluate(()=>{const g=e=>getComputedStyle(e);const ic=[...document.querySelectorAll('#markdown_content code')].find(e=>!e.closest('pre,a,table')&&e.parentElement.tagName==='P');const pre=[...document.querySelectorAll('#markdown_content pre')].find(e=>e.textContent.includes('NOMEAPP</string>'));const wrap=pre.parentElement;const tb=wrap.querySelector('.toolbar');const btn=wrap.querySelector('button.copy-to-clipboard-button');const bb=g(btn);const rem=parseFloat(g(document.documentElement).fontSize);return {built:wrap.classList.contains('code-toolbar'),icb:[g(ic).borderTopWidth,g(ic).borderRadius,g(ic).fontFamily===g(ic.parentElement).fontFamily,g(ic).fontWeight],ibc:g(ic).borderTopColor,pb:[g(pre).borderTopWidth,g(pre).borderRadius,g(pre).fontFamily===g(wrap).fontFamily],pbc:g(pre).borderTopColor,wrapFit:g(wrap).width===Math.round(wrap.getBoundingClientRect().width*100)/100+'px'||Math.abs(wrap.getBoundingClientRect().width-pre.getBoundingClientRect().width)<1,narrower:wrap.getBoundingClientRect().width<=wrap.parentElement.getBoundingClientRect().width+.5,pr:parseFloat(g(pre).paddingRight)/rem,top:parseFloat(g(tb).top)/rem,right:parseFloat(g(tb).right)/rem,btn:{bg:bb.backgroundColor,shadow:bb.boxShadow,radius:bb.borderTopLeftRadius,color:bb.color,bw:bb.borderTopWidth},code:g(pre.querySelector('code')).fontFamily===g(pre).fontFamily&&!/mono/i.test(g(pre).fontFamily)}});
+        assert.equal(r.built,true,'Prism wrapped the block');assert.deepEqual(r.icb,['0px','8px',true,'500']);
         assert.deepEqual(r.pb,['0px','16px',true]);
         assert.equal(r.code,true);
         assert.equal(r.wrapFit,true);assert.equal(r.narrower,true);
@@ -350,8 +361,8 @@ async function stubCatalogue(page) {
       });
       await context.close();
     }
-    if (process.env.VERIFICATION_REPORT) await fs.writeFile(process.env.VERIFICATION_REPORT, JSON.stringify({ passed: results.length, checks: results, notMeasured: [...notMeasured] }, null, 2));
-    console.log(JSON.stringify({passed:results.length,checks:results,notMeasured:[...notMeasured]},null,2));
+    if (process.env.VERIFICATION_REPORT) await fs.writeFile(process.env.VERIFICATION_REPORT, JSON.stringify({ engine: engineName(), passed: results.length, checks: results, notMeasured: [...notMeasured] }, null, 2));
+    console.log(JSON.stringify({engine:engineName(),passed:results.length,checks:results,notMeasured:[...notMeasured]},null,2));
     if (notMeasured.size) console.warn('Not measured here, the page is not using SF Pro: '+[...notMeasured].join(', ')+'. Run on a Mac.');
   } finally { await browser.close(); }
 })().catch(e=>{console.error(e);process.exit(1)});

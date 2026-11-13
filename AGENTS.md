@@ -273,6 +273,10 @@ Un file più specifico vince **dove parla**, e il suo silenzio non è una deroga
   lista di lavori in un file, niente `localStorage` per il tema, niente codice inline a pillola;
   lo switch delle tabelle e il tasto del tema restano dietro i loro flag spenti (`Rules.md`
   § '🚩 Flag, sotto-pagine e decisioni da non rovesciare').
+- **Il codice di terzi è nel repo, nessuno script da un CDN**: Prism in `vendor/prism` con `defer`,
+  tocbot in linea; versioni in `vendor/package.json`, registro in `docs/Dependencies.json`
+  (`Rules.md` § '🚩 Flag, sotto-pagine e decisioni da non rovesciare').
+- **Il banco**: `tests/browser.cjs` in WebKit di serie, `TEST_BROWSER=chromium` dove WebKit manca.
 - **Un feature flag si spegne con `[hidden]{display:none!important}` fuori da ogni media query**,
   e si verifica sul `display` calcolato (`Rules.md` § '🚩 Flag, sotto-pagine e decisioni da non
   rovesciare').

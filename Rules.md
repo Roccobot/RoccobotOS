@@ -115,8 +115,8 @@
   regole del **tema markdown vendorizzato** (`blockquote`, `dl`, `figure`, `details`, `kbd`, liste
   di spunta, note a piè di pagina, `h5`, `h6`, liste annidate): coprono costrutti che la pagina può
   usare domani, e senza di loro la prima citazione uscirebbe senza stile.
-  - ⚠️ **Come si rifà la misura**: la cartella servita su HTTP locale con **Prism scaricato in
-    locale** (il browser di prova non ha rete, e senza Prism `div.code-toolbar` e
+  - ⚠️ **Come si rifà la misura**: la cartella servita su HTTP locale, che dalla `4.54` basta, perché
+    Prism è un file del repo (`vendor/prism`; senza Prism `div.code-toolbar` e
     `pre[class*=language-]` sembrano morte); i selettori estratti dal CSSOM e provati in **otto
     stati combinati** (desktop e mobile, per chiaro e scuro, più schede e indice aperto), accesi
     **col clic** e non scrivendo l'attributo, o `td[data-label]` non esiste. Le schede si accendono
@@ -178,6 +178,23 @@
 - ⚠️ **Nessuna lista di lavori pendenti in un file**: `Da fare.txt` è stato eliminato
   dall'utente e non si ricrea. Un lavoro pendente si porta all'utente o nel brief, perché un file
   che nessuno rilegge invecchia (dettagli in `docs/Removed.md` § '📝 `Da fare.txt`').
+- ⚠️⚠️ **Il codice di terzi è un file del repo, e la pagina non chiede niente ad altri server**
+  (scelta `Prism-01` dell'utente, 2026-11-13, giro `Vaglio`, rilievi RoccobotOS-01, -03 e -04).
+  Prism 1.30.0 (il nucleo e i plugin Toolbar e Copy to Clipboard, con la licenza) vive in
+  `vendor/prism`, preso così com'è dal pacchetto npm `prismjs`, e si carica con `defer`, così non
+  ferma il primo disegno; tocbot è la copia in linea in `index.html`.
+  - **Le versioni sono scritte in un posto solo**, `vendor/package.json`, e il registro è
+    `docs/Dependencies.json` (`Roccobot.md` § '🔗 Le dipendenze si seguono'). La versione di tocbot
+    è dedotta e da verificare: il codice è quello della 4.27.0-4.27.14, identico in quelle versioni.
+  - **Tolto lo script `jsdelivr-auto-fallback`** e non si rimette: era un residuo dell'esportazione,
+    sondava cinque server a ogni visita (uno fuori da jsDelivr, che rimandava a un dominio
+    sconosciuto), scriveva nella memoria del browser e, se jsDelivr non rispondeva, faceva caricare
+    Prism da quel server senza nessun controllo.
+  - **Tolto l'autoloader di Prism**: nessun blocco usa un linguaggio che Prism colori, e a ogni
+    visita chiedeva `prism-plain_text.min.js`, che non esiste. Per lo stesso motivo il nucleo basta:
+    il `prism.min.js` di jsDelivr conteneva anche quattro linguaggi che la pagina non usa.
+  - La prova controlla che la pagina non chieda niente fuori dal sito, che nessuna richiesta
+    risponda con un errore e che la memoria del browser resti vuota.
 
 ### 🖼️ Le iconcine del testo: SVG che seguono il colore
 
@@ -284,7 +301,7 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
   - **Nella `1.67` il globo stava 1 px più su** (`-.095em`) e l'utente l'ha respinto: dalla
     `1.68` è `vertical-align: -.161em`, di nuovo al centro (.003em sopra), e il test vuole lo
     scarto sotto .25 px.
-  - **Dalla `1.69` anche il tasto Mission Control sta nel codice in riga**, dopo `⌘` (Mostra
+  - **Dalla `1.69` anche il tasto Mission Control è nel codice in riga**, dopo `⌘` (Mostra
     Scrivania): alto .875em dal suo attributo `height` (12,6 px nel riquadro di 17,8 px a 14,4 px,
     perché il disegno occupa tutta l'altezza), `code .ic-mission { vertical-align: -.099em; }`
     lo mette al centro (sotto .08 px in Chromium e WebKit) e il riquadro resta alto come quelli
@@ -299,13 +316,13 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
   `NotaVar`) non ha `↩`. Le note si scrivono a mano senza `↩`: lo mette lo script.
 - ⚠️⚠️ **Sotto i 600 px le celle vanno a capo con il corpo del testo** (pagina 4.49, richiesta dell'utente: *l'importante è ottenere un testo più grande*). Prima le celle erano a una riga con corpo `.65rem` (10,4 px) e 21 tabelle su 31 scorrevano di lato a 376 px, con la barra nascosta e il testo che sembrava ritagliato; ora il corpo è `.9rem` come sopra i 600 px e ne scorrono 6. Il codice in riga resta su una riga (un comando spezzato in tre non è più un comando), quindi le tabelle che ne contengono di lunghi scorrono. Una tabella che scorre ancora sfuma il bordo che nasconde altro contenuto: `RoccobotOS.js` scrive `data-scorre` (`dx`, `sx`, `entrambi`) dentro `sync()` e il CSS applica una maschera solo di trasparenza, uguale nei due temi e senza spostare niente. L'indice (`table.index-grid`) tiene il corpo `.65rem`, o a 390 px non entra. La pagina a 376 px è più alta di circa il 29%.
   - ⚠️⚠️ **La tabella Tasti / Effetto, a due coppie di colonne, sotto i 600 px mette la seconda coppia sotto la prima** (pagina 4.50, scelta `Coppie-01` dell'utente): ha la classe `coppie`, ogni riga diventa una griglia di due colonne (`4.75rem` e il resto), l'intestazione ripetuta si nasconde e la colonna Effetto passa da un quarto a tre quarti della larghezza. Le celle `cell-extra-line` perdono il `<br>` iniziale e la riga di riempimento, che servivano a centrarle accanto alle vicine. A 376 px la tabella è più corta di circa il 10% (1267 px contro 1413). Sopra i 600 px non cambia. ⚠️ Non vale per `Simbolo / Tasto` (la tabella prima, con un `rowspan`, già intera a 376 px) né per le sostituzioni (tre coppie, restano com'erano).
-  - ⚠️ **Misurato in Chromium; il banco del repo gira in WebKit**, e nel container la soglia del globo Fn (.25 px) non regge neanche su `main` (.46 px): le 132 prove del banco passano in Chromium con quella soglia allentata, uguali a `main`. ⚠️ **Rifatto in WebKit il 2026-11-02, e la soglia non regge nemmeno là, in nessuna versione dalla 4.41 alla 4.51**: lo scarto è .58 px dalla 4.41 alla 4.48 e .35 px dalla 4.49 in poi, ed è identico prima e dopo la 4.51. La causa è il carattere: nel container `-apple-system` e `Helvetica` diventano Liberation Sans, mentre il valore del globo è tarato su SF Pro, quindi questa misura dice qualcosa solo col font reale (`Roccobot.md` § '🧪 Test e verifiche'). Da quel giorno (scelta `Globo-01` dell'utente) le due misure di centratura, il globo Fn e il tasto Mission Control, girano solo quando la prova gira su un Mac, dove c'è SF Pro; altrove la prova le salta e lo dice nel resoconto (`notMeasured`), e `MEASURE_ICON_CENTRE=1` le forza. Il resto del banco passa in WebKit e in Chromium anche nel container.
+  - ⚠️ **Misurato in Chromium; il banco del repo gira in WebKit**, e nel container la soglia del globo Fn (.25 px) non regge neanche su `main` (.46 px): le 132 prove del banco passano in Chromium con quella soglia allentata, uguali a `main`. ⚠️ **Rifatto in WebKit il 2026-11-02, e la soglia non regge nemmeno là, in nessuna versione dalla 4.41 alla 4.51**: lo scarto è .58 px dalla 4.41 alla 4.48 e .35 px dalla 4.49 in poi, ed è identico prima e dopo la 4.51. La causa è il carattere: nel container `-apple-system` e `Helvetica` diventano Liberation Sans, mentre il valore del globo è tarato su SF Pro, quindi questa misura dice qualcosa solo col font reale (`Roccobot.md` § '🧪 Test e verifiche'). Da quel giorno (scelta `Globo-01` dell'utente) le due misure di centratura, il globo Fn e il tasto Mission Control, girano solo quando la prova gira su un Mac, dove c'è SF Pro; altrove la prova le salta e lo dice nel resoconto (`notMeasured`), e `MEASURE_ICON_CENTRE=1` le forza. Il resto del banco passa in WebKit e in Chromium anche nel container. Dalla `4.54` il motore lo sceglie la variabile `TEST_BROWSER` (`webkit` di serie, `chromium` o `firefox`; `tests/engine.cjs`), così il banco gira anche dove WebKit non è installato, e il resoconto dice con quale motore è girato.
 - **Tabelle dalla `1.71`, oggi `Roccobot MD 0.9`** (pagina 4.44): angoli `.5rem` (prima `1rem`), uguali nei due temi. Sotto
   i 600 px nessuna barra di scorrimento orizzontale nelle tabelle (scorrono col tocco), la cella
   `cell-extra-line` tiene il margine sotto di una riga e resta al centro, e l'indice
   (`table.index-grid`) va a capo con margini `.5rem .375rem` ed entra intero a 390 px. Il test
   controlla i tre punti a 390.
-  - ⚠️ **Il globo e il carattere che lo segue stanno in uno `<span style="white-space:nowrap">`**:
+  - ⚠️ **Il globo e il carattere che lo segue sono in uno `<span style="white-space:nowrap">`**:
     un SVG in riga apre un punto di a capo che il testo Fn non aveva, e senza lo span le celle
     strette andavano a capo dopo il globo (+23,6 px di riga). Con lo span altezze e posizioni di
     ogni blocco e di ogni riquadro di codice sono identiche a prima nei due temi a 1440, 900 e

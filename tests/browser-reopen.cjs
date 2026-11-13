@@ -1,7 +1,7 @@
-const {webkit}=require('playwright');
+const {launch}=require('./engine.cjs');
 const assert=require('node:assert/strict');
 (async()=>{
- const browser=await webkit.launch({...(process.env.PLAYWRIGHT_WEBKIT_EXECUTABLE ? { executablePath: process.env.PLAYWRIGHT_WEBKIT_EXECUTABLE } : {}),headless:true});
+ const browser=await launch();
  try{
  const page=await browser.newPage({viewport:{width:1200,height:900}});
  await page.route('https://**/*',r=>r.abort());
