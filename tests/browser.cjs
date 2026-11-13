@@ -1,5 +1,6 @@
 const { engineName, launch } = require('./engine.cjs');
 const fs = require('node:fs/promises');
+const pages = require('./pages.cjs');
 const assert = require('node:assert/strict');
 const url = 'http://127.0.0.1:18770/';
 const results = [];
@@ -38,7 +39,7 @@ async function stubCatalogue(page) {
   const browser = await launch();
   try {
     const lay={};
-    for(const width of [390,1440]) for(const theme of ['light','dark']) {
+    for(const width of [390,900,1440]) for(const theme of ['light','dark']) {
       const context = await browser.newContext({viewport:{width,height:1000},colorScheme:theme});
       const page = await context.newPage();
       await page.route('https://**/*', route=>route.abort());
@@ -361,6 +362,7 @@ async function stubCatalogue(page) {
       });
       await context.close();
     }
+    await pages.run(browser, url, check);
     if (process.env.VERIFICATION_REPORT) await fs.writeFile(process.env.VERIFICATION_REPORT, JSON.stringify({ engine: engineName(), passed: results.length, checks: results, notMeasured: [...notMeasured] }, null, 2));
     console.log(JSON.stringify({engine:engineName(),passed:results.length,checks:results,notMeasured:[...notMeasured]},null,2));
     if (notMeasured.size) console.warn('Not measured here, the page is not using SF Pro: '+[...notMeasured].join(', ')+'. Run on a Mac.');

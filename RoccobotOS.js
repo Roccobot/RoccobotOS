@@ -127,7 +127,7 @@
     }
     if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
     if (ev.key === "t" || ev.key === "T") commutaTema();
-    if (ev.key === "Escape" && html.getAttribute("data-mobile-toc") === "open") chiudiIndice();
+    if (ev.key === "Escape" && html.getAttribute("data-mobile-toc") === "open") chiudiIndice(true);
   });
 
   // ── Tabelle a schede (dietro il flag) ──
@@ -181,23 +181,36 @@
   // funzioni chiamano aggiornaComandi(): a indice aperto il pulsante se ne va, per non
   // coprire il fondo del pannello. Se ci si dimentica la chiamata il difetto non si vede
   // subito, perché il primo scorrimento successivo rimette tutto a posto da solo.
-  function chiudiIndice() {
+  // Il fuoco segue l'indice (RoccobotOS-06): all'apertura va alla voce attiva, o alla prima,
+  // perché il tasto resta sotto il pannello, invisibile e fuori dal giro del Tab, e chi usa
+  // tastiera o lettore di schermo non saprebbe di essere nell'indice. Alla chiusura con Esc o
+  // col tasto, se il fuoco era nel pannello, torna al tasto, che si mostra come allo
+  // scorrimento. Chiudendo con una voce il fuoco lo dà tocbot al titolo d'arrivo, e non si tocca.
+  function chiudiIndice(rendiFuoco) {
+    const pannello = document.querySelector(".mweb_toc_wrap_ct");
+    const fuocoNelPannello = pannello && pannello.contains(document.activeElement);
     html.removeAttribute("data-mobile-toc");
     if (tastoIndice) {
       tastoIndice.setAttribute("aria-pressed", "false");
       tastoIndice.setAttribute("aria-expanded", "false");
     }
     aggiornaComandi();
+    if (rendiFuoco === true && fuocoNelPannello && tastoIndice) {
+      segnalaScorrimento();
+      tastoIndice.focus({ preventScroll: true });
+    }
   }
   function commutaIndice() {
     if (!mqMobile.matches) return;
-    if (html.getAttribute("data-mobile-toc") === "open") return chiudiIndice();
+    if (html.getAttribute("data-mobile-toc") === "open") return chiudiIndice(true);
     html.setAttribute("data-mobile-toc", "open");
     if (tastoIndice) {
       tastoIndice.setAttribute("aria-pressed", "true");
       tastoIndice.setAttribute("aria-expanded", "true");
     }
     aggiornaComandi();
+    const voce = listaIndice && (listaIndice.querySelector("a.toc-link.is-active-link") || listaIndice.querySelector("a.toc-link"));
+    if (voce) voce.focus({ preventScroll: true });
   }
   if (tastoIndice) tastoIndice.addEventListener("click", ev => { ev.preventDefault(); commutaIndice() });
   if (listaIndice) listaIndice.addEventListener("click", ev => {

@@ -176,6 +176,14 @@ html[data-theme=dark] .toc-toggle {
   opacity: 1;
 }
 
+/* The fixed controls are drawn at 34px; a transparent ring around each one makes the area that answers a touch 44px wide and 42px tall (the ring starts inside the 1px border), without changing the drawing (RoccobotOS-06). The two jumps are 10px apart, one above the other: 5px up and down lets their rings meet without overlapping. */
+.toc-toggle::after,.scroll-toggle::after {
+  content: "";
+  position: absolute;
+  inset: -.3125rem -.375rem;
+  border-radius: 50%;
+}
+
 html[data-theme=dark],html[data-theme=dark] body {
   background-color: #191E1D;
   color: #DEE5E1;
@@ -861,6 +869,11 @@ html[data-theme=dark] .scroll-toggle,html[data-theme=dark] .tables-toggle {
   box-sizing: initial;
 }
 
+/* An image that declares its size keeps its proportions when max-width narrows it: the width and height attributes only reserve the room before the file arrives, so the text below does not jump (Keyboard.gif, RoccobotOS-10). */
+.markdown-body img[width][height] {
+  height: auto;
+}
+
 .markdown-body img[align=right] {
   padding-left: 1.25rem;
 }
@@ -1466,10 +1479,6 @@ html[data-theme=dark] .markdown-body table.narrow-cols-even td:nth-child(2n) {
 
 .scroll-bottom-toggle .scroll-glyph {
   transform: translateY(-.03125rem);
-}
-
-.toc-toggle {
-  bottom: calc(1rem + env(safe-area-inset-bottom));
 }
 
 #mweb_toc_list_iid li {

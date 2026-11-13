@@ -206,6 +206,11 @@
     il `prism.min.js` di jsDelivr conteneva anche quattro linguaggi che la pagina non usa.
   - La prova controlla che la pagina non chieda niente fuori dal sito, che nessuna richiesta
     risponda con un errore e che la memoria del browser resti vuota.
+- **Un richiamo o una scorciatoia non vanno a capo da soli** (dalla `4.54`, rilievo
+  RoccobotOS-09): in `index.html` c'è `&nbsp;` prima di ogni `<sup>` di richiamo, fra i tasti
+  di una scorciatoia nelle voci di elenco (`</code>&nbsp;<code>`) e fra l'etichetta e la sua
+  scorciatoia (`</strong>:&nbsp;<code>`). Una voce nuova si scrive così. Nelle celle delle
+  tabelle no, perché allargherebbe le colonne strette.
 
 ### 🖼️ Le iconcine del testo: SVG che seguono il colore
 
@@ -327,7 +332,7 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
   `NotaVar`) non ha `↩`. Le note si scrivono a mano senza `↩`: lo mette lo script.
 - ⚠️⚠️ **Sotto i 600 px le celle vanno a capo con il corpo del testo** (pagina 4.49, richiesta dell'utente: *l'importante è ottenere un testo più grande*). Prima le celle erano a una riga con corpo `.65rem` (10,4 px) e 21 tabelle su 31 scorrevano di lato a 376 px, con la barra nascosta e il testo che sembrava ritagliato; ora il corpo è `.9rem` come sopra i 600 px e ne scorrono 6. Il codice in riga resta su una riga (un comando spezzato in tre non è più un comando), quindi le tabelle che ne contengono di lunghi scorrono. Una tabella che scorre ancora sfuma il bordo che nasconde altro contenuto: `RoccobotOS.js` scrive `data-scorre` (`dx`, `sx`, `entrambi`) dentro `sync()` e il CSS applica una maschera solo di trasparenza, uguale nei due temi e senza spostare niente. L'indice (`table.index-grid`) tiene il corpo `.65rem`, o a 390 px non entra. La pagina a 376 px è più alta di circa il 29%.
   - ⚠️⚠️ **La tabella Tasti / Effetto, a due coppie di colonne, sotto i 600 px mette la seconda coppia sotto la prima** (pagina 4.50, scelta `Coppie-01` dell'utente): ha la classe `coppie`, ogni riga diventa una griglia di due colonne (`4.75rem` e il resto), l'intestazione ripetuta si nasconde e la colonna Effetto passa da un quarto a tre quarti della larghezza. Le celle `cell-extra-line` perdono il `<br>` iniziale e la riga di riempimento, che servivano a centrarle accanto alle vicine. A 376 px la tabella è più corta di circa il 10% (1267 px contro 1413). Sopra i 600 px non cambia. ⚠️ Non vale per `Simbolo / Tasto` (la tabella prima, con un `rowspan`, già intera a 376 px) né per le sostituzioni (tre coppie, restano com'erano).
-  - ⚠️ **Misurato in Chromium; il banco del repo gira in WebKit**, e nel container la soglia del globo Fn (.25 px) non regge neanche su `main` (.46 px): le 132 prove del banco passano in Chromium con quella soglia allentata, uguali a `main`. ⚠️ **Rifatto in WebKit il 2026-11-02, e la soglia non regge nemmeno là, in nessuna versione dalla 4.41 alla 4.51**: lo scarto è .58 px dalla 4.41 alla 4.48 e .35 px dalla 4.49 in poi, ed è identico prima e dopo la 4.51. La causa è il carattere: nel container `-apple-system` e `Helvetica` diventano Liberation Sans, mentre il valore del globo è tarato su SF Pro, quindi questa misura dice qualcosa solo col font reale (`Roccobot.md` § '🧪 Test e verifiche'). Da quel giorno (scelta `Globo-01` dell'utente) le due misure di centratura, il globo Fn e il tasto Mission Control, girano solo quando la prova gira su un Mac, dove c'è SF Pro; altrove la prova le salta e lo dice nel resoconto (`notMeasured`), e `MEASURE_ICON_CENTRE=1` le forza. Il resto del banco passa in WebKit e in Chromium anche nel container. Dalla `4.54` il motore lo sceglie la variabile `TEST_BROWSER` (`webkit` di serie, `chromium` o `firefox`; `tests/engine.cjs`), così il banco gira anche dove WebKit non è installato, e il resoconto dice con quale motore è girato.
+  - ⚠️ **Misurato in Chromium; il banco del repo gira in WebKit**, e nel container la soglia del globo Fn (.25 px) non regge neanche su `main` (.46 px): le 132 prove del banco passano in Chromium con quella soglia allentata, uguali a `main`. ⚠️ **Rifatto in WebKit il 2026-11-02, e la soglia non regge nemmeno là, in nessuna versione dalla 4.41 alla 4.51**: lo scarto è .58 px dalla 4.41 alla 4.48 e .35 px dalla 4.49 in poi, ed è identico prima e dopo la 4.51. La causa è il carattere: nel container `-apple-system` e `Helvetica` diventano Liberation Sans, mentre il valore del globo è tarato su SF Pro, quindi questa misura dice qualcosa solo col font reale (`Roccobot.md` § '🧪 Test e verifiche'). Da quel giorno (scelta `Globo-01` dell'utente) le due misure di centratura, il globo Fn e il tasto Mission Control, girano solo quando la prova gira su un Mac, dove c'è SF Pro; altrove la prova le salta e lo dice nel resoconto (`notMeasured`), e `MEASURE_ICON_CENTRE=1` le forza. Il resto del banco passa in WebKit e in Chromium anche nel container. Dalla `4.54` il motore lo sceglie la variabile `TEST_BROWSER` (`webkit` di serie, `chromium` o `firefox`; `tests/engine.cjs`), così il banco gira anche dove WebKit non è installato, e il resoconto dice con quale motore è girato. Dalla stessa versione il banco misura la pagina principale anche a 900 px, e `tests/pages.cjs` aggiunge le quattro sotto-pagine (anti-jitter nei due temi a 390, 900 e 1440 px, nessuno scorrimento di lato della pagina, ogni tabella nel suo `div.pg-scroll`), due controlli dei contenuti tenuti in due posti (la tabella delle sostituzioni contro `OS Files/Text Replacements.plist`, le due tabelle DNS gemelle), l'immagine della tastiera, e il tasto indice sul telefono (area di tocco e fuoco). Prism è un file del repo, quindi gira anche nel banco, che controlla che la pagina non chieda niente ad altri server.
 - **Tabelle dalla `1.71`, oggi `Roccobot MD 0.9`** (pagina 4.44): angoli `.5rem` (prima `1rem`), uguali nei due temi. Sotto
   i 600 px nessuna barra di scorrimento orizzontale nelle tabelle (scorrono col tocco), la cella
   `cell-extra-line` tiene il margine sotto di una riga e resta al centro, e l'indice
@@ -433,9 +438,10 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
 - ⚠️ **La dissolvenza segue il lato**: il JS scrive `translateX(var(--hide-shift))` e il valore lo
   dà il CSS, positivo per i tasti di destra e **negativo** per quelli di sinistra, o escono
   attraversando lo schermo. È una logica sola per tutti i tasti, invece di un ramo per lato.
-- ⚠️ **La distanza dal fondo del tasto indice è scritta due volte**, nella media query e in una
-  regola più in basso nel file, e vince la seconda: si cambiano tutte e due, o il tasto non si
-  sposta.
+- **La distanza dal fondo del tasto indice è scritta una volta sola**, nella media query del
+  telefono di `styles/RoccobotMD.css`, l'unico formato in cui il tasto si vede (dalla `4.54`,
+  rilievo RoccobotOS-08: fino alla `4.53` era scritta anche in una regola più in basso, che
+  vinceva, e andavano cambiate tutte e due).
 - ⚠️ **L'evidenziazione del tocco si spegne a mano** (`-webkit-tap-highlight-color`) sui comandi
   fissi, sul link di salto, sulla griglia 'Indice' e sul FAB delle sotto-pagine: su Android il
   rettangolo del tocco ignora il `border-radius` e copre un comando tondo con un quadrato, e non è
@@ -443,6 +449,14 @@ Prima erano PNG neri, quasi invisibili al buio. Le sole raster sono le frecce di
 - **`⌘`/`Ctrl` + freccia su o giù** portano in cima e in fondo, con `preventDefault` sulla
   scorciatoia del browser (voluto). Il salto da tastiera è **istantaneo** e quello dei pulsanti
   **fluido**, come su 'I Grandi di Arda'.
+- **L'area che risponde al tocco è più grande del disegno** (dalla `4.54`, rilievo RoccobotOS-06):
+  i comandi misurano 34 px, e un anello trasparente (`::after` del tasto indice e dei due salti)
+  porta l'area a 44 px di larghezza e 42 di altezza, perché i due salti, uno sopra l'altro, sono a
+  10 px e i loro anelli si toccano senza sovrapporsi.
+- **Il fuoco segue l'indice sul telefono** (stessa versione e stesso rilievo): all'apertura va
+  alla voce attiva, o alla prima, perché il tasto resta sotto il pannello, invisibile e fuori dal
+  giro del Tab; chiudendo con `Esc` torna al tasto, che si mostra come allo scorrimento. Chiudendo
+  con una voce il fuoco lo dà tocbot al titolo d'arrivo.
 - **Verifica da rifare se si tocca un tasto fisso**: misurare i comandi a metà pagina, dove sono
   tutti visibili, e controllare che nessuna coppia si sovrapponga, nei due formati.
 - **Tasto `T`: cambia tema al volo**, come su 'I Grandi di Arda' (richiesta dell'utente). Tasto
