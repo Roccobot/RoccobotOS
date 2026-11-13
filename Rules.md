@@ -543,8 +543,8 @@ ordine alfabetico**, non nell'ordine del pannello (decisione dell'utente, 2026-0
 
 - **Due tabelle gemelle** in fondo alla pagina (sezione `DNS`), una per gli IPv4 (con la colonna
   `TLS auth name`) e una per gli IPv6: **elencano sempre gli stessi servizi, nello stesso ordine**.
-  Ordine **alfabetico naturale**, coi numeri letti come numeri (`Quad9` prima di `Quad101`). Un
-  valore assente si scrive `-`, mai una cella vuota.
+  Ordine **alfabetico naturale**, coi numeri letti come numeri (un `Quad9` va prima di un
+  `Quad101`). Un valore assente si scrive `-`, mai una cella vuota.
 - **Note in calce con richiamo**: le avvertenze su un servizio vanno in una nota sotto le tabelle,
   richiamata da un simbolo accanto al nome (`†`, `‡`...), non nella cella.
 - **Indirizzi superati: si aggiornano in autonomia** (istruzione durevole dell'utente). Quando un
@@ -552,6 +552,11 @@ ordine alfabetico**, non nell'ordine del pannello (decisione dell'utente, 2026-0
   correnti senza chiedere. La riga si cancella solo per un servizio **cessato**. Tre casi da
   distinguere: servizio chiuso, attivo con indirizzi cambiati, attivo con nome o proprietario
   cambiato (si rinomina la riga e si spiega il passaggio in nota).
+  - **Tolti nella `4.55`, per scelta dell'utente** (2026-11-13), con le loro note in calce:
+    **Mullvad DNS** (`Mullvad-01`: TechRadar ne ha annunciato la chiusura per il 2 novembre 2026),
+    e **UltraDNS Public**, **Quad101** e **NextDNS** (`Dns-02`: nessuna fonte ufficiale
+    raggiungibile per gli indirizzi). Un servizio i cui indirizzi non si possono leggere in una
+    fonte ufficiale non entra in tabella, per la regola qui sotto.
 - **Verifica delle fonti.** Gli indirizzi si prendono **solo** dalla documentazione ufficiale del
   servizio, mai a memoria.
   - ⚠️ **Dal container il test via UDP 53 non vale**: la rete dirotta le query DNS e risponde 'OK'

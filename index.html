@@ -3394,18 +3394,6 @@ defaults write com.apple.finder CreateDesktop false
             <td style="text-align:left">dns.google</td>
           </tr>
           <tr>
-            <td style="text-align:left"><strong>Mullvad DNS</strong></td>
-            <td style="text-align:center">194.242.2.3</td>
-            <td style="text-align:center">-</td>
-            <td style="text-align:left">adblock.dns.mullvad.net</td>
-          </tr>
-          <tr>
-            <td style="text-align:left"><strong>NextDNS</strong> ‡</td>
-            <td style="text-align:center">45.90.28.0</td>
-            <td style="text-align:center">45.90.30.0</td>
-            <td style="text-align:left">&lt;ID&gt;.dns.nextdns.io</td>
-          </tr>
-          <tr>
             <td style="text-align:left"><strong>OpenDNS</strong></td>
             <td style="text-align:center">208.67.222.222</td>
             <td style="text-align:center">208.67.220.220</td>
@@ -3416,18 +3404,6 @@ defaults write com.apple.finder CreateDesktop false
             <td style="text-align:center">9.9.9.9</td>
             <td style="text-align:center">149.112.112.112</td>
             <td style="text-align:left">dns.quad9.net</td>
-          </tr>
-          <tr>
-            <td style="text-align:left"><strong>Quad101</strong></td>
-            <td style="text-align:center">101.101.101.101</td>
-            <td style="text-align:center">101.102.103.104</td>
-            <td style="text-align:left">-</td>
-          </tr>
-          <tr>
-            <td style="text-align:left"><strong>UltraDNS Public</strong> †</td>
-            <td style="text-align:center">64.6.64.6</td>
-            <td style="text-align:center">64.6.65.6</td>
-            <td style="text-align:left">-</td>
           </tr>
         </tbody>
       </table>
@@ -3466,16 +3442,6 @@ defaults write com.apple.finder CreateDesktop false
             <td style="text-align:center">2001:4860:4860::8844</td>
           </tr>
           <tr>
-            <td style="text-align:left"><strong>Mullvad DNS</strong></td>
-            <td style="text-align:center">2a07:e340::3</td>
-            <td style="text-align:center">-</td>
-          </tr>
-          <tr>
-            <td style="text-align:left"><strong>NextDNS</strong> ‡</td>
-            <td style="text-align:center">2a07:a8c0::</td>
-            <td style="text-align:center">2a07:a8c1::</td>
-          </tr>
-          <tr>
             <td style="text-align:left"><strong>OpenDNS</strong></td>
             <td style="text-align:center">2620:119:35::35</td>
             <td style="text-align:center">2620:119:53::53</td>
@@ -3485,30 +3451,10 @@ defaults write com.apple.finder CreateDesktop false
             <td style="text-align:center">2620:fe::fe</td>
             <td style="text-align:center">2620:fe::9</td>
           </tr>
-          <tr>
-            <td style="text-align:left"><strong>Quad101</strong></td>
-            <td style="text-align:center">2001:de4::101</td>
-            <td style="text-align:center">2001:de4::102</td>
-          </tr>
-          <tr>
-            <td style="text-align:left"><strong>UltraDNS Public</strong> †</td>
-            <td style="text-align:center">2620:74:1b::1:1</td>
-            <td style="text-align:center">2620:74:1c::2:2</td>
-          </tr>
         </tbody>
       </table>
-      <p>Le righe di <strong>Control D</strong> e <strong>Mullvad DNS</strong> corrispondono ai resolver che bloccano
-        solo annunci e tracker (rispettivamente il profilo '<em>Ads &amp; Tracking</em>' e
-        '<em>adblock</em>'): nessun filtro per contenuti per famiglie.</p>
-      <p><strong>†</strong> <strong>UltraDNS Public</strong> è l'ex <em>Verisign Public DNS</em>: nel dicembre 2020 il
-        servizio è passato a Neustar e oggi fa capo a Vercara (gruppo DigiCert). Gli indirizzi sono rimasti gli stessi e
-        corrispondono al livello senza filtri (<em>Unfiltered Resolution</em>), ma il marchio Verisign non esiste più.
-      </p>
-      <p><strong>‡</strong> <strong>NextDNS</strong> non blocca nulla di per sé: i filtri dipendono dal profilo
-        personale che si crea sul sito (gratuito fino a 300.000 richieste al mese). Con IPv4 va prima collegato il
-        proprio indirizzo IP pubblico al profilo (<em>Linked IP</em>); con IPv6 e con DNS-over-TLS/HTTPS non serve,
-        perché l'ID del profilo è già incorporato nell'indirizzo (<code>2a07:a8c0::&lt;ID&gt;</code>) e
-        nell'hostname (<code>&lt;ID&gt;.dns.nextdns.io</code>).</p>
+      <p>La riga di <strong>Control D</strong> corrisponde al resolver che blocca solo annunci e tracker (il profilo
+        '<em>Ads &amp; Tracking</em>'): nessun filtro per contenuti per famiglie.</p>
       <p><strong>N.B.</strong> Tutti i browser Android basati su Chromium (Chrome, Kiwi, ecc.) sovrascrivono di default
         le impostazioni DNS.<br>Il flag <code>async dns</code> che serviva a disattivarla non esiste più nel Chromium
         attuale: la via che resta è impostare il DNS privato a livello di sistema (Impostazioni → Rete e internet →
