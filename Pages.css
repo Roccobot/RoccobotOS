@@ -106,6 +106,13 @@ th, td { padding: 5px }
    table had, so nothing moves where the table fits. */
 .pg-scroll { overflow-x: auto; margin: 15px 0 }
 .pg-scroll > table { margin: 0 }
+/* Formats and BlendModes keep the frame of their export (choice Tabelle-01 of the user, 4.55):
+   the table has 5px of padding, so the cells stand off its border, and every cell keeps its 3px
+   corner. The four corner cells still take their .4375rem from the rules further down, which are
+   more specific. With 4.54 the frame had gone with the <style> of the pages, and at 390px the
+   last table of Formats grew shorter (768px against 814px). */
+body.pg-cornice table { padding: 5px }
+body.pg-cornice :is(th, td) { border-radius: 3px }
 /* Long addresses written out as link text break where they must, not past the window. */
 a { text-decoration: none; overflow-wrap: break-word }
 code, pre { font-family: Monaco, monospace; font-size: 10pt; border-radius: 3px }

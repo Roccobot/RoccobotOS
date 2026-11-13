@@ -5,6 +5,9 @@
 const assert = require('node:assert/strict');
 
 const SUB_PAGES = ['Characters', 'Formats', 'AdServers', 'BlendModes'];
+// The pages whose tables keep the 5px frame and the 3px cell corners of their export (Tabelle-01,
+// 4.55): there the inner cells are rounded on purpose, and the check turns round to want them.
+const FRAMED = ['Formats', 'BlendModes'];
 const WIDTHS = [390, 900, 1440];
 
 async function open(browser, address, options) {
@@ -27,7 +30,13 @@ function measure() {
     boxes, page: document.documentElement.scrollHeight, sw: document.documentElement.scrollWidth, iw: innerWidth,
     sheets: document.querySelectorAll('style').length,
     loose: [...document.querySelectorAll('table')].filter(t => !t.parentElement.classList.contains('pg-scroll')).length,
-    innerRadius: [...document.querySelectorAll('td, th')].filter(c => parseFloat(getComputedStyle(c).borderTopLeftRadius) > 0 && c.cellIndex > 0).length
+    innerRadius: [...document.querySelectorAll('td, th')].filter(c => parseFloat(getComputedStyle(c).borderTopLeftRadius) > 0 && c.cellIndex > 0).length,
+    inner: [...document.querySelectorAll('td, th')].filter(c => c.cellIndex > 0).length,
+    framed: [...document.querySelectorAll('table')].filter(t => {
+      const g = getComputedStyle(t), tb = t.getBoundingClientRect(), cb = t.rows[0].cells[0].getBoundingClientRect();
+      return g.paddingTop === '5px' && g.paddingLeft === '5px' && Math.abs(cb.left - tb.left - 6) < .01 && Math.abs(cb.top - tb.top - 6) < .01;
+    }).length,
+    tables: document.querySelectorAll('table').length
   };
 }
 
@@ -38,11 +47,18 @@ async function subPages(browser, url, check) {
       const { context, page, errors } = await open(browser, url + name + '.html', { viewport: { width, height: 900 }, colorScheme: theme });
       const m = await page.evaluate(measure);
       lay[theme] = m;
-      await check(`${name} ${width}/${theme}: the page does not scroll sideways, every table is in its scrolling box, no inline style sheet, no rounded inner cell`, async () => {
+      const framed = FRAMED.includes(name);
+      await check(`${name} ${width}/${theme}: the page does not scroll sideways, every table is in its scrolling box, no inline style sheet, ${framed ? 'every table keeps the 5px frame and every cell its rounded corner' : 'no frame and no rounded inner cell'}`, async () => {
         assert.ok(m.sw <= m.iw, `page ${m.sw}px wide in a ${m.iw}px window`);
         assert.equal(m.loose, 0, 'tables outside div.pg-scroll');
         assert.equal(m.sheets, 0, '<style> blocks');
-        assert.equal(m.innerRadius, 0, 'inner cells with a rounded corner');
+        if (framed) {
+          assert.equal(m.framed, m.tables, 'tables with the 5px frame');
+          assert.equal(m.innerRadius, m.inner, 'inner cells with a rounded corner');
+        } else {
+          assert.equal(m.framed, 0, 'tables with a frame');
+          assert.equal(m.innerRadius, 0, 'inner cells with a rounded corner');
+        }
         assert.deepEqual(errors, []);
       });
       if (theme === 'dark') await check(`${name} ${width}: anti-jitter, light and dark have the same layout (every element box and the page length)`, async () => {

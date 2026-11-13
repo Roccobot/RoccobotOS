@@ -160,6 +160,14 @@
   l'occasione i selettori che non agganciavano niente, l'angolo di 3 px di ogni cella (a ogni
   incrocio della griglia il bordo faceva un intaglio) e i 5 px di `padding` della tabella, che
   staccavano le celle dalla cornice.
+  - ⚠️⚠️ **Ma `Formats.html` e `BlendModes.html` hanno di nuovo la cornice** (dalla `4.55`,
+    scelta `Tabelle-01` dell'utente): le loro tabelle hanno i 5 px di `padding`, quindi le celle
+    staccate dal bordo, e ogni cella l'angolo di 3 px, mentre le quattro celle d'angolo tengono
+    i loro `.4375rem`. La regola vive in `Pages.css`, sulla classe `pg-cornice` del `body` di
+    quelle due pagine, e non torna nessun `<style>` in testa. Le misure sono quelle di prima della
+    `4.54` in tutti i formati: a 390 px l'ultima tabella di `Formats.html` è di nuovo alta 814 px
+    (768 senza cornice) e quella di `BlendModes.html` 842 (814). `tests/pages.cjs` vuole la cornice
+    e gli angoli sulle due pagine, e né l'una né gli altri su `Characters.html` e `AdServers.html`.
   - **Ogni tabella è dentro un `div.pg-scroll`, che scorre di lato da solo** (rilievo
     RoccobotOS-05): su un telefono scorre la tabella e non la pagina. Il contenitore porta i
     margini che aveva la tabella, quindi dove la tabella entra non si sposta niente; una tabella
