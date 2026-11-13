@@ -9,9 +9,9 @@ test('reads Aomidori metadata without executing CSS', () => {
   assert.deepEqual(readMetadata(valid), { name: 'RoccobotOS Paper', version: '1.40', note: 'A paper palette.', comment: 'Light and dark colours.' });
 });
 
-test('reads the Roccobot MD header and version 0.9', () => {
-  const classic = '/*\n#NAME: Roccobot MD\n#VERSION: 0.9\n#NOTE: Default style.\n#COMMENT: Light and dark colours.\n*/\nbody { color: #303735; }';
-  assert.equal(readMetadata(classic).version, '0.9');
+test('reads the Roccobot MD header and version 0.91', () => {
+  const classic = '/*\n#NAME: Roccobot MD\n#VERSION: 0.91\n#NOTE: Default style.\n#COMMENT: Light and dark colours.\n*/\nbody { color: #303735; }';
+  assert.equal(readMetadata(classic).version, '0.91');
 });
 
 test('the catalogue keeps Roccobot MD first, then orders by name', () => {

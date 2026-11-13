@@ -278,7 +278,7 @@ async function stubCatalogue(page) {
         }
         if(r.tables!=='cards')assert.equal(r.rad,'8px');
       });
-      if(width===390)await check(`${width}/${theme}: MD 0.9 on a phone the index table fits, tables show no scrollbar and the Tasti funzione cell is centred`,async()=>{
+      if(width===390)await check(`${width}/${theme}: MD 0.91 on a phone the index table fits, tables show no scrollbar and the Tasti funzione cell is centred`,async()=>{
         const r=await page.evaluate(()=>{const t=document.querySelector('#markdown_content table.index-grid');const td=[...document.querySelectorAll('td.cell-extra-line')].find(e=>e.textContent.includes('tasti Mac'));const b=td.getBoundingClientRect();const cs=[...td.querySelectorAll('code')].map(c=>c.getBoundingClientRect());return {fit:t.scrollWidth<=t.clientWidth,right:t.getBoundingClientRect().right<=innerWidth,bars:[...document.querySelectorAll('#markdown_content table')].every(e=>getComputedStyle(e).scrollbarWidth==='none'),off:Math.abs((Math.min(...cs.map(c=>c.top))-b.top)-(b.bottom-Math.max(...cs.map(c=>c.bottom))))}});
         assert.ok(r.fit&&r.right,'index table fits');assert.ok(r.bars,'no table scrollbar');assert.ok(r.off<2.5,'Tasti funzione cell off centre by '+r.off);
       });
@@ -324,7 +324,7 @@ async function stubCatalogue(page) {
       await check(`${width}/${theme}: both formats expose one version`,async()=>assert.equal(await page.locator('[data-style-picker]:visible').count(),1));
       await trigger.click();
       await page.getByRole('option').first().waitFor();
-      await check(`${width}/${theme}: the real catalogue has one style, Roccobot MD 0.9`,async()=>assert.deepEqual(await page.getByRole('option').allTextContents(),['Roccobot MD0.9']));
+      await check(`${width}/${theme}: the real catalogue has one style, Roccobot MD 0.91`,async()=>assert.deepEqual(await page.getByRole('option').allTextContents(),['Roccobot MD0.91']));
       await page.getByRole('button',{name:'Chiudi il selettore'}).click();
       await stubCatalogue(page);
       await page.reload({waitUntil:'domcontentloaded'});
@@ -336,7 +336,7 @@ async function stubCatalogue(page) {
       await check(`${width}/${theme}: three styles in the stubbed catalogue`,async()=>assert.equal(await page.getByRole('option').count(),3));
       await check(`${width}/${theme}: SlimVer names without Paper`,async()=>{
         const labels=await page.getByRole('option').allTextContents();
-        assert.deepEqual(labels,['Prova A1.00','Prova B1.42','Roccobot MD0.9']);
+        assert.deepEqual(labels,['Prova A1.00','Prova B1.42','Roccobot MD0.91']);
         assert.equal(await page.getByRole('link',{name:'Aggiungi uno stile'}).count(),0);
       });
       await page.getByRole('option').first().click();
