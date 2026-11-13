@@ -2,10 +2,9 @@
    (Characters.html, Formats.html, AdServers.html, 'BlendModes.html').
 
    Perché un file a parte e non le regole dentro ogni pagina: le quattro sotto-pagine sono
-   export vecchi con il foglio di stile scritto dentro l'head, e in due varianti diverse.
-   Duplicare il blocco quattro volte avrebbe creato quattro fonti che prima o poi divergono;
-   qui la fonte è una sola e le pagine la richiamano dopo il loro <style>, che è ciò che
-   gli fa vincere il confronto a parità di specificità.
+   export vecchi, che avevano il foglio di stile scritto dentro l'head, in due varianti diverse.
+   Dalla 4.54 quei blocchi non ci sono più e questo file è l'unica fonte: impaginazione prima,
+   colori dopo.
 
    DUE VIE PER IL TEMA, e nessuna delle due memorizza niente:
    1. la preferenza del SISTEMA operativo (prefers-color-scheme), che è quella con cui la
@@ -80,6 +79,70 @@ html[data-theme="light"] {
   --pg-cella-stretta: #ececec;
   --pg-link: #1c7a68;
   --pg-link-rotto: #c00;
+}
+
+/* ── Layout of the sub-pages ──
+   Until 4.54 each page carried in its head the <style> of the export it came from, the same block
+   three times (Formats, AdServers, BlendModes) and a longer one in Characters (rilievo
+   RoccobotOS-07). What those blocks did, and this sheet did not already redo, lives here, once:
+   first the layout of the three pages, then what Characters keeps of its own export
+   (body.pg-characters). The rules that matched nothing (#ws, #message, .send, .server, .error,
+   the anchors, the frames) are gone. This block comes before the colours, which still win. */
+body {
+  font-family: "Avenir Next", Helvetica, Arial, sans-serif;
+  padding: 1em;
+  margin: auto;
+  max-width: 64em;
+}
+h1, h2, h3, h4, h5, h6 { font-weight: bold }
+h1 { font-size: 28pt }
+h2 { border-bottom: 1px solid; font-size: 24px }
+h3 { font-size: 18px }
+p, blockquote, ul, ol, dl, li, table, pre { margin: 15px 0 }
+table { width: 100% }
+th, td { padding: 5px }
+/* A table wider than a phone scrolls inside its own box, and the page does not (RoccobotOS-05):
+   every table of the sub-pages is wrapped in div.pg-scroll, which carries the margins the
+   table had, so nothing moves where the table fits. */
+.pg-scroll { overflow-x: auto; margin: 15px 0 }
+.pg-scroll > table { margin: 0 }
+/* Long addresses written out as link text break where they must, not past the window. */
+a { text-decoration: none; overflow-wrap: break-word }
+code, pre { font-family: Monaco, monospace; font-size: 10pt; border-radius: 3px }
+code { border: 1px solid; margin: 0 2px; padding: 0 5px }
+pre { border: 1px solid; overflow: auto; padding: 4px 8px }
+pre > code { border: 0; margin: 0; padding: 0 }
+
+body.pg-characters {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  /* The top padding is the room for the back button, further down. */
+  padding-right: 30px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+  margin: revert;
+  max-width: none;
+}
+@media screen and (min-width: 914px) {
+  body.pg-characters { width: 854px; margin: 0 auto }
+}
+.pg-characters > :first-child { margin-top: 0 !important }
+.pg-characters :is(h1, h2, h3, h4, h5, h6) {
+  margin: 20px 0 10px;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative;
+}
+.pg-characters h1 { font-size: 28px }
+.pg-characters table { width: auto }
+.pg-characters :is(th, td) { padding: 6px 13px }
+.pg-characters :is(th, td) :first-child { margin-top: 0 }
+.pg-characters :is(th, td) :last-child { margin-bottom: 0 }
+@media print {
+  .pg-characters * { -webkit-print-color-adjust: exact; print-color-adjust: exact }
+  .pg-characters :is(table, pre) { break-inside: avoid }
 }
 
 html { color-scheme: light dark }

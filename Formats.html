@@ -18,136 +18,6 @@
 <meta name="application-name" content="RoccobotOS">
 <meta name="theme-color" content="#43b59e">
 <title>Formati</title>
-
-
-<style>
-body {
-	font-family: "Avenir Next", Helvetica, Arial, sans-serif;
-	padding:1em;
-	margin:auto;
-	max-width:64em;
-	background:#fefefe;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	font-weight: bold;
-}
-
-h1 {
-	color: #000000;
-	font-size: 28pt;
-}
-
-h2 {
-	border-bottom: 1px solid #CCCCCC;
-	color: #000000;
-	font-size: 24px;
-}
-
-h3 {
-	font-size: 18px;
-}
-
-h4 {
-	font-size: 16px;
-}
-
-h5 {
-	font-size: 14px;
-}
-
-h6 {
-	color: #777777;
-	background-color: inherit;
-	font-size: 14px;
-}
-
-hr {
-	height: 0.2em;
-	border: 0;
-	color: #CCCCCC;
-	background-color: #CCCCCC;
-}
-
-p, blockquote, ul, ol, dl, li, table, pre {
-	margin: 15px 0;
-}
-
-img {
-	max-width: 100%;
-}
-
-table {
-	border-collapse: collapse;
-	width: 100%;
-}
-
-table, th, td {
-	border: 1px solid #EAEAEA;
-	
-	border-radius: 3px;
-	padding: 5px;
-}
-
-tr:nth-child(even) {
-  background-color: #F8F8F8;
-}
-
-a, a:visited {
-	color: #4183C4;
-	background-color: inherit;
-	text-decoration: none;
-}
-
-#message {
-	border-radius: 6px;
-	border: 1px solid #ccc;
-	display:block;
-	width:100%;
-	height:60px;
-	margin:6px 0px;
-}
-
-button, #ws {
-	font-size: 10pt;
-	padding: 4px 6px;
-	border-radius: 5px;
-	border: 1px solid #bbb;
-	background-color: #eee;
-}
-
-code, pre, #ws, #message {
-	font-family: Monaco, monospace;
-	font-size: 10pt;
-	border-radius: 3px;
-	background-color: #F8F8F8;
-	color: inherit;
-}
-
-code {
-	border: 1px solid #EAEAEA;
-	margin: 0 2px;
-	padding: 0 5px;
-}
-
-pre {
-	border: 1px solid #CCCCCC;
-	overflow: auto;
-	padding: 4px 8px;
-}
-
-pre > code {
-	border: 0;
-	margin: 0;
-	padding: 0;
-}
-
-#ws { background-color: #f8f8f8; }
-
-.send { color:#77bb77; }
-.server { color:#7799bb; }
-.error { color:#AA0000; }
-</style>
 <link rel="stylesheet" href="Pages.css">
 
 
@@ -159,7 +29,7 @@ pre > code {
 
 <h2>Smartphone e tablet</h2>
 
-<table>
+<div class="pg-scroll"><table>
 <thead>
 <tr>
 <th style="text-align: right">Fattore</th>
@@ -242,9 +112,9 @@ pre > code {
 <td style="text-align: center">1440&nbsp;×&nbsp;3200</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 
-<table>
+<div class="pg-scroll"><table>
 <thead>
 <tr>
 <th style="text-align: right">Fattore</th>
@@ -306,7 +176,7 @@ pre > code {
 <td style="text-align: center">2560&nbsp;×&nbsp;1600</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 
 <p><strong>Fattore</strong> = &#39;ingrandimento&#39;: definisce il numero effettivo di pixel renderizzati in base ai <strong>dp</strong> del modello<br>
 <strong>Classe</strong> = sigla che categorizza gli schermi dei dispositivi in base alla densità (<strong>DPI</strong>)<br>
@@ -323,7 +193,7 @@ pre > code {
 
 <h2>Dispositivi iOS</h2>
 
-<table>
+<div class="pg-scroll"><table>
 <thead>
 <tr>
 <th style="text-align: left">Modello</th>
@@ -393,9 +263,9 @@ pre > code {
 <td style="text-align: center">750&nbsp;×&nbsp;1334</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 
-<table>
+<div class="pg-scroll"><table>
 <thead>
 <tr>
 <th style="text-align: left">Modello</th>
@@ -449,7 +319,7 @@ pre > code {
 <td style="text-align: center">1488&nbsp;×&nbsp;2266</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 
 <p><strong>pts</strong> = punti (equivalenti ai <strong>dp</strong>)<br>
 <strong>Fattore scala UIKit</strong> (UIKit Scale Factor) = moltiplicatore: definisce il numero di pixel renderizzati in base ai punti (<strong>pts</strong>) del modello<br>
@@ -460,7 +330,7 @@ pre > code {
 
 <h2>Monitor e TV</h2>
 
-<table>
+<div class="pg-scroll"><table>
 <thead>
 <tr>
 <th style="text-align: center">Risoluzione</th>
@@ -694,7 +564,7 @@ pre > code {
 <td style="text-align: right">76 800</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 
 <p><strong>21:9</strong> (2,37:1) è un&#39;approssimazione della proporzione reale <strong>64:27</strong>, quadrato di 16:9</p>
 
@@ -704,7 +574,7 @@ pre > code {
 
 <h2>Cinema e segnali TV digitali, file video professionali</h2>
 
-<table>
+<div class="pg-scroll"><table>
 <thead>
 <tr>
 <th style="text-align: center">Risoluzione</th>
@@ -983,7 +853,7 @@ pre > code {
 <td style="text-align: right">345 600</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 
 <p><strong>DCI Full</strong> (anche DCI Full Frame o Full Container), <strong>DCI Flat</strong> e <strong>DCI Scope</strong>: standard per le sale cinematografiche digitali introdotti da DCI (Digital Cinema Initiatives)<br>
 <strong>UHD</strong> (Video) e <strong>UHDTV</strong> (Trasmissione televisiva): formati per segnali digitali corrispondenti alle precedenti generazioni <strong>FHD</strong>/FHDTV, <strong>HD</strong>/HDTV, <strong>SD</strong>/SDTV<br>
@@ -991,7 +861,7 @@ pre > code {
 
 <h2>Proporzioni video storiche di riferimento</h2>
 
-<table>
+<div class="pg-scroll"><table>
 <thead>
 <tr>
 <th style="text-align: left">Formato</th>
@@ -1087,7 +957,7 @@ pre > code {
 <td style="text-align: center"></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 
 <p>Oggi il nome storico <strong>CinemaScope</strong> è utilizzato per indicare le proporzioni <strong>2,35:1</strong>, <strong>2,39:1</strong> e <strong>2,40:1</strong><br>
 (talvolta include le proporzioni intermedie tra 2,30:1 e 2,40:1)</p>
@@ -1096,7 +966,7 @@ pre > code {
 
 <h2>Contenitori video (file contenenti tracce multimediali)</h2>
 
-<table>
+<div class="pg-scroll"><table>
 <thead>
 <tr>
 <th style="text-align: left">Estensione</th>
@@ -1151,11 +1021,11 @@ pre > code {
 <td style="text-align: left"></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 
 <h3>*Pacchetto DCP (standard per la distribuzione cinematografica)</h3>
 
-<table>
+<div class="pg-scroll"><table>
 <thead>
 <tr>
 <th style="text-align: left">Parametro</th>
@@ -1237,7 +1107,7 @@ pre > code {
 <td style="text-align: left">&#39;stampati&#39; sul video, senza file esterni (consigliato)</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 
 <p>¹ talvolta accettati anche ext2, NTFS, HFS o APFS, ma va verificato di volta in volta.<br>
 ² tutti i cinema digitali sono in grado di proiettare in 2K; per il 4K è bene chiedere conferma al tecnico di sala.<br>

@@ -153,6 +153,17 @@
   non ci si arriva.
 - **Le sotto-pagine hanno un FAB 'indietro' in alto a sinistra**, verso `index.html`: lo crea
   `Pages.js` con `createElement`, così la fonte è una sola invece di quattro pagine.
+- **Le sotto-pagine non hanno più un `<style>` in testa** (dalla `4.54`, rilievo RoccobotOS-07):
+  l'impaginazione dei vecchi export vive in `Pages.css`, una volta sola, e `Characters.html`, che
+  veniva da un export diverso, tiene la sua con la classe `pg-characters` sul `body`. Tolti con
+  l'occasione i selettori che non agganciavano niente, l'angolo di 3 px di ogni cella (a ogni
+  incrocio della griglia il bordo faceva un intaglio) e i 5 px di `padding` della tabella, che
+  staccavano le celle dalla cornice.
+  - **Ogni tabella è dentro un `div.pg-scroll`, che scorre di lato da solo** (rilievo
+    RoccobotOS-05): su un telefono scorre la tabella e non la pagina. Il contenitore porta i
+    margini che aveva la tabella, quindi dove la tabella entra non si sposta niente; una tabella
+    nuova di una sotto-pagina entra nel suo `div.pg-scroll`. I link vanno a capo dove devono
+    (`overflow-wrap: break-word`), per gli indirizzi lunghi di `AdServers.html`.
 - **Le sotto-pagine seguono il tema del sistema** (`prefers-color-scheme`) e si commutano col tasto
   `T`, senza memorizzare nulla: niente `localStorage` per il tema (scelta dell'utente), quindi il
   tema scelto nella pagina principale non le raggiunge.
