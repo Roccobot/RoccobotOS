@@ -16,3 +16,10 @@ permissions:
 jobs:
   check:
     uses: Roccobot/roccobot.github.io/.github/workflows/dependencies.yml@master
+    # The project's card on the board (Campanello, 2026-11-23): CARDS_PASSWORD opens only the
+    # card calls of the rules-proxy Worker; without it the card is skipped and the run stays green.
+    with:
+      card_list: Tools
+      card_label: 'Roccobot OS'
+    secrets:
+      cards_password: ${{ secrets.CARDS_PASSWORD }}
